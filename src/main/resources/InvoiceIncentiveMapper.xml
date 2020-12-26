@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbhb.cw.invoice.mapper.InvoiceIncentiveMapper">
+  <resultMap id="BaseResultMap" type="com.hbhb.cw.invoice.model.InvoiceIncentive">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="unit_id" jdbcType="INTEGER" property="unitId" />
+    <result column="channel_num" jdbcType="VARCHAR" property="channelNum" />
+    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+    <result column="tax_amount" jdbcType="DECIMAL" property="taxAmount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, unit_id, channel_num, channel_name, tax_amount, create_time, create_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invoice_incentive
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from invoice_incentive
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbhb.cw.invoice.model.InvoiceIncentive">
+    insert into invoice_incentive (id, unit_id, channel_num,
+      channel_name, tax_amount, create_time,
+      create_by)
+    values (#{id,jdbcType=BIGINT}, #{unitId,jdbcType=INTEGER}, #{channelNum,jdbcType=VARCHAR},
+      #{channelName,jdbcType=VARCHAR}, #{taxAmount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP},
+      #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbhb.cw.invoice.model.InvoiceIncentive">
+    insert into invoice_incentive
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="unitId != null">
+        unit_id,
+      </if>
+      <if test="channelNum != null">
+        channel_num,
+      </if>
+      <if test="channelName != null">
+        channel_name,
+      </if>
+      <if test="taxAmount != null">
+        tax_amount,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="unitId != null">
+        #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="channelNum != null">
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="taxAmount != null">
+        #{taxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.invoice.model.InvoiceIncentive">
+    update invoice_incentive
+    <set>
+      <if test="unitId != null">
+        unit_id = #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="channelNum != null">
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+        channel_name = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="taxAmount != null">
+        tax_amount = #{taxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.invoice.model.InvoiceIncentive">
+    update invoice_incentive
+    set unit_id = #{unitId,jdbcType=INTEGER},
+      channel_num = #{channelNum,jdbcType=VARCHAR},
+      channel_name = #{channelName,jdbcType=VARCHAR},
+      tax_amount = #{taxAmount,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceIncentiveResVO">
+    select
+    u.unit_name as unitId,
+    ii.channel_num as channelNum,
+    ii.channel_name as channelName,
+    ii.tax_amount as taxAmount
+    from invoice_incentive ii
+    left join unit u on u.id = ii.unit_id
+    where ii.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.channelNum != null">
+        and ii.channel_num like concat ('%', #{cond.channelNum}, '%')
+      </if>
+  </select>
+
+  <select id="countByCond" parameterType="map" resultType="int">
+    select COUNT(1)
+    from invoice_incentive
+    where unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.channelNum != null">
+        and channel_num like concat ('%', #{cond.channelNum}, '%')
+      </if>
+  </select>
+
+  <select id="selectByParentCond" parameterType="map"  resultType="com.hbhb.cw.invoice.web.vo.InvoiceIncentiveResVO">
+    select
+    u.unit_name as unitId,
+    ii.channel_num as channelNum,
+    ii.channel_name as channelName,
+    ii.tax_amount as taxAmount
+    from invoice_incentive ii
+    left join unit u on u.id = ii.unit_id
+    where ii.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.channelNum != null">
+        and ii.channel_num like concat ('%', #{cond.channelNum}, '%')
+      </if>
+  </select>
+
+  <select id="countByParentCond" parameterType="map" resultType="int">
+    select COUNT(1)
+    from invoice_incentive
+    where unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    <if test="cond.channelNum != null">
+      and channel_num like concat ('%', #{cond.channelNum}, '%')
+    </if>
+  </select>
+
+  <insert id="insertBatch" parameterType="list">
+    insert into invoice_incentive (
+    unit_id,
+    channel_num,
+    channel_name,
+    tax_amount) values
+    <foreach item="item" index="index" collection="list" separator=",">
+      (#{item.unitId},
+      #{item.channelNum},
+      #{item.channelName},
+      #{item.taxAmount})
+    </foreach>
+  </insert>
+
+  <delete id="deleteByUnitId" parameterType="int">
+    delete from invoice_incentive
+    <where>
+      <if test="unitId != null">
+        and unit_id = #{unitId}
+      </if>
+    </where>
+  </delete>
+</mapper>

@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbhb.cw.invoice.mapper.InvoiceLibraryMapper">
+  <resultMap id="BaseResultMap" type="com.hbhb.cw.invoice.model.InvoiceLibrary">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="invoice_code" jdbcType="VARCHAR" property="invoiceCode" />
+    <result column="invoice_number" jdbcType="VARCHAR" property="invoiceNumber" />
+    <result column="invoice_date" jdbcType="TIMESTAMP" property="invoiceDate" />
+    <result column="invoice_state" jdbcType="TINYINT" property="invoiceState" />
+    <result column="seller_tax" jdbcType="VARCHAR" property="sellerTax" />
+    <result column="seller_name" jdbcType="VARCHAR" property="sellerName" />
+    <result column="buyer_tax" jdbcType="VARCHAR" property="buyerTax" />
+    <result column="buyer_name" jdbcType="VARCHAR" property="buyerName" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="tax_amount" jdbcType="DECIMAL" property="taxAmount" />
+    <result column="tax_include_amount" jdbcType="DECIMAL" property="taxIncludeAmount" />
+    <result column="check_code" jdbcType="VARCHAR" property="checkCode" />
+    <result column="seller_contact" jdbcType="VARCHAR" property="sellerContact" />
+    <result column="seller_account" jdbcType="VARCHAR" property="sellerAccount" />
+    <result column="buyer_contact" jdbcType="VARCHAR" property="buyerContact" />
+    <result column="buyer_account" jdbcType="VARCHAR" property="buyerAccount" />
+    <result column="pwd_area" jdbcType="VARCHAR" property="pwdArea" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="drawer" jdbcType="VARCHAR" property="drawer" />
+    <result column="payee" jdbcType="VARCHAR" property="payee" />
+    <result column="reviewer" jdbcType="VARCHAR" property="reviewer" />
+    <result column="create_by" jdbcType="INTEGER" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, invoice_code, invoice_number, invoice_date, invoice_state, seller_tax, seller_name, 
+    buyer_tax, buyer_name, amount, tax_amount, tax_include_amount, check_code, seller_contact, 
+    seller_account, buyer_contact, buyer_account, pwd_area, remark, drawer, payee, reviewer, 
+    create_by, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invoice_library
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from invoice_library
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbhb.cw.invoice.model.InvoiceLibrary">
+    insert into invoice_library (id, invoice_code, invoice_number, 
+      invoice_date, invoice_state, seller_tax, 
+      seller_name, buyer_tax, buyer_name, 
+      amount, tax_amount, tax_include_amount, 
+      check_code, seller_contact, seller_account, 
+      buyer_contact, buyer_account, pwd_area, 
+      remark, drawer, payee, 
+      reviewer, create_by, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{invoiceCode,jdbcType=VARCHAR}, #{invoiceNumber,jdbcType=VARCHAR}, 
+      #{invoiceDate,jdbcType=TIMESTAMP}, #{invoiceState,jdbcType=TINYINT}, #{sellerTax,jdbcType=VARCHAR}, 
+      #{sellerName,jdbcType=VARCHAR}, #{buyerTax,jdbcType=VARCHAR}, #{buyerName,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{taxAmount,jdbcType=DECIMAL}, #{taxIncludeAmount,jdbcType=DECIMAL}, 
+      #{checkCode,jdbcType=VARCHAR}, #{sellerContact,jdbcType=VARCHAR}, #{sellerAccount,jdbcType=VARCHAR}, 
+      #{buyerContact,jdbcType=VARCHAR}, #{buyerAccount,jdbcType=VARCHAR}, #{pwdArea,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{drawer,jdbcType=VARCHAR}, #{payee,jdbcType=VARCHAR}, 
+      #{reviewer,jdbcType=VARCHAR}, #{createBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbhb.cw.invoice.model.InvoiceLibrary">
+    insert into invoice_library
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="invoiceCode != null">
+        invoice_code,
+      </if>
+      <if test="invoiceNumber != null">
+        invoice_number,
+      </if>
+      <if test="invoiceDate != null">
+        invoice_date,
+      </if>
+      <if test="invoiceState != null">
+        invoice_state,
+      </if>
+      <if test="sellerTax != null">
+        seller_tax,
+      </if>
+      <if test="sellerName != null">
+        seller_name,
+      </if>
+      <if test="buyerTax != null">
+        buyer_tax,
+      </if>
+      <if test="buyerName != null">
+        buyer_name,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="taxAmount != null">
+        tax_amount,
+      </if>
+      <if test="taxIncludeAmount != null">
+        tax_include_amount,
+      </if>
+      <if test="checkCode != null">
+        check_code,
+      </if>
+      <if test="sellerContact != null">
+        seller_contact,
+      </if>
+      <if test="sellerAccount != null">
+        seller_account,
+      </if>
+      <if test="buyerContact != null">
+        buyer_contact,
+      </if>
+      <if test="buyerAccount != null">
+        buyer_account,
+      </if>
+      <if test="pwdArea != null">
+        pwd_area,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="drawer != null">
+        drawer,
+      </if>
+      <if test="payee != null">
+        payee,
+      </if>
+      <if test="reviewer != null">
+        reviewer,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceCode != null">
+        #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNumber != null">
+        #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDate != null">
+        #{invoiceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceState != null">
+        #{invoiceState,jdbcType=TINYINT},
+      </if>
+      <if test="sellerTax != null">
+        #{sellerTax,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerName != null">
+        #{sellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerTax != null">
+        #{buyerTax,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerName != null">
+        #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="taxAmount != null">
+        #{taxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="taxIncludeAmount != null">
+        #{taxIncludeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="checkCode != null">
+        #{checkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerContact != null">
+        #{sellerContact,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerAccount != null">
+        #{sellerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerContact != null">
+        #{buyerContact,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerAccount != null">
+        #{buyerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdArea != null">
+        #{pwdArea,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="drawer != null">
+        #{drawer,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null">
+        #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewer != null">
+        #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.invoice.model.InvoiceLibrary">
+    update invoice_library
+    <set>
+      <if test="invoiceCode != null">
+        invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNumber != null">
+        invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDate != null">
+        invoice_date = #{invoiceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceState != null">
+        invoice_state = #{invoiceState,jdbcType=TINYINT},
+      </if>
+      <if test="sellerTax != null">
+        seller_tax = #{sellerTax,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerName != null">
+        seller_name = #{sellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerTax != null">
+        buyer_tax = #{buyerTax,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerName != null">
+        buyer_name = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="taxAmount != null">
+        tax_amount = #{taxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="taxIncludeAmount != null">
+        tax_include_amount = #{taxIncludeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="checkCode != null">
+        check_code = #{checkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerContact != null">
+        seller_contact = #{sellerContact,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerAccount != null">
+        seller_account = #{sellerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerContact != null">
+        buyer_contact = #{buyerContact,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerAccount != null">
+        buyer_account = #{buyerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdArea != null">
+        pwd_area = #{pwdArea,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="drawer != null">
+        drawer = #{drawer,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null">
+        payee = #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewer != null">
+        reviewer = #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.invoice.model.InvoiceLibrary">
+    update invoice_library
+    set invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      invoice_date = #{invoiceDate,jdbcType=TIMESTAMP},
+      invoice_state = #{invoiceState,jdbcType=TINYINT},
+      seller_tax = #{sellerTax,jdbcType=VARCHAR},
+      seller_name = #{sellerName,jdbcType=VARCHAR},
+      buyer_tax = #{buyerTax,jdbcType=VARCHAR},
+      buyer_name = #{buyerName,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      tax_amount = #{taxAmount,jdbcType=DECIMAL},
+      tax_include_amount = #{taxIncludeAmount,jdbcType=DECIMAL},
+      check_code = #{checkCode,jdbcType=VARCHAR},
+      seller_contact = #{sellerContact,jdbcType=VARCHAR},
+      seller_account = #{sellerAccount,jdbcType=VARCHAR},
+      buyer_contact = #{buyerContact,jdbcType=VARCHAR},
+      buyer_account = #{buyerAccount,jdbcType=VARCHAR},
+      pwd_area = #{pwdArea,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      drawer = #{drawer,jdbcType=VARCHAR},
+      payee = #{payee,jdbcType=VARCHAR},
+      reviewer = #{reviewer,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertBatch" parameterType="list">
+    insert into invoice_library (
+    invoice_code,
+    invoice_number,
+    invoice_date,
+    invoice_state,
+    seller_tax,
+    seller_name,
+    buyer_tax,
+    buyer_name,
+    amount,
+    tax_amount,
+    tax_include_amount,
+    check_code,
+    seller_contact,
+    seller_account,
+    buyer_contact,
+    pwd_area,
+    buyer_account,
+    remark,
+    drawer,
+    payee,
+    reviewer,
+    create_time) values
+    <foreach item="item" index="index" collection="list" separator=",">
+      (#{item.invoiceCode},
+      #{item.invoiceNumber},
+      #{item.invoiceDate},
+      #{item.invoiceState},
+      #{item.sellerTax},
+      #{item.sellerName},
+      #{item.buyerTax},
+      #{item.buyerName},
+      #{item.amount},
+      #{item.taxAmount},
+      #{item.taxIncludeAmount},
+      #{item.checkCode},
+      #{item.sellerContact},
+      #{item.sellerAccount},
+      #{item.buyerContact},
+      #{item.pwdArea},
+      #{item.buyerAccount},
+      #{item.remark},
+      #{item.drawer},
+      #{item.payee},
+      #{item.reviewer},
+      #{item.createTime})
+    </foreach>
+    ON DUPLICATE KEY UPDATE invoice_date = VALUES(invoice_date), invoice_state = VALUES(invoice_state),
+    seller_tax = VALUES(seller_tax), seller_name = VALUES(seller_name),
+    buyer_tax = VALUES(buyer_tax), buyer_name = VALUES(buyer_name),
+    amount = VALUES(amount),tax_amount = VALUES(tax_amount),tax_include_amount = VALUES(tax_include_amount),
+    check_code = VALUES(check_code), seller_contact = VALUES(seller_contact),
+    seller_account = VALUES(seller_account),buyer_contact = VALUES(buyer_contact),
+    pwd_area = VALUES(pwd_area),buyer_account = VALUES(buyer_account),remark = VALUES(remark),
+    drawer = VALUES(drawer), payee = VALUES(payee),reviewer = VALUES(reviewer);
+  </insert>
+
+  <select id="selectTime" resultType="string">
+    select max(create_time)
+    from invoice_library
+  </select>
+  
+  <select id="selectInspectionList" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceInspectionVO">
+    select il.invoice_code       as invoiceCode,
+    il.invoice_number     as invoiceNumber,
+    il.invoice_date       as invoiceDate,
+    il.invoice_state      as invoiceState,
+    il.seller_tax         as sellerTax,
+    il.seller_name        as sellerName,
+    il.buyer_tax          as buyerTax,
+    il.buyer_name         as buyerName,
+    il.amount             as amount,
+    il.tax_amount         as taxAmount,
+    il.tax_include_amount as taxIncludeAmount,
+    il.check_code         as checkCode,
+    il.seller_contact     as sellerContact,
+    il.seller_account     as sellerAccount,
+    il.buyer_contact      as buyerContact,
+    il.buyer_account      as buyerAccount,
+    il.remark             as remark,
+    il.drawer             as drawer,
+    il.payee              as payee,
+    il.reviewer           as reviewer,
+    ig.goods_name         as goodsName,
+    ig.model              as model,
+    ig.unit               as unit,
+    ig.quantity           as quantity,
+    ig.price              as price,
+    ig.tax_rate           as taxRate
+    from invoice_library il
+    left join invoice_goods ig on il.invoice_code = ig.invoice_code
+    <where>
+      <if test="cond.sellerTax != null  and cond.sellerTax != ''">
+        and il.seller_tax like concat ('%', #{cond.sellerTax}, '%')
+      </if>
+      <if test="cond.sellerName != null  and cond.sellerName != ''">
+        and il.seller_name like concat ('%', #{cond.sellerName}, '%')
+      </if>
+    </where>
+    group by il.invoice_code,il.invoice_number
+  </select>
+
+  <select id="countInspectionList" parameterType="map" resultType="int">
+    select COUNT(1) FROM (
+    select il.invoice_code       as invoiceCode,
+    il.invoice_number     as invoiceNumber,
+    il.invoice_date       as invoiceDate,
+    il.invoice_state      as invoiceState,
+    il.seller_tax         as sellerTax,
+    il.seller_name        as sellerName,
+    il.buyer_tax          as buyerTax,
+    il.buyer_name         as buyerName,
+    il.amount             as amount,
+    il.tax_amount         as taxAmount,
+    il.tax_include_amount as taxIncludeAmount,
+    il.check_code         as checkCode,
+    il.seller_contact     as sellerContact,
+    il.seller_account     as sellerAccount,
+    il.buyer_contact      as buyerContact,
+    il.buyer_account      as buyerAccount,
+    il.remark             as remark,
+    il.drawer             as drawer,
+    il.payee              as payee,
+    il.reviewer           as reviewer,
+    ig.goods_name         as goodsName,
+    ig.model              as model,
+    ig.unit               as unit,
+    ig.quantity           as quantity,
+    ig.price              as price,
+    ig.tax_rate           as taxRate
+    from invoice_library il
+    left join invoice_goods ig on il.invoice_code = ig.invoice_code
+    <where>
+    <if test="cond.sellerTax != null  and cond.sellerTax != ''">
+      and il.seller_tax like concat ('%', #{cond.sellerTax}, '%')
+    </if>
+    <if test="cond.sellerName != null  and cond.sellerName != ''">
+      and il.seller_name like concat ('%', #{cond.sellerName}, '%')
+    </if>
+    <if test="cond.invoiceDate != null  and cond.invoiceDate != ''">
+      and il.invoice_date like concat ('%', #{cond.invoiceDate}, '%')
+    </if>
+    </where>
+    group by il.invoice_code,il.invoice_number) t;
+  </select>
+
+  <select id="selectInspectionParentList" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceInspectionVO">
+    select il.invoice_code       as invoiceCode,
+    il.invoice_number     as invoiceNumber,
+    il.invoice_date       as invoiceDate,
+    il.invoice_state      as invoiceState,
+    il.seller_tax         as sellerTax,
+    il.seller_name        as sellerName,
+    il.buyer_tax          as buyerTax,
+    il.buyer_name         as buyerName,
+    il.amount             as amount,
+    il.tax_amount         as taxAmount,
+    il.tax_include_amount as taxIncludeAmount,
+    il.check_code         as checkCode,
+    il.seller_contact     as sellerContact,
+    il.seller_account     as sellerAccount,
+    il.buyer_contact      as buyerContact,
+    il.buyer_account      as buyerAccount,
+    il.remark             as remark,
+    il.drawer             as drawer,
+    il.payee              as payee,
+    il.reviewer           as reviewer,
+    ig.goods_name         as goodsName,
+    ig.model              as model,
+    ig.unit               as unit,
+    ig.quantity           as quantity,
+    ig.price              as price,
+    ig.tax_rate           as taxRate
+    from invoice_library il
+    left join invoice_goods ig on il.invoice_code = ig.invoice_code
+    where il.unit_id in
+      <foreach collection="list" item="item" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    <if test="cond.sellerTax != null  and cond.sellerTax != ''">
+      and il.seller_tax like concat ('%', #{cond.sellerTax}, '%')
+    </if>
+    <if test="cond.sellerName != null  and cond.sellerName != ''">
+      and il.seller_name like concat ('%', #{cond.sellerName}, '%')
+    </if>
+    <if test="cond.invoiceDate != null  and cond.invoiceDate != ''">
+      and il.invoice_date like concat ('%', #{cond.invoiceDate}, '%')
+    </if>
+    group by il.invoice_code,il.invoice_number;
+  </select>
+
+  <select id="countInspectionParentList" parameterType="map" resultType="int">
+    select COUNT(1) FROM (
+    select il.invoice_code       as invoiceCode,
+    il.invoice_number     as invoiceNumber,
+    il.invoice_date       as invoiceDate,
+    il.invoice_state      as invoiceState,
+    il.seller_tax         as sellerTax,
+    il.seller_name        as sellerName,
+    il.buyer_tax          as buyerTax,
+    il.buyer_name         as buyerName,
+    il.amount             as amount,
+    il.tax_amount         as taxAmount,
+    il.tax_include_amount as taxIncludeAmount,
+    il.check_code         as checkCode,
+    il.seller_contact     as sellerContact,
+    il.seller_account     as sellerAccount,
+    il.buyer_contact      as buyerContact,
+    il.buyer_account      as buyerAccount,
+    il.remark             as remark,
+    il.drawer             as drawer,
+    il.payee              as payee,
+    il.reviewer           as reviewer,
+    ig.goods_name         as goodsName,
+    ig.model              as model,
+    ig.unit               as unit,
+    ig.quantity           as quantity,
+    ig.price              as price,
+    ig.tax_rate           as taxRate
+    from invoice_library il
+    left join invoice_goods ig on il.invoice_code = ig.invoice_code
+    where il.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    <if test="cond.sellerTax != null  and cond.sellerTax != ''">
+      and il.seller_tax like concat ('%', #{cond.sellerTax}, '%')
+    </if>
+    <if test="cond.sellerName != null  and cond.sellerName != ''">
+      and il.seller_name like concat ('%', #{cond.sellerName}, '%')
+    </if>
+    <if test="cond.invoiceDate != null  and cond.invoiceDate != ''">
+      and il.invoice_date like concat ('%', #{cond.invoiceDate}, '%')
+    </if>
+    group by il.invoice_code,il.invoice_number) t;
+  </select>
+</mapper>
