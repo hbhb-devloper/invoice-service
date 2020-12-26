@@ -59,7 +59,7 @@ feign-url:
 
 # 服务提供方实例名称
 provider:
-  system-center: system-center-test
+  system-center: system-center-@env@
 
 ################### 本地环境配置 ###################
 ---
@@ -69,7 +69,7 @@ spring:
     consul:
       host: consul.yeexun.com.cn
       discovery:
-#        prefer-ip-address: true
+        #        prefer-ip-address: true
         instance-id: ${spring.application.name}-${server.port}-${spring.cloud.client.ip-address}
         service-name: ${spring.application.name}
         # 本地调试使用frp代理ip
