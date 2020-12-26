@@ -4,8 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.hbhb.core.bean.BeanConverter;
 import com.hbhb.core.utils.DateUtil;
 import com.hbhb.cw.invoice.common.DictType;
+import com.hbhb.cw.invoice.common.InvoiceBuyer;
 import com.hbhb.cw.invoice.mapper.Invoice1vatMapper;
 import com.hbhb.cw.invoice.model.Invoice1vat;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.rpc.DictApiExp;
 import com.hbhb.cw.invoice.rpc.SysUserApiExp;
 import com.hbhb.cw.invoice.service.Invoice1vatService;
@@ -19,10 +21,8 @@ import com.hbhb.cw.invoice.web.vo.InvoiceInspectionReqVO;
 import com.hbhb.cw.systemcenter.enums.DictCode;
 import com.hbhb.cw.systemcenter.vo.DictVO;
 import com.hbhb.cw.systemcenter.vo.UserInfo;
-import com.hbhb.springboot.web.view.Page;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -38,12 +38,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class Invoice1vatServiceImpl implements Invoice1vatService {
-
-    @Value("${cw.invoice.invoice.buyer-tax-id}")
-    private String buyerTaxId;
-
-    @Value("${cw.invoice.invoice.attributes}")
-    private String attributes;
 
     @Resource
     private Invoice1vatMapper invoice1vatMapper;
@@ -164,9 +158,9 @@ public class Invoice1vatServiceImpl implements Invoice1vatService {
         invoice1vat.setInvoiceDate(date);
         invoice1vat.setUserId(user.getId());
         invoice1vat.setUnitId(user.getUnitId());
-        invoice1vat.setBuyerTaxId(buyerTaxId);
+        invoice1vat.setBuyerTaxId(InvoiceBuyer.BUYER_NUMBER.value());
         invoice1vat.setiTime(new Date());
-        invoice1vat.setProjectProperties(attributes);
+        invoice1vat.setProjectProperties(InvoiceBuyer.ATTRIBUTES.value());
         invoice1vatMapper.insert(invoice1vat);
     }
 

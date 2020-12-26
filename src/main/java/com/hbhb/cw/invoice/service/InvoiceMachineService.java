@@ -1,11 +1,11 @@
 package com.hbhb.cw.invoice.service;
 
 import com.hbhb.cw.invoice.model.InvoiceMachine;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.web.vo.InvoiceMachineAddVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceMachineReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceMachineResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceMachineVO;
-import com.hbhb.springboot.web.view.Page;
 
 import java.util.List;
 

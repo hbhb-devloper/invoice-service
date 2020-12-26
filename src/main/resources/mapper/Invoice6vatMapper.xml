@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hbhb.cw.mapper.Invoice6vatMapper">
-  <resultMap id="BaseResultMap" type="com.hbhb.cw.model.Invoice6vat">
+<mapper namespace="com.hbhb.cw.invoice.mapper.Invoice6vatMapper">
+  <resultMap id="BaseResultMap" type="com.hbhb.cw.invoice.model.Invoice6vat">
     <id column="vat6_id" jdbcType="BIGINT" property="vat6Id" />
     <result column="invoice_type" jdbcType="VARCHAR" property="invoiceType" />
     <result column="invoice_code" jdbcType="VARCHAR" property="invoiceCode" />
@@ -31,7 +31,7 @@
     delete from invoice_6vat
     where vat6_id = #{vat6Id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.hbhb.cw.model.Invoice6vat">
+  <insert id="insert" parameterType="com.hbhb.cw.invoice.model.Invoice6vat">
     insert into invoice_6vat (vat6_id, invoice_type, invoice_code, 
       invoice_number, invoice_page_number, invoice_date, 
       tax_free_amount, buyer_tax_id, project_properties, 
@@ -43,7 +43,7 @@
       #{tableNumber,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER}, #{iTime,jdbcType=TIMESTAMP}, 
       #{userId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.hbhb.cw.model.Invoice6vat">
+  <insert id="insertSelective" parameterType="com.hbhb.cw.invoice.model.Invoice6vat">
     insert into invoice_6vat
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="vat6Id != null">
@@ -128,7 +128,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.model.Invoice6vat">
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.invoice.model.Invoice6vat">
     update invoice_6vat
     <set>
       <if test="invoiceType != null">
@@ -170,7 +170,7 @@
     </set>
     where vat6_id = #{vat6Id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.model.Invoice6vat">
+  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.invoice.model.Invoice6vat">
     update invoice_6vat
     set invoice_type = #{invoiceType,jdbcType=VARCHAR},
       invoice_code = #{invoiceCode,jdbcType=VARCHAR},
@@ -186,7 +186,7 @@
       user_id = #{userId,jdbcType=INTEGER}
     where vat6_id = #{vat6Id,jdbcType=BIGINT}
   </update>
-  <select id="selectListByCond" parameterType="map" resultType="com.hbhb.cw.web.vo.Invoice6ResVO">
+  <select id="selectListByCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.Invoice6ResVO">
     select i.vat6_id                        as vat6Id,
     i.invoice_type                          as invoiceType,
     i.invoice_code                          as invoiceCode,

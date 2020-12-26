@@ -46,7 +46,7 @@ host:
   proxy: 47.96.83.55
 
 port:
-  default: 10060
+  default: 10067
   dev: 10029
   dev-proxy: 10009
   test: 10030
@@ -59,7 +59,7 @@ feign-url:
 
 # 服务提供方实例名称
 provider:
-  system-center: system-center-@env@
+  system-center: system-center-test
 
 ################### 本地环境配置 ###################
 ---

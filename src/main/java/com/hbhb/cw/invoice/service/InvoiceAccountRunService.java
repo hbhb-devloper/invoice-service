@@ -1,12 +1,12 @@
 package com.hbhb.cw.invoice.service;
 
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunExportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunImportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceContrastReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceContrastVO;
-import com.hbhb.springboot.web.view.Page;
 
 import java.util.List;
 
@@ -19,12 +19,12 @@ public interface InvoiceAccountRunService {
     /**
      * 按条件查询往来账管理（分页）
      */
-    Page<InvoiceAccountRunResVO> getPageByCont(InvoiceAccountRunVO cond, Integer pageNum, Integer pageSize);
+    Page<InvoiceAccountRunResVO> getPageByCont(InvoiceAccountRunVO cond, Integer userId, Integer pageNum, Integer pageSize);
 
     /**
      * 获取导出列表所需数据
      */
-    List<InvoiceAccountRunExportVO> getListByCont(InvoiceAccountRunVO cond);
+    List<InvoiceAccountRunExportVO> getListByCont(InvoiceAccountRunVO cond, Integer userId);
 
     /**
      * 批量导入保存往来账管理

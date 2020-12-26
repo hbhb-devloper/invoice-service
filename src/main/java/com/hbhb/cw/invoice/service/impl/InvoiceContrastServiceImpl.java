@@ -10,7 +10,6 @@ import com.hbhb.cw.invoice.web.vo.InvoiceContrastReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceContrastResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceContrastVO;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -31,11 +30,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class InvoiceContrastServiceImpl implements InvoiceContrastService {
-
-    @Value("${cw.invoice.unit-id.hangzhou}")
-    private Integer hangzhou;
-    @Value("${cw.invoice.unit-id.benbu}")
-    private Integer benbu;
 
     @Resource
     private InvoiceAccountRunService invoiceAccountRunService;

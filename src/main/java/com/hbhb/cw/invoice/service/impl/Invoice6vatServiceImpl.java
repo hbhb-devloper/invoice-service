@@ -4,11 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.hbhb.core.bean.BeanConverter;
 import com.hbhb.core.utils.DateUtil;
 import com.hbhb.cw.invoice.common.DictType;
+import com.hbhb.cw.invoice.common.InvoiceBuyer;
 import com.hbhb.cw.invoice.mapper.Invoice6vatMapper;
 import com.hbhb.cw.invoice.model.Invoice6vat;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.rpc.DictApiExp;
 import com.hbhb.cw.invoice.rpc.SysUserApiExp;
-import com.hbhb.cw.invoice.rpc.UnitApiExp;
 import com.hbhb.cw.invoice.service.Invoice6vatService;
 import com.hbhb.cw.invoice.web.vo.Invoice6AddVO;
 import com.hbhb.cw.invoice.web.vo.Invoice6ResVO;
@@ -18,10 +19,8 @@ import com.hbhb.cw.invoice.web.vo.InvoiceByCondVO;
 import com.hbhb.cw.systemcenter.enums.DictCode;
 import com.hbhb.cw.systemcenter.vo.DictVO;
 import com.hbhb.cw.systemcenter.vo.UserInfo;
-import com.hbhb.springboot.web.view.Page;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -41,13 +40,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Invoice6vatServiceImpl implements Invoice6vatService {
 
-
-    @Value("${cw.invoice.invoice.buyer-tax-id}")
-    private String buyerTaxId;
-
-    @Value("${cw.invoice.invoice.attributes}")
-    private String attributes;
-
     @Resource
     private Invoice6vatMapper invoice6vatMapper;
 
@@ -56,9 +48,6 @@ public class Invoice6vatServiceImpl implements Invoice6vatService {
 
     @Resource
     private SysUserApiExp sysUserApiExp;
-
-    @Resource
-    private UnitApiExp unitApiExp;
 
 
     /**
@@ -184,8 +173,8 @@ public class Invoice6vatServiceImpl implements Invoice6vatService {
         invoice6vat.setUserId(user.getId());
         invoice6vat.setUnitId(user.getUnitId());
         invoice6vat.setiTime(new Date());
-        invoice6vat.setBuyerTaxId(buyerTaxId);
-        invoice6vat.setProjectProperties(attributes);
+        invoice6vat.setBuyerTaxId(InvoiceBuyer.BUYER_NUMBER.value());
+        invoice6vat.setProjectProperties(InvoiceBuyer.ATTRIBUTES.value());
         invoice6vatMapper.insert(invoice6vat);
     }
 

@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.hbhb.core.bean.BeanConverter;
 import com.hbhb.cw.invoice.mapper.InvoiceAccountRunMapper;
 import com.hbhb.cw.invoice.model.InvoiceAccountRun;
+import com.hbhb.cw.invoice.model.Page;
+import com.hbhb.cw.invoice.rpc.SysUserApiExp;
 import com.hbhb.cw.invoice.rpc.UnitApiExp;
 import com.hbhb.cw.invoice.service.InvoiceAccountRunService;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunExportVO;
@@ -12,9 +14,8 @@ import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceContrastReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceContrastVO;
-import com.hbhb.springboot.web.view.Page;
+import com.hbhb.cw.systemcenter.vo.UserInfo;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,22 +35,22 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InvoiceAccountRunServiceImpl implements InvoiceAccountRunService {
 
-    @Value("${cw.invoice.unit-id.hangzhou}")
-    private Integer hangzhou;
-    @Value("${cw.invoice.unit-id.benbu}")
-    private Integer benbu;
 
     @Resource
     private UnitApiExp unitApiExp;
     @Resource
     private InvoiceAccountRunMapper invoiceAccountRunMapper;
+    @Resource
+    private SysUserApiExp sysUserApiExp;
 
     private final List<String> msg = new ArrayList<>();
 
     @Override
-    public Page<InvoiceAccountRunResVO> getPageByCont(InvoiceAccountRunVO cond, Integer pageNum, Integer pageSize) {
+    public Page<InvoiceAccountRunResVO> getPageByCont(InvoiceAccountRunVO cond, Integer userId, Integer pageNum, Integer pageSize) {
+       UserInfo user = sysUserApiExp.getUserInfoById(userId);
         // 获取所有下属单位
-        List<Integer> unitIds = unitApiExp.getSubUnit(cond.getUnitId());
+        List<Integer> unitIds = unitApiExp.getSubUnit(user.getUnitId());
+        unitIds.add(-1);
         PageHelper.startPage(pageNum, pageSize);
         List<InvoiceAccountRunResVO> list = invoiceAccountRunMapper.selectByCond(cond, unitIds);
         int count = invoiceAccountRunMapper.countByCond(cond, unitIds);
@@ -57,9 +58,10 @@ public class InvoiceAccountRunServiceImpl implements InvoiceAccountRunService {
     }
 
     @Override
-    public List<InvoiceAccountRunExportVO> getListByCont(InvoiceAccountRunVO cond) {
+    public List<InvoiceAccountRunExportVO> getListByCont(InvoiceAccountRunVO cond,Integer userId) {
+       UserInfo user = sysUserApiExp.getUserInfoById(userId);
         // 获取所有下属单位
-        List<Integer> unitIds = unitApiExp.getSubUnit(cond.getUnitId());
+        List<Integer> unitIds = unitApiExp.getSubUnit(user.getUnitId());
         List<InvoiceAccountRunResVO> list = invoiceAccountRunMapper.selectByCond(cond, unitIds);
         return BeanConverter.copyBeanList(list, InvoiceAccountRunExportVO.class);
     }

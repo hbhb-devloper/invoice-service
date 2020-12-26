@@ -4,16 +4,16 @@ import com.alibaba.excel.EasyExcel;
 import com.hbhb.core.utils.ExcelUtil;
 import com.hbhb.cw.invoice.common.config.InvoiceErrorCode;
 import com.hbhb.cw.invoice.common.exception.InvoiceException;
+import com.hbhb.cw.invoice.model.Page;
+import com.hbhb.cw.invoice.rpc.FileApiExp;
 import com.hbhb.cw.invoice.service.InvoiceAccountRunService;
 import com.hbhb.cw.invoice.service.listener.InvoiceAccountRunListener;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunExportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunImportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountRunVO;
-import com.hbhb.springboot.web.view.Page;
 import com.hbhb.web.annotation.UserId;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,49 +31,43 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import springfox.documentation.annotations.ApiIgnore;
-
 /**
  * @author yzc
  * @since 2020-10-19
  */
-@Api(tags = "渠道发票-往来账管理")
+@Tag(name = "渠道发票-往来账管理")
 @RestController
-@RequestMapping("/invoice/account/run")
+@RequestMapping("/account/run")
 @Slf4j
 public class InvoiceAccountRunController {
 
-    @Value("${file.upload.template}")
-    private String filePath;
+    @Resource
+    private FileApiExp fileApi;
 
     @Resource
     private InvoiceAccountRunService invoiceAccountRunService;
 
 
-    @ApiOperation(value = "按条件获取列表", notes = "分页")
+    @Operation(summary = "按条件获取列表")
     @GetMapping("/list")
     public Page<InvoiceAccountRunResVO> getPages(
-            @ApiParam(value = "条件") InvoiceAccountRunVO cond,
-            @ApiParam(value = "页码，默认为1") @RequestParam(required = false) Integer pageNum,
-            @ApiParam(value = "每页数量，默认为10") @RequestParam(required = false) Integer pageSize,
-            @ApiIgnore @Parameter(hidden = true) @UserId Integer userId) {
+            @Parameter(description ="条件") InvoiceAccountRunVO cond,
+            @Parameter(description = "页码，默认为1") @RequestParam(required = false) Integer pageNum,
+            @Parameter(description = "每页数量，默认为10") @RequestParam(required = false) Integer pageSize,
+            @Parameter(hidden = true) @UserId Integer userId) {
         pageNum = pageNum == null ? 1 : pageNum;
         pageSize = pageSize == null ? 20 : pageSize;
-        if (cond.getUnitId() == null) {
-            cond.setUnitId(userId);
-        }
-        return invoiceAccountRunService.getPageByCont(cond, pageNum, pageSize);
+        return invoiceAccountRunService.getPageByCont(cond, userId, pageNum, pageSize);
     }
 
-    @ApiOperation("往来账管理导入")
+    @Operation(summary ="往来账管理导入")
     @PostMapping("/import")
     public List<String> importList(MultipartFile file,
-                                   @ApiIgnore @Parameter(hidden = true) @UserId Integer userId) {
+                                    @Parameter(hidden = true) @UserId Integer userId) {
         long begin = System.currentTimeMillis();
         try {
             EasyExcel.read(file.getInputStream(), InvoiceAccountRunImportVO.class,
@@ -87,35 +81,32 @@ public class InvoiceAccountRunController {
         return invoiceAccountRunService.getMsg();
     }
 
-    @ApiOperation("导出往来账管理表")
+    @Operation(summary ="导出往来账管理表")
     @PostMapping("/export")
     public void accountTemplate(HttpServletRequest request, HttpServletResponse response,
                                 @RequestBody InvoiceAccountRunVO cond,
-                                @ApiIgnore @Parameter(hidden = true) @UserId Integer userId) {
-        if (cond.getUnitId() == null) {
-            cond.setUnitId(userId);
-        }
-        List<InvoiceAccountRunExportVO> list = invoiceAccountRunService.getListByCont(cond);
+                                 @Parameter(hidden = true) @UserId Integer userId) {
+        List<InvoiceAccountRunExportVO> list = invoiceAccountRunService.getListByCont(cond,userId);
         String fileName = ExcelUtil.encodingFileName(request, "往来账管理表");
         ExcelUtil.export2WebWithTemplate(response, fileName, "往来账",
-                filePath + File.separator + "往来账管理表.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "往来账管理表.xlsx", list);
     }
 
-    @ApiOperation("导出往来账管理模板")
+    @Operation(summary ="导出往来账管理模板")
     @PostMapping("/export/template")
     public void rewardTemplate(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<Object> list = new ArrayList<>();
         String fileName = ExcelUtil.encodingFileName(request, "往来账数据导入模板");
         ExcelUtil.export2WebWithTemplate(response, fileName, "Sheet1",
-                filePath + File.separator + "往来账数据导入模板.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "往来账数据导入模板.xlsx", list);
     }
 
-    @ApiOperation("往来帐导入时间")
+    @Operation(summary ="往来帐导入时间")
     @GetMapping("/time")
-    public String getTime(Integer unitId,@ApiIgnore @Parameter(hidden = true) @UserId Integer userId) {
-        if (unitId==null){
+    public String getTime(Integer unitId,  @Parameter(hidden = true) @UserId Integer userId) {
+        if (unitId == null) {
             return invoiceAccountRunService.getTime(userId);
-        }else {
+        } else {
             return invoiceAccountRunService.getTime(unitId);
         }
     }

@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.hbhb.core.bean.BeanConverter;
 import com.hbhb.core.utils.DateUtil;
 import com.hbhb.cw.invoice.common.DictType;
+import com.hbhb.cw.invoice.common.InvoiceBuyer;
 import com.hbhb.cw.invoice.common.InvoiceMachineType;
 import com.hbhb.cw.invoice.common.config.InvoiceErrorCode;
 import com.hbhb.cw.invoice.common.exception.InvoiceException;
 import com.hbhb.cw.invoice.mapper.InvoiceMachineMapper;
 import com.hbhb.cw.invoice.model.InvoiceMachine;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.rpc.DictApiExp;
 import com.hbhb.cw.invoice.rpc.SysUserApiExp;
 import com.hbhb.cw.invoice.service.InvoiceMachineService;
@@ -20,10 +22,8 @@ import com.hbhb.cw.invoice.web.vo.InvoiceMachineVO;
 import com.hbhb.cw.systemcenter.enums.DictCode;
 import com.hbhb.cw.systemcenter.vo.DictVO;
 import com.hbhb.cw.systemcenter.vo.UserInfo;
-import com.hbhb.springboot.web.view.Page;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,15 +44,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class InvoiceMachineServiceImpl implements InvoiceMachineService {
-
-    @Value("${cw.invoice.invoice.buyer-tax-id}")
-    private String buyerTaxId;
-
-    @Value("${cw.invoice.invoice.buyer-name}")
-    private String buyerName;
-
-    @Value("${cw.invoice.invoice.type}")
-    private String type;
 
     @Resource
     private DictApiExp dictApiExp;
@@ -168,9 +159,9 @@ public class InvoiceMachineServiceImpl implements InvoiceMachineService {
         invoiceMachine.setUserId(user.getId());
         invoiceMachine.setUnitId(user.getUnitId());
         invoiceMachine.setiTime(new Date());
-        invoiceMachine.setBuyerTaxId(buyerTaxId);
-        invoiceMachine.setBuyerName(buyerName);
-        invoiceMachine.setInvoiceType(type);
+        invoiceMachine.setBuyerTaxId(InvoiceBuyer.BUYER_NUMBER.value());
+        invoiceMachine.setBuyerName(InvoiceBuyer.BUYER_NAME.value());
+        invoiceMachine.setInvoiceType(InvoiceBuyer.TYPE.value());
         invoiceMachineMapper.insert(invoiceMachine);
     }
 

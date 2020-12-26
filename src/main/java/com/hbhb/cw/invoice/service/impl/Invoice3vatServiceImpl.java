@@ -1,14 +1,15 @@
-package com.hbhb.cw.invoice.invoice.service.impl;
+package com.hbhb.cw.invoice.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.hbhb.core.bean.BeanConverter;
 import com.hbhb.core.utils.DateUtil;
 import com.hbhb.cw.invoice.common.DictType;
+import com.hbhb.cw.invoice.common.InvoiceBuyer;
 import com.hbhb.cw.invoice.mapper.Invoice3vatMapper;
 import com.hbhb.cw.invoice.model.Invoice3vat;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.rpc.DictApiExp;
 import com.hbhb.cw.invoice.rpc.SysUserApiExp;
-import com.hbhb.cw.invoice.rpc.UnitApiExp;
 import com.hbhb.cw.invoice.service.Invoice3vatService;
 import com.hbhb.cw.invoice.web.vo.Invoice3AddVO;
 import com.hbhb.cw.invoice.web.vo.Invoice3ResVO;
@@ -18,10 +19,8 @@ import com.hbhb.cw.invoice.web.vo.InvoiceByCondVO;
 import com.hbhb.cw.systemcenter.enums.DictCode;
 import com.hbhb.cw.systemcenter.vo.DictVO;
 import com.hbhb.cw.systemcenter.vo.UserInfo;
-import com.hbhb.springboot.web.view.Page;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -41,12 +40,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Invoice3vatServiceImpl implements Invoice3vatService {
 
-    @Value("${cw.invoice.invoice.buyer-tax-id}")
-    private String buyerTaxId;
-
-    @Value("${cw.invoice.invoice.attributes}")
-    private String attributes;
-
     @Resource
     private Invoice3vatMapper invoice3vatMapper;
 
@@ -55,9 +48,6 @@ public class Invoice3vatServiceImpl implements Invoice3vatService {
 
     @Resource
     private SysUserApiExp sysUserApiExp;
-
-    @Resource
-    private UnitApiExp unitApiExp;
 
     /**
      * 查询3%增值税专票
@@ -97,7 +87,7 @@ public class Invoice3vatServiceImpl implements Invoice3vatService {
      */
     @Override
     public Page<Invoice3ResVO> selectInvoice3vatByCond(Integer pageNum, Integer pageSize,
-            Invoice3vatReqVO invoice3vatReqVO) {
+                                                       Invoice3vatReqVO invoice3vatReqVO) {
         //判断是否为管理员
         boolean adminRole = sysUserApiExp.isAdmin(invoice3vatReqVO.getUserId());
         if (adminRole) {
@@ -176,8 +166,8 @@ public class Invoice3vatServiceImpl implements Invoice3vatService {
         invoice3vat.setUserId(user.getId());
         invoice3vat.setUnitId(user.getUnitId());
         invoice3vat.setiTime(new Date());
-        invoice3vat.setBuyerTaxId(buyerTaxId);
-        invoice3vat.setProjectProperties(attributes);
+        invoice3vat.setBuyerTaxId(InvoiceBuyer.BUYER_NUMBER.value());
+        invoice3vat.setProjectProperties(InvoiceBuyer.ATTRIBUTES.value());
         invoice3vatMapper.insert(invoice3vat);
     }
 

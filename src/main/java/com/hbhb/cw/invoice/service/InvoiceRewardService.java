@@ -1,5 +1,6 @@
 package com.hbhb.cw.invoice.service;
 
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountImportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceCheckExportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceDetailsExportVO;
@@ -8,7 +9,6 @@ import com.hbhb.cw.invoice.web.vo.InvoiceRewardImportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceRewardReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceRewardResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceSubsidyImportVO;
-import com.hbhb.springboot.web.view.Page;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,7 +23,7 @@ public interface InvoiceRewardService {
     /**
      * 按条件查询酬金列表（用于删除）
      */
-    Page<InvoiceRewardResVO> getListByCont(InvoiceRewardReqVO cond, Integer pageNum, Integer pageSize);
+    Page<InvoiceRewardResVO> getListByCont(InvoiceRewardReqVO cond, Integer userId,Integer pageNum, Integer pageSize);
 
     /**
      * 批量保存酬金发放数据
@@ -43,17 +43,17 @@ public interface InvoiceRewardService {
     /**
      * 支付明细导出
      */
-    List<InvoiceDetailsExportVO> getDetailsExportByCond(InvoiceRewardReqVO cond);
+    List<InvoiceDetailsExportVO> getDetailsExportByCond(InvoiceRewardReqVO cond, Integer userId);
 
     /**
      * 酬金月份导出
      */
-    List<InvoiceMonthExportVO> getMonthExportByCond(InvoiceRewardReqVO cond);
+    List<InvoiceMonthExportVO> getMonthExportByCond(InvoiceRewardReqVO cond, Integer userId);
 
     /**
      * 查验结果导出
      */
-    List<InvoiceCheckExportVO> getCheckExportByCond(InvoiceRewardReqVO cond);
+    List<InvoiceCheckExportVO> getCheckExportByCond(InvoiceRewardReqVO cond, Integer userId);
 
     /**
      * 得到导excel时出错的数据

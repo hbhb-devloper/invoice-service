@@ -18,7 +18,11 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.promeg</groupId>
+            <artifactId>tinypinyin</artifactId>
+            <version>2.0.3</version>
+        </dependency>
         <dependency>
             <groupId>com.hbhb</groupId>
             <artifactId>system-center-api</artifactId>
@@ -26,7 +30,12 @@
         </dependency>
         <dependency>
             <groupId>com.hbhb</groupId>
-            <artifactId>hbhb-springboot-web</artifactId>
+            <artifactId>message-hub-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hbhb</groupId>
+            <artifactId>budget-service-api</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

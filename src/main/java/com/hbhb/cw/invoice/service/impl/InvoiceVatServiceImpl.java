@@ -4,8 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.hbhb.core.bean.BeanConverter;
 import com.hbhb.core.utils.DateUtil;
 import com.hbhb.cw.invoice.common.DictType;
+import com.hbhb.cw.invoice.common.InvoiceBuyer;
 import com.hbhb.cw.invoice.mapper.InvoiceVatMapper;
 import com.hbhb.cw.invoice.model.InvoiceVat;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.rpc.DictApiExp;
 import com.hbhb.cw.invoice.rpc.SysUserApiExp;
 import com.hbhb.cw.invoice.rpc.UnitApiExp;
@@ -18,10 +20,8 @@ import com.hbhb.cw.invoice.web.vo.InvoiceVatVO;
 import com.hbhb.cw.systemcenter.enums.DictCode;
 import com.hbhb.cw.systemcenter.vo.DictVO;
 import com.hbhb.cw.systemcenter.vo.UserInfo;
-import com.hbhb.springboot.web.view.Page;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -40,9 +40,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class InvoiceVatServiceImpl implements InvoiceVatService {
-
-    @Value("${cw.invoice.invoice.buyer-tax-id}")
-    private String buyerTaxId;
 
     @Resource
     private InvoiceVatMapper invoiceVatMapper;
@@ -168,7 +165,7 @@ public class InvoiceVatServiceImpl implements InvoiceVatService {
         invoiceVat.setiTime(new Date());
         String checkCode = invoiceVat.getCheckCode();
         invoiceVat.setCheckCode(checkCode.substring(checkCode.length() - 6));
-        invoiceVat.setBuyerTaxId(buyerTaxId);
+        invoiceVat.setBuyerTaxId(InvoiceBuyer.BUYER_NUMBER.value());
         invoiceVatMapper.insert(invoiceVat);
     }
 

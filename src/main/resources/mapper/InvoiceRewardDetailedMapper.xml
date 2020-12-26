@@ -346,7 +346,7 @@
   <select id="countByCond" parameterType="map" resultType="int">
     select COUNT(1)
     from invoice_reward_detailed
-    where ird.unit_id in
+    where unit_id in
     <foreach collection="list" item="item" open="(" separator="," close=")">
       #{item}
     </foreach>

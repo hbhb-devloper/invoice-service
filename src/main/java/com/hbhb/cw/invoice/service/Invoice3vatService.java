@@ -1,11 +1,11 @@
 package com.hbhb.cw.invoice.service;
 
 import com.hbhb.cw.invoice.model.Invoice3vat;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.web.vo.Invoice3AddVO;
 import com.hbhb.cw.invoice.web.vo.Invoice3ResVO;
 import com.hbhb.cw.invoice.web.vo.Invoice3VO;
 import com.hbhb.cw.invoice.web.vo.Invoice3vatReqVO;
-import com.hbhb.springboot.web.view.Page;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public interface Invoice3vatService {
      * 通过条件查询3%增值税专票列表
      */
     public Page<Invoice3ResVO> selectInvoice3vatByCond(Integer pageNum, Integer pageSize,
-            Invoice3vatReqVO invoice3vatReqVO);
+                                                       Invoice3vatReqVO invoice3vatReqVO);
 
 
     /**

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,16 +19,16 @@ public class InvoiceIncentive implements Serializable {
     private static final long serialVersionUID = -2285435792454227006L;
     private Long id;
 
-    @ApiModelProperty("分公司")
+    @Schema(description ="分公司")
     private Integer unitId;
 
-    @ApiModelProperty("渠道编号")
+    @Schema(description ="渠道编号")
     private String channelNum;
 
-    @ApiModelProperty("渠道名称")
+    @Schema(description ="渠道名称")
     private String channelName;
 
-    @ApiModelProperty("综合激励含税金额")
+    @Schema(description ="综合激励含税金额")
     private BigDecimal taxAmount;
 
     private Date createTime;

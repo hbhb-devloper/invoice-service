@@ -5,6 +5,8 @@ import com.hbhb.core.utils.DateUtil;
 import com.hbhb.core.utils.ExcelUtil;
 import com.hbhb.cw.invoice.common.config.InvoiceErrorCode;
 import com.hbhb.cw.invoice.common.exception.InvoiceException;
+import com.hbhb.cw.invoice.model.Page;
+import com.hbhb.cw.invoice.rpc.FileApiExp;
 import com.hbhb.cw.invoice.service.InvoiceRewardService;
 import com.hbhb.cw.invoice.service.listener.InvoiceCurrentAccountListener;
 import com.hbhb.cw.invoice.service.listener.InvoiceDetailsListener;
@@ -17,10 +19,8 @@ import com.hbhb.cw.invoice.web.vo.InvoiceRewardImportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceRewardReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceRewardResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceSubsidyImportVO;
-import com.hbhb.springboot.web.view.Page;
 import com.hbhb.web.annotation.UserId;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,48 +40,44 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author yzc
  * @since 2020-09-08
  */
-@Api(tags = "渠道发票-酬金发放")
+@Tag(name = "渠道发票-酬金发放")
 @RestController
-@RequestMapping("/invoice/remuneration")
+@RequestMapping("/remuneration")
 @Slf4j
 public class InvoiceRewardController {
 
-    @Value("${file.upload.template}")
-    private String filePath;
+    @Resource
+    private FileApiExp fileApi;
 
     @Resource
     private InvoiceRewardService invoiceRewardService;
 
 
-    @ApiOperation(value = "按条件获取酬金发放列表", notes = "分页")
+    @Operation(summary = "按条件获取酬金发放列表")
     @GetMapping("/list")
     public Page<InvoiceRewardResVO> getDetails(
-            @ApiParam(value = "条件") InvoiceRewardReqVO cond,
-            @ApiParam(value = "页码，默认为1") @RequestParam(required = false) Integer pageNum,
-            @ApiParam(value = "每页数量，默认为10") @RequestParam(required = false) Integer pageSize,
+            @Parameter(description = "条件") InvoiceRewardReqVO cond,
+           @Parameter(description = "页码，默认为1") @RequestParam(required = false) Integer pageNum,
+           @Parameter(description = "每页数量，默认为10") @RequestParam(required = false) Integer pageSize,
             @Parameter(hidden = true) @UserId Integer userId) {
         if (cond.getImportDate() == null) {
             cond.setImportDate(DateUtil.getLastMonth());
         }
         pageNum = pageNum == null ? 1 : pageNum;
         pageSize = pageSize == null ? 20 : pageSize;
-        if (cond.getUnitId() == null) {
-            cond.setUnitId(userId);
-        }
-        return invoiceRewardService.getListByCont(cond, pageNum, pageSize);
+        return invoiceRewardService.getListByCont(cond, userId, pageNum, pageSize);
     }
 
-    @ApiOperation("酬金发放表导入")
+    @Operation(summary ="酬金发放表导入")
     @PostMapping("/import/reward")
     public List<String> importDetailsBreak(MultipartFile file, BigDecimal taxRate,
                                            @Parameter(hidden = true) @UserId Integer userId) {
@@ -101,7 +97,7 @@ public class InvoiceRewardController {
         return invoiceRewardService.getMsg();
     }
 
-    @ApiOperation("综合补贴表导入")
+    @Operation(summary ="综合补贴表导入")
     @PostMapping("/import/subsidy")
     public List<String> importSubsidy(MultipartFile file, @Parameter(hidden = true) @UserId Integer userId) {
         long begin = System.currentTimeMillis();
@@ -118,9 +114,9 @@ public class InvoiceRewardController {
         return invoiceRewardService.getMsg();
     }
 
-    @ApiOperation("往来账表导入")
+    @Operation(summary ="往来账表导入")
     @PostMapping("/import/account")
-    public List<String> importAccount(MultipartFile file,  @Parameter(hidden = true) @UserId Integer userId) {
+    public List<String> importAccount(MultipartFile file, @Parameter(hidden = true) @UserId Integer userId) {
         long begin = System.currentTimeMillis();
         try {
             EasyExcel.read(file.getInputStream(), InvoiceAccountImportVO.class,
@@ -134,88 +130,79 @@ public class InvoiceRewardController {
         return invoiceRewardService.getMsg();
     }
 
-    @ApiOperation("导出酬金发放表模板")
+    @Operation(summary ="导出酬金发放表模板")
     @PostMapping("/export/reward/template")
     public void rewardTemplate(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<Object> list = new ArrayList<>();
         String fileName = ExcelUtil.encodingFileName(request, "酬金发放表模板");
         ExcelUtil.export2WebWithTemplate(response, fileName, "酬金发放明细表---普票",
-                filePath + File.separator + "酬金发放表模板.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "酬金发放表模板.xlsx", list);
     }
 
-    @ApiOperation("导出综合补贴模板")
+    @Operation(summary ="导出综合补贴模板")
     @PostMapping("/export/subsidy/template")
     public void subsidyTemplate(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<Object> list = new ArrayList<>();
         String fileName = ExcelUtil.encodingFileName(request, "综合补贴模板");
         ExcelUtil.export2WebWithTemplate(response, fileName, "综合补贴",
-                filePath + File.separator + "综合补贴模板.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "综合补贴模板.xlsx", list);
     }
 
-    @ApiOperation("导出往来账模板")
+    @Operation(summary ="导出往来账模板")
     @PostMapping("/export/account/template")
     public void accountTemplate(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<Object> list = new ArrayList<>();
         String fileName = ExcelUtil.encodingFileName(request, "往来账模板");
         ExcelUtil.export2WebWithTemplate(response, fileName, "往来账",
-                filePath + File.separator + "往来账模板.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "往来账模板.xlsx", list);
     }
 
-    @ApiOperation("支付明细导出")
+    @Operation(summary ="支付明细导出")
     @PostMapping("/export/subsidy")
     public void exportSubsidy(HttpServletRequest request, HttpServletResponse response,
-                              @ApiParam(value = "条件")@RequestBody InvoiceRewardReqVO cond,
+                              @Parameter(description = "条件") @RequestBody InvoiceRewardReqVO cond,
                               @Parameter(hidden = true) @UserId Integer userId) {
         if (cond.getImportDate() == null) {
             cond.setImportDate(DateUtil.getLastMonth());
         }
-        if (cond.getUnitId()==null){
-            cond.setUnitId(userId);
-        }
-        List<InvoiceDetailsExportVO> list = invoiceRewardService.getDetailsExportByCond(cond);
+        List<InvoiceDetailsExportVO> list = invoiceRewardService.getDetailsExportByCond(cond,userId);
         String fileName = ExcelUtil.encodingFileName(request, "支付明细表模板");
         ExcelUtil.export2WebWithTemplate(response, fileName, "支付明细",
-                filePath + File.separator + "支付明细表模板.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "支付明细表模板.xlsx", list);
     }
 
 
-    @ApiOperation("酬金月份导出")
+    @Operation(summary ="酬金月份导出")
     @PostMapping("/export/month")
     public void exportByMonth(HttpServletRequest request, HttpServletResponse response,
-                              @ApiParam(value = "条件") @RequestBody InvoiceRewardReqVO cond,
+                              @Parameter(description = "条件") @RequestBody InvoiceRewardReqVO cond,
                               @Parameter(hidden = true) @UserId Integer userId) {
         if (cond.getImportDate() == null) {
             cond.setImportDate(DateUtil.getLastMonth());
         }
-        if (cond.getUnitId()==null){
-            cond.setUnitId(userId);
-        }
-        List<InvoiceMonthExportVO> list = invoiceRewardService.getMonthExportByCond(cond);
+        List<InvoiceMonthExportVO> list = invoiceRewardService.getMonthExportByCond(cond,userId);
         String fileName = ExcelUtil.encodingFileName(request, "酬金月份表模板");
         ExcelUtil.export2WebWithTemplate(response, fileName, "支付月（酬金月份）",
-                filePath + File.separator + "酬金月份表模板.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "酬金月份表模板.xlsx", list);
     }
 
 
-    @ApiOperation("查验结果导出")
+    @Operation(summary ="查验结果导出")
     @PostMapping("/export/check")
     public void exportCheck(HttpServletRequest request, HttpServletResponse response,
-                            @ApiParam(value = "条件")@RequestBody InvoiceRewardReqVO cond,
+                            @Parameter(description= "条件") @RequestBody InvoiceRewardReqVO cond,
                             @Parameter(hidden = true) @UserId Integer userId) {
         if (cond.getImportDate() == null) {
             cond.setImportDate(DateUtil.getLastMonth());
         }
-        if (cond.getUnitId()==null){
-            cond.setUnitId(userId);
-        }
-        List<InvoiceCheckExportVO> list = invoiceRewardService.getCheckExportByCond(cond);
+        List<InvoiceCheckExportVO> list = invoiceRewardService.getCheckExportByCond(cond,userId);
         String fileName = ExcelUtil.encodingFileName(request, "查验结果表模板");
         ExcelUtil.export2WebWithTemplate(response, fileName, "查验结果导出模板",
-                filePath + File.separator + "查验结果表模板.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "查验结果表模板.xlsx", list);
     }
 
 
-    @ApiOperation("酬金发放通过流水号删除")
+    @Operation(summary ="酬金发放通过流水号删除")
     @DeleteMapping("")
     public void removeBySerialNumber(@RequestBody List<String> list) {
         invoiceRewardService.deleteBySerialNumber(list);

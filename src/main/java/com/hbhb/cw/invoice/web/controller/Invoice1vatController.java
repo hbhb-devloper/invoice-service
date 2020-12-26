@@ -4,15 +4,15 @@ import com.hbhb.core.utils.ExcelUtil;
 import com.hbhb.cw.invoice.common.config.InvoiceErrorCode;
 import com.hbhb.cw.invoice.common.exception.InvoiceException;
 import com.hbhb.cw.invoice.model.Invoice1vat;
+import com.hbhb.cw.invoice.model.Page;
+import com.hbhb.cw.invoice.rpc.FileApiExp;
 import com.hbhb.cw.invoice.service.Invoice1vatService;
 import com.hbhb.cw.invoice.web.vo.Invoice1AddVO;
 import com.hbhb.cw.invoice.web.vo.Invoice1ResVO;
 import com.hbhb.cw.invoice.web.vo.Invoice1VO;
 import com.hbhb.cw.invoice.web.vo.Invoice1vatReqVO;
-import com.hbhb.springboot.web.view.Page;
 import com.hbhb.web.annotation.UserId;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,11 +30,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import springfox.documentation.annotations.ApiIgnore;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 
 /**
@@ -43,22 +41,22 @@ import springfox.documentation.annotations.ApiIgnore;
  * @author ruoyi
  * @date 2020-06-01
  */
-@Api(tags = "发票相关-1%增值税专票")
+@Tag(name = "发票相关-1%增值税专票")
 @RestController
-@RequestMapping("/invoice/invoice_1vat")
+@RequestMapping("/invoice_1vat")
 public class Invoice1vatController {
 
     @Resource
     private Invoice1vatService invoice1vatService;
 
-    @Value("${file.upload.template}")
-    private String filePath;
+    @Resource
+    private FileApiExp fileApi;
 
-    @ApiOperation("查询1%增值税专票列表")
+    @Operation(summary ="查询1%增值税专票列表")
     @GetMapping("/list")
     public Page<Invoice1ResVO> list(
-            @ApiParam(value = "页码，默认为1") @RequestParam(required = false) Integer pageNum,
-            @ApiParam(value = "每页数量，默认为10") @RequestParam(required = false) Integer pageSize,
+           @Parameter(description = "页码，默认为1") @RequestParam(required = false) Integer pageNum,
+           @Parameter(description = "每页数量，默认为10") @RequestParam(required = false) Integer pageSize,
             Invoice1vatReqVO cond, @Parameter(hidden = true) @UserId Integer userId) {
         pageNum = pageNum == null ? 1 : pageNum;
         pageSize = pageSize == null ? 20 : pageSize;
@@ -68,7 +66,7 @@ public class Invoice1vatController {
                 .pageInvoice1vatByCond(pageNum, pageSize, cond);
     }
 
-    @ApiOperation("新增1%增值税专票")
+    @Operation(summary ="新增1%增值税专票")
     @PostMapping("")
     public void saveInvoice1vat(@RequestBody Invoice1AddVO invoice1AddVO,
                                 @Parameter(hidden = true) @UserId Integer userId) {
@@ -81,52 +79,52 @@ public class Invoice1vatController {
     }
 
 
-    @ApiOperation("修改1%增值税专票")
+    @Operation(summary ="修改1%增值税专票")
     @PutMapping("")
     public void updateInvoice1vat(@RequestBody Invoice1vat invoice1vat) {
         invoice1vatService.updateInvoice1vat(invoice1vat);
     }
 
-    @ApiOperation("批量删除1%增值税专票")
+    @Operation(summary ="批量删除1%增值税专票")
     @DeleteMapping("/batch")
     public void removes(
-            @ApiParam(value = "专票id数组", required = true) @RequestBody List<String> ids) {
+            @Parameter(description = "专票id数组", required = true) @RequestBody List<String> ids) {
         invoice1vatService.deleteInvoice1vatByIds(ids);
     }
 
-    @ApiOperation("删除6%增值税票")
+    @Operation(summary ="删除6%增值税票")
     @DeleteMapping("/{id}")
     public void remove(
-            @ApiParam(value = "税票id", required = true) @PathVariable String id) {
+            @Parameter(description ="税票id", required = true) @PathVariable String id) {
         invoice1vatService.deleteInvoice1vatById(Long.valueOf(id));
     }
 
-    @ApiOperation("导出1%增值税专票列表")
+    @Operation(summary ="导出1%增值税专票列表")
     @PostMapping("/export")
     public void export(HttpServletRequest request, HttpServletResponse response,
-                       @ApiParam(value = "需导出的发票id", required = true) @RequestBody List<Long> ids) {
+                       @Parameter(description = "需导出的发票id", required = true) @RequestBody List<Long> ids) {
         List<Invoice1VO> list = invoice1vatService.selectListByIds(ids);
         String fileName = ExcelUtil.encodingFileName(request, "增值税专票");
         ExcelUtil.export2WebWithTemplate(response, fileName,"增值税专票",
-                filePath + File.separator + "增值税专票模板.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "增值税专票模板.xlsx", list);
     }
 
-    @ApiOperation("查询数据详情")
+    @Operation(summary ="查询数据详情")
     @GetMapping("/info/{id}")
     public Invoice1vat details(@PathVariable Long id) {
         return invoice1vatService.selectById(id);
     }
 
-    @ApiOperation("导出所有1%增值税专票列表")
+    @Operation(summary ="导出所有1%增值税专票列表")
     @PostMapping("/export/all")
     public void templateWrite(HttpServletRequest request, HttpServletResponse response,
-                              @ApiParam(value = "需导出的发票id", required = true) @RequestBody Invoice1vatReqVO cond,
-                              @ApiIgnore @Parameter(hidden = true) @UserId Integer userId) {
+                              @Parameter(description = "需导出的发票id", required = true) @RequestBody Invoice1vatReqVO cond,
+                              @Parameter(hidden = true) @UserId Integer userId) {
         // 通过用户登入信息得到用户名，赋值于导入人员
         cond.setUserId(userId);
         List<Invoice1VO> list = invoice1vatService.listInvoice1vatByCond(cond);
         String fileName = ExcelUtil.encodingFileName(request, "增值税专票");
         ExcelUtil.export2WebWithTemplate(response, fileName,"增值税专票",
-                filePath + File.separator + "增值税专票模板.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "增值税专票模板.xlsx", list);
     }
 }

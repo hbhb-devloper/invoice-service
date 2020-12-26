@@ -8,6 +8,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author yzc
  * @since 2020-11-27
  */
-@FeignClient(value = "system-center-prd", path = "dict")
+@FeignClient(value = "${provider.system-center}", url = "${feign-url}", contextId = "SysDictApi", path = "dict")
 public interface DictApiExp extends DictApi {
 }

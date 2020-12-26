@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,67 +19,67 @@ public class InvoiceFocusAccount implements Serializable {
     private static final long serialVersionUID = 1601151108453764345L;
     private Long id;
 
-    @ApiModelProperty("酬金月份")
+    @Schema(description ="酬金月份")
     private String rewardMonth;
 
-    @ApiModelProperty("地市")
+    @Schema(description ="地市")
     private String city;
 
-    @ApiModelProperty("县市")
+    @Schema(description ="县市")
     private Integer unitId;
 
-    @ApiModelProperty("片区")
+    @Schema(description ="片区")
     private String area;
 
-    @ApiModelProperty("渠道编号")
+    @Schema(description ="渠道编号")
     private String channelNum;
 
-    @ApiModelProperty("渠道名称")
+    @Schema(description ="渠道名称")
     private String channelName;
 
-    @ApiModelProperty("一级类别")
+    @Schema(description ="一级类别")
     private String firstLevel;
 
-    @ApiModelProperty("二级类别")
+    @Schema(description ="二级类别")
     private String secondLevel;
 
-    @ApiModelProperty("三级类别")
+    @Schema(description ="三级类别")
     private String thirdLevel;
 
-    @ApiModelProperty("负责人")
+    @Schema(description ="负责人")
     private String director;
 
-    @ApiModelProperty("代扣代缴")
+    @Schema(description ="代扣代缴")
     private Long withhold;
 
-    @ApiModelProperty("付款名称")
+    @Schema(description ="付款名称")
     private String payName;
 
-    @ApiModelProperty("开户行")
+    @Schema(description ="开户行")
     private String bank;
 
-    @ApiModelProperty("开户支行")
+    @Schema(description ="开户支行")
     private String bankBranch;
 
-    @ApiModelProperty("银行账号")
+    @Schema(description ="银行账号")
     private String bankAccount;
 
-    @ApiModelProperty("酬金（元）")
+    @Schema(description ="酬金（元）")
     private BigDecimal reward;
 
-    @ApiModelProperty("应付（元）")
+    @Schema(description ="应付（元）")
     private BigDecimal payable;
 
-    @ApiModelProperty("支付状态")
+    @Schema(description ="支付状态")
     private String payState;
 
-    @ApiModelProperty("开票信息")
+    @Schema(description ="开票信息")
     private String invoiceOpen;
 
-    @ApiModelProperty("酬金发票编号")
+    @Schema(description ="酬金发票编号")
     private String rewardNumber;
 
-    @ApiModelProperty("用途")
+    @Schema(description ="用途")
     private String purpose;
 
     private Date createTime;

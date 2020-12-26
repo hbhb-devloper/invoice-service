@@ -1,10 +1,10 @@
 package com.hbhb.cw.invoice.service;
 
 import com.hbhb.cw.invoice.model.InvoiceTaxpayerCredentials;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.web.vo.InvoiceTaxpayerImportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceTaxpayerShowVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceTaxpayerVO;
-import com.hbhb.springboot.web.view.Page;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
 package com.hbhb.cw.invoice.service;
 
 import com.hbhb.cw.invoice.model.InvoiceVat;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.web.vo.InvoiceVatAddVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceVatReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceVatResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceVatVO;
-import com.hbhb.springboot.web.view.Page;
 
 import java.util.List;
 

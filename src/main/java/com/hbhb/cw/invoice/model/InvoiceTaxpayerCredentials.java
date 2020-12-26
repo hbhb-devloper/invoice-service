@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,37 +19,37 @@ public class InvoiceTaxpayerCredentials implements Serializable {
     private static final long serialVersionUID = 4388980478150054300L;
     private Long id;
 
-    @ApiModelProperty("分公司")
+    @Schema(description ="分公司")
     private Integer unitId;
 
-    @ApiModelProperty("渠道编号")
+    @Schema(description ="渠道编号")
     private String channelNum;
 
-    @ApiModelProperty("渠道名称")
+    @Schema(description ="渠道名称")
     private String channelName;
 
-    @ApiModelProperty("纳税人资质")
+    @Schema(description ="纳税人资质")
     private Integer taxpayerCredentials;
 
-    @ApiModelProperty("税率")
+    @Schema(description ="税率")
     private BigDecimal taxRate;
 
-    @ApiModelProperty("更新时间")
+    @Schema(description ="更新时间")
     private Date updateTime;
 
-    @ApiModelProperty("销售方名称")
+    @Schema(description ="销售方名称")
     private String sellerName;
 
-    @ApiModelProperty("销售方纳税人识别号")
+    @Schema(description ="销售方纳税人识别号")
     private String sellerTaxpayerCode;
 
-    @ApiModelProperty("营业执照名称")
+    @Schema(description ="营业执照名称")
     private String businessLicense;
 
-    @ApiModelProperty("营业执照纳税人识别号")
+    @Schema(description ="营业执照纳税人识别号")
     private String businessTaxpayerCode;
 
-    @ApiModelProperty("法人")
+    @Schema(description ="法人")
     private String legalPerson;
 
     private Date createTime;

@@ -4,14 +4,15 @@ import com.github.pagehelper.PageHelper;
 import com.hbhb.core.bean.BeanConverter;
 import com.hbhb.cw.invoice.mapper.InvoiceIncentiveMapper;
 import com.hbhb.cw.invoice.model.InvoiceIncentive;
+import com.hbhb.cw.invoice.model.Page;
+import com.hbhb.cw.invoice.rpc.SysUserApiExp;
 import com.hbhb.cw.invoice.rpc.UnitApiExp;
 import com.hbhb.cw.invoice.service.InvoiceIncentiveService;
 import com.hbhb.cw.invoice.web.vo.InvoiceIncentiveImportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceIncentiveResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceIncentiveVO;
-import com.hbhb.springboot.web.view.Page;
+import com.hbhb.cw.systemcenter.vo.UserInfo;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,23 +31,22 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class InvoiceIncentiveServiceImpl implements InvoiceIncentiveService {
-
-    @Value("${cw.invoice.unit-id.hangzhou}")
-    private Integer hangzhou;
-    @Value("${cw.invoice.unit-id.benbu}")
-    private Integer benbu;
-
     @Resource
     private UnitApiExp unitApiExp;
     @Resource
     private InvoiceIncentiveMapper invoiceIncentiveMapper;
+    @Resource
+    private SysUserApiExp sysUserApiExp;
 
     private final List<String> msg = new ArrayList<>();
 
     @Override
-    public Page<InvoiceIncentiveResVO> getPageByCont(InvoiceIncentiveVO cond, Integer pageNum, Integer pageSize) {
+    public Page<InvoiceIncentiveResVO> getPageByCont(InvoiceIncentiveVO cond, Integer userId, Integer pageNum, Integer pageSize) {
+       UserInfo user = sysUserApiExp.getUserInfoById(userId);
         // 获取所有下属单位
-        List<Integer> unitIds = unitApiExp.getSubUnit(cond.getUnitId());
+        List<Integer> unitIds = unitApiExp.getSubUnit(user.getUnitId());
+        // 确保unitIds有值
+        unitIds.add(-1);
         PageHelper.startPage(pageNum, pageSize);
         List<InvoiceIncentiveResVO> list = invoiceIncentiveMapper.selectByCond(cond, unitIds);
         int count = invoiceIncentiveMapper.countByCond(cond, unitIds);

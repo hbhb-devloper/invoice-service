@@ -1,52 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hbhb.cw.mapper.InvoiceVatMapper">
-  <resultMap id="BaseResultMap" type="com.hbhb.cw.model.InvoiceVat">
-    <id column="vat_id" jdbcType="BIGINT" property="vatId" />
+<mapper namespace="com.hbhb.cw.invoice.mapper.Invoice3vatMapper">
+  <resultMap id="BaseResultMap" type="com.hbhb.cw.invoice.model.Invoice3vat">
+    <id column="vat3_id" jdbcType="BIGINT" property="vat3Id" />
     <result column="invoice_type" jdbcType="VARCHAR" property="invoiceType" />
     <result column="invoice_code" jdbcType="VARCHAR" property="invoiceCode" />
     <result column="invoice_number" jdbcType="VARCHAR" property="invoiceNumber" />
     <result column="invoice_page_number" jdbcType="INTEGER" property="invoicePageNumber" />
     <result column="invoice_date" jdbcType="DATE" property="invoiceDate" />
-    <result column="check_code" jdbcType="VARCHAR" property="checkCode" />
-    <result column="buyer_tax_id" jdbcType="VARCHAR" property="buyerTaxId" />
-    <result column="table_number" jdbcType="VARCHAR" property="tableNumber" />
     <result column="tax_free_amount" jdbcType="DECIMAL" property="taxFreeAmount" />
+    <result column="buyer_tax_id" jdbcType="VARCHAR" property="buyerTaxId" />
+    <result column="project_properties" jdbcType="VARCHAR" property="projectProperties" />
+    <result column="table_number" jdbcType="VARCHAR" property="tableNumber" />
     <result column="unit_id" jdbcType="INTEGER" property="unitId" />
     <result column="i_time" jdbcType="TIMESTAMP" property="iTime" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
   <sql id="Base_Column_List">
-    vat_id, invoice_type, invoice_code, invoice_number, invoice_page_number, invoice_date, 
-    check_code, buyer_tax_id, table_number, tax_free_amount, unit_id, i_time, user_id
+    vat3_id, invoice_type, invoice_code, invoice_number, invoice_page_number, invoice_date, 
+    tax_free_amount, buyer_tax_id, project_properties, table_number, unit_id, i_time, 
+    user_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
-    from invoice_vat
-    where vat_id = #{vatId,jdbcType=BIGINT}
+    from invoice_3vat
+    where vat3_id = #{vat3Id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from invoice_vat
-    where vat_id = #{vatId,jdbcType=BIGINT}
+    delete from invoice_3vat
+    where vat3_id = #{vat3Id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.hbhb.cw.model.InvoiceVat">
-    insert into invoice_vat (vat_id, invoice_type, invoice_code, 
+  <insert id="insert" parameterType="com.hbhb.cw.invoice.model.Invoice3vat">
+    insert into invoice_3vat (vat3_id, invoice_type, invoice_code, 
       invoice_number, invoice_page_number, invoice_date, 
-      check_code, buyer_tax_id, table_number, 
-      tax_free_amount, unit_id, i_time, 
+      tax_free_amount, buyer_tax_id, project_properties, 
+      table_number, unit_id, i_time, 
       user_id)
-    values (#{vatId,jdbcType=BIGINT}, #{invoiceType,jdbcType=VARCHAR}, #{invoiceCode,jdbcType=VARCHAR}, 
+    values (#{vat3Id,jdbcType=BIGINT}, #{invoiceType,jdbcType=VARCHAR}, #{invoiceCode,jdbcType=VARCHAR}, 
       #{invoiceNumber,jdbcType=VARCHAR}, #{invoicePageNumber,jdbcType=INTEGER}, #{invoiceDate,jdbcType=DATE}, 
-      #{checkCode,jdbcType=VARCHAR}, #{buyerTaxId,jdbcType=VARCHAR}, #{tableNumber,jdbcType=VARCHAR}, 
-      #{taxFreeAmount,jdbcType=DECIMAL}, #{unitId,jdbcType=INTEGER}, #{iTime,jdbcType=TIMESTAMP}, 
+      #{taxFreeAmount,jdbcType=DECIMAL}, #{buyerTaxId,jdbcType=VARCHAR}, #{projectProperties,jdbcType=VARCHAR}, 
+      #{tableNumber,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER}, #{iTime,jdbcType=TIMESTAMP}, 
       #{userId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.hbhb.cw.model.InvoiceVat">
-    insert into invoice_vat
+  <insert id="insertSelective" parameterType="com.hbhb.cw.invoice.model.Invoice3vat">
+    insert into invoice_3vat
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="vatId != null">
-        vat_id,
+      <if test="vat3Id != null">
+        vat3_id,
       </if>
       <if test="invoiceType != null">
         invoice_type,
@@ -63,17 +64,17 @@
       <if test="invoiceDate != null">
         invoice_date,
       </if>
-      <if test="checkCode != null">
-        check_code,
-      </if>
-      <if test="buyerTaxId != null">
-        buyer_tax_id,
+      <if test="taxFreeAmount != null">
+        tax_free_amount,
       </if>
       <if test="tableNumber != null">
         table_number,
       </if>
-      <if test="taxFreeAmount != null">
-        tax_free_amount,
+      <if test="projectProperties != null">
+        project_properties,
+      </if>
+      <if test="buyerTaxId != null">
+        buyer_tax_id,
       </if>
       <if test="unitId != null">
         unit_id,
@@ -86,8 +87,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="vatId != null">
-        #{vatId,jdbcType=BIGINT},
+      <if test="vat3Id != null">
+        #{vat3Id,jdbcType=BIGINT},
       </if>
       <if test="invoiceType != null">
         #{invoiceType,jdbcType=VARCHAR},
@@ -104,17 +105,17 @@
       <if test="invoiceDate != null">
         #{invoiceDate,jdbcType=DATE},
       </if>
-      <if test="checkCode != null">
-        #{checkCode,jdbcType=VARCHAR},
-      </if>
-      <if test="buyerTaxId != null">
-        #{buyerTaxId,jdbcType=VARCHAR},
+      <if test="taxFreeAmount != null">
+        #{taxFreeAmount,jdbcType=DECIMAL},
       </if>
       <if test="tableNumber != null">
         #{tableNumber,jdbcType=VARCHAR},
       </if>
-      <if test="taxFreeAmount != null">
-        #{taxFreeAmount,jdbcType=DECIMAL},
+      <if test="projectProperties != null">
+        #{projectProperties,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerTaxId != null">
+        #{buyerTaxId,jdbcType=VARCHAR},
       </if>
       <if test="unitId != null">
         #{unitId,jdbcType=INTEGER},
@@ -127,8 +128,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.model.InvoiceVat">
-    update invoice_vat
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.invoice.model.Invoice3vat">
+    update invoice_3vat
     <set>
       <if test="invoiceType != null">
         invoice_type = #{invoiceType,jdbcType=VARCHAR},
@@ -145,17 +146,17 @@
       <if test="invoiceDate != null">
         invoice_date = #{invoiceDate,jdbcType=DATE},
       </if>
-      <if test="checkCode != null">
-        check_code = #{checkCode,jdbcType=VARCHAR},
+      <if test="taxFreeAmount != null">
+        tax_free_amount = #{taxFreeAmount,jdbcType=DECIMAL},
       </if>
       <if test="buyerTaxId != null">
         buyer_tax_id = #{buyerTaxId,jdbcType=VARCHAR},
       </if>
+      <if test="projectProperties != null">
+        project_properties = #{projectProperties,jdbcType=VARCHAR},
+      </if>
       <if test="tableNumber != null">
         table_number = #{tableNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="taxFreeAmount != null">
-        tax_free_amount = #{taxFreeAmount,jdbcType=DECIMAL},
       </if>
       <if test="unitId != null">
         unit_id = #{unitId,jdbcType=INTEGER},
@@ -167,77 +168,76 @@
         user_id = #{userId,jdbcType=INTEGER},
       </if>
     </set>
-    where vat_id = #{vatId,jdbcType=BIGINT}
+    where vat3_id = #{vat3Id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.model.InvoiceVat">
-    update invoice_vat
+  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.invoice.model.Invoice3vat">
+    update invoice_3vat
     set invoice_type = #{invoiceType,jdbcType=VARCHAR},
       invoice_code = #{invoiceCode,jdbcType=VARCHAR},
       invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
       invoice_page_number = #{invoicePageNumber,jdbcType=INTEGER},
       invoice_date = #{invoiceDate,jdbcType=DATE},
-      check_code = #{checkCode,jdbcType=VARCHAR},
-      buyer_tax_id = #{buyerTaxId,jdbcType=VARCHAR},
-      table_number = #{tableNumber,jdbcType=VARCHAR},
       tax_free_amount = #{taxFreeAmount,jdbcType=DECIMAL},
+      buyer_tax_id = #{buyerTaxId,jdbcType=VARCHAR},
+      project_properties = #{projectProperties,jdbcType=VARCHAR},
+      table_number = #{tableNumber,jdbcType=VARCHAR},
       unit_id = #{unitId,jdbcType=INTEGER},
       i_time = #{iTime,jdbcType=TIMESTAMP},
       user_id = #{userId,jdbcType=INTEGER}
-    where vat_id = #{vatId,jdbcType=BIGINT}
+    where vat3_id = #{vat3Id,jdbcType=BIGINT}
   </update>
-  <select id="selectListByCond" parameterType="map" resultType="com.hbhb.cw.web.vo.InvoiceVatResVO">
-    select
-    i.vat_id as vatId,
-    i.invoice_type as invoiceType,
-    i.invoice_code as invoiceCode,
-    i.invoice_number as invoiceNumber,
-    i.invoice_page_number as invoicePageNumber,
-    DATE_FORMAT(i.invoice_date, '%Y-%m-%d') as invoiceDate,
-    i.check_code as checkCode,
-    i.buyer_tax_ID as buyerTaxId,
-    i.table_number as tableNumber,
-    i.tax_free_amount as taxFreeAmount,
-    u.unit_name as branch,
-    i.i_time as iTime,
-    su.user_name as personnel
-    from invoice_vat i
-    left join unit u on i.unit_id = u.id
-    left join sys_user su on i.user_id = su.id
+
+  <select id="selectListByCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.Invoice3ResVO">
+    select i.vat3_id                              as vat3Id,
+          i.invoice_type                          as invoiceType,
+          i.invoice_code                          as invoiceCode,
+          i.invoice_number                        as invoiceNumber,
+          i.invoice_page_number                   as invoicePageNumber,
+          DATE_FORMAT(i.invoice_date, '%Y-%m-%d') as invoiceDate,
+          i.tax_free_amount                       as taxFreeAmount,
+          i.buyer_tax_ID                          as buyerTaxId,
+          i.project_properties                    as projectProperties,
+          i.table_number                          as tableNumber,
+          u.unit_name                             as branch,
+          i.i_time                                as iTime,
+          su.user_name                            as personnel
+    from invoice_3vat i
+      left join unit u on i.unit_id = u.id
+      left join sys_user su on i.user_id = su.id
     <where>
       <if test="invoiceCode != null  and invoiceCode != ''">
         and i.invoice_code = #{invoiceCode}
       </if>
       <if test="invoiceNumber != null  and invoiceNumber != ''">
-        and i.invoice_number = #{invoiceNumber}</if>
-      <if test="invoiceDate != null  and invoiceDate != ''">
-        and i.invoice_date = #{invoiceDate}</if>
-      <if test="checkCode != null  and checkCode != ''">
-        and i.check_code = #{checkCode}
+        and i.invoice_number = #{invoiceNumber}
       </if>
-      <if test="buyerTaxId != null  and buyerTaxId != ''">
-        and i.buyer_tax_ID = #{buyerTaxId}
+      <if test="invoiceDate != null  and invoiceDate != ''">
+        and i.invoice_date = #{invoiceDate}
       </if>
       <if test="taxFreeAmount != null  and taxFreeAmount != ''">
         and i.tax_free_amount = #{taxFreeAmount}
       </if>
-      <if test="branch != null  and branch != ''">
-        and u.unit_name = #{branch}
+      <if test="buyerTaxId != null  and buyerTaxId != ''">
+        and i.buyer_tax_ID = #{buyerTaxId}
       </if>
       <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
         and i.i_time between #{beginTime} and #{endTime}
       </if>
+      <if test="userId != null  and userId != ''">
+        and i.user_id = #{userId}
+      </if>
       <if test="personnel != null  and personnel != ''">
         and su.user_name = #{personnel}
       </if>
-      <if test="userId != null  and userId != ''">
-        and i.user_id = #{userId}
+      <if test="branch != null  and branch != ''">
+        and u.unit_name = #{branch}
       </if>
     </where>
     order by i.i_time ASC
   </select>
 
   <select id="countByCond" parameterType="map" resultType="int">
-    select count(1) from invoice_vat i
+    select count(1) from invoice_3vat i
     left join unit u on i.unit_id = u.id
     left join sys_user su on i.user_id = su.id
     <where>
@@ -245,28 +245,28 @@
         and i.invoice_code = #{invoiceCode}
       </if>
       <if test="invoiceNumber != null  and invoiceNumber != ''">
-        and i.invoice_number = #{invoiceNumber}</if>
+        and i.invoice_number = #{invoiceNumber}
+      </if>
       <if test="invoiceDate != null  and invoiceDate != ''">
-        and i.invoice_date = #{invoiceDate}</if>
-      <if test="checkCode != null  and checkCode != ''">
-        and i.check_code = #{checkCode}</if>
-      <if test="buyerTaxId != null  and buyerTaxId != ''">
-        and i.buyer_tax_ID = #{buyerTaxId}
+        and i.invoice_date = #{invoiceDate}
       </if>
       <if test="taxFreeAmount != null  and taxFreeAmount != ''">
         and i.tax_free_amount = #{taxFreeAmount}
       </if>
-      <if test="branch != null  and branch != ''">
-        and u.unit_name = #{branch}
+      <if test="buyerTaxId != null  and buyerTaxId != ''">
+        and i.buyer_tax_ID = #{buyerTaxId}
       </if>
-      <if test="iTime != null ">
-        and i.i_time = #{iTime}
+      <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+        and i.i_time between #{beginTime} and #{endTime}
+      </if>
+      <if test="userId != null  and userId != ''">
+        and i.user_id = #{userId}
       </if>
       <if test="personnel != null  and personnel != ''">
         and su.user_name = #{personnel}
       </if>
-      <if test="userId != null  and userId != ''">
-        and i.user_id = #{userId}
+      <if test="branch != null  and branch != ''">
+        and u.unit_name = #{branch}
       </if>
     </where>
   </select>
@@ -274,8 +274,8 @@
   <select id="selectListByIds" parameterType="list" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from invoice_vat
-    where vat_id in
+    from invoice_3vat
+    where vat3_id in
     <foreach collection="list" item="item" open="(" separator="," close=")">
       #{item}
     </foreach>
@@ -284,13 +284,13 @@
   <select id="selectByNumber" parameterType="map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from invoice_vat
+    from invoice_3vat
     where invoice_number = #{invoiceNumber} and invoice_code = #{invoiceCode}
   </select>
 
   <delete id="deleteBatchByIds" parameterType="list">
-    delete from invoice_vat
-    where vat_id in
+    delete from invoice_3vat
+    where vat3_id in
     <foreach collection="list" item="item" open="(" separator="," close=")">
       #{item}
     </foreach>
@@ -299,7 +299,7 @@
   <select id="selectById" parameterType="long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from invoice_vat
-    where vat_id = #{vatId}
+    from invoice_3vat
+    where vat3_id = #{vat3Id}
   </select>
 </mapper>

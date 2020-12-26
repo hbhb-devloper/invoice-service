@@ -19,17 +19,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author yzc
  * @since 2020-09-15
  */
-@Api(tags = "渠道发票")
+@Tag(name = "渠道发票")
 @RestController
-@RequestMapping("/invoice/library")
+@RequestMapping("/library")
 @Slf4j
 public class InvoiceLibraryController {
 
@@ -37,7 +37,7 @@ public class InvoiceLibraryController {
     private InvoiceLibraryService invoiceLibraryService;
 
 
-    @ApiOperation("发票库表导入")
+    @Operation(summary ="发票库表导入")
     @PostMapping("/import")
     public void importLibrary(MultipartFile file) {
         long begin = System.currentTimeMillis();
@@ -57,7 +57,7 @@ public class InvoiceLibraryController {
     }
 
 
-    @ApiOperation("发票库表导入时间")
+    @Operation(summary ="发票库表导入时间")
     @GetMapping("/time")
     public String getTime() {
         return invoiceLibraryService.getTime();

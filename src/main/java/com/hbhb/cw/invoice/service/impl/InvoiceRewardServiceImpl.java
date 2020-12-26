@@ -11,7 +11,9 @@ import com.hbhb.cw.invoice.mapper.InvoiceSubsidyMapper;
 import com.hbhb.cw.invoice.model.InvoiceAccount;
 import com.hbhb.cw.invoice.model.InvoiceReward;
 import com.hbhb.cw.invoice.model.InvoiceSubsidy;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.rpc.DictApiExp;
+import com.hbhb.cw.invoice.rpc.SysUserApiExp;
 import com.hbhb.cw.invoice.rpc.UnitApiExp;
 import com.hbhb.cw.invoice.service.InvoiceRewardService;
 import com.hbhb.cw.invoice.web.vo.InvoiceAccountImportVO;
@@ -26,10 +28,10 @@ import com.hbhb.cw.invoice.web.vo.InvoiceRewardResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceSubsidyImportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceSubsidyVO;
 import com.hbhb.cw.systemcenter.enums.DictCode;
+import com.hbhb.cw.systemcenter.enums.UnitEnum;
 import com.hbhb.cw.systemcenter.vo.DictVO;
-import com.hbhb.springboot.web.view.Page;
+import com.hbhb.cw.systemcenter.vo.UserInfo;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,10 +55,6 @@ import static java.math.BigDecimal.ZERO;
 @Slf4j
 public class InvoiceRewardServiceImpl implements InvoiceRewardService {
 
-    @Value("${cw.invoice.unit-id.hangzhou}")
-    private Integer hangzhou;
-    @Value("${cw.invoice.unit-id.benbu}")
-    private Integer benbu;
 
     @Resource
     private InvoiceRewardMapper invoiceRewardMapper;
@@ -68,15 +66,19 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
     private UnitApiExp unitApiExp;
     @Resource
     private DictApiExp dictApiExp;
+    @Resource
+    private SysUserApiExp sysUserApiExp;
 
 
     private final List<String> msg = new ArrayList<>();
 
 
     @Override
-    public Page<InvoiceRewardResVO> getListByCont(InvoiceRewardReqVO cond, Integer pageNum, Integer pageSize) {
+    public Page<InvoiceRewardResVO> getListByCont(InvoiceRewardReqVO cond, Integer userId, Integer pageNum, Integer pageSize) {
+       UserInfo user = sysUserApiExp.getUserInfoById(userId);
         // 获取所有下属单位
-        List<Integer> unitIds = unitApiExp.getSubUnit(cond.getUnitId());
+        List<Integer> unitIds = unitApiExp.getSubUnit(user.getUnitId());
+        unitIds.add(-1);
         PageHelper.startPage(pageNum, pageSize);
         List<InvoiceRewardResVO> list = invoiceRewardMapper.selectByCond(cond, unitIds);
         int count = invoiceRewardMapper.countByCond(cond, unitIds);
@@ -89,7 +91,7 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
         msg.clear();
         log.info("导入开始了");
         // 判断用户是否能进行导入操作
-        if (hangzhou.equals(unitId) || benbu.equals(unitId)) {
+        if (UnitEnum.HANGZHOU.value().equals(unitId) || UnitEnum.BENBU.value().equals(unitId)) {
             msg.add("该用户无法导入");
             return;
         }
@@ -242,9 +244,11 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
     }
 
     @Override
-    public List<InvoiceDetailsExportVO> getDetailsExportByCond(InvoiceRewardReqVO cond) {
+    public List<InvoiceDetailsExportVO> getDetailsExportByCond(InvoiceRewardReqVO cond, Integer userId) {
+       UserInfo user = sysUserApiExp.getUserInfoById(userId);
         // 获取所有下属单位
-        List<Integer> unitIds = unitApiExp.getSubUnit(cond.getUnitId());
+        List<Integer> unitIds = unitApiExp.getSubUnit(user.getUnitId());
+        unitIds.add(-1);
         List<InvoiceRewardResVO> listByCont = invoiceRewardMapper.selectByCond(cond, unitIds);
 
         if (listByCont == null || listByCont.size() == 0) {
@@ -271,9 +275,11 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
     }
 
     @Override
-    public List<InvoiceMonthExportVO> getMonthExportByCond(InvoiceRewardReqVO cond) {
+    public List<InvoiceMonthExportVO> getMonthExportByCond(InvoiceRewardReqVO cond, Integer userId) {
+       UserInfo user = sysUserApiExp.getUserInfoById(userId);
         // 获取所有下属单位
-        List<Integer> unitIds = unitApiExp.getSubUnit(cond.getUnitId());
+        List<Integer> unitIds = unitApiExp.getSubUnit(user.getUnitId());
+        unitIds.add(-1);
         List<InvoiceMonthExportVO> list = invoiceRewardMapper.censusByCond(cond,unitIds);
 
         // 通过字典得到发票类型
@@ -302,9 +308,11 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
     }
 
     @Override
-    public List<InvoiceCheckExportVO> getCheckExportByCond(InvoiceRewardReqVO cond) {
+    public List<InvoiceCheckExportVO> getCheckExportByCond(InvoiceRewardReqVO cond, Integer userId) {
+       UserInfo user = sysUserApiExp.getUserInfoById(userId);
         // 获取所有下属单位
-        List<Integer> unitIds = unitApiExp.getSubUnit(cond.getUnitId());
+        List<Integer> unitIds = unitApiExp.getSubUnit(user.getUnitId());
+        unitIds.add(-1);
         List<InvoiceCheckVO> list = invoiceRewardMapper.checkListByCond(cond,unitIds);
         // 往来账列表查询
         List<InvoiceAccountVO> accountVOList = invoiceAccountMapper.selectList();

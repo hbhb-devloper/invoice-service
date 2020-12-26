@@ -4,15 +4,16 @@ import com.github.pagehelper.PageHelper;
 import com.hbhb.core.bean.BeanConverter;
 import com.hbhb.cw.invoice.mapper.InvoiceRewardDetailedMapper;
 import com.hbhb.cw.invoice.model.InvoiceRewardDetailed;
+import com.hbhb.cw.invoice.model.Page;
+import com.hbhb.cw.invoice.rpc.SysUserApiExp;
 import com.hbhb.cw.invoice.rpc.UnitApiExp;
 import com.hbhb.cw.invoice.service.InvoiceDetailedService;
 import com.hbhb.cw.invoice.web.vo.InvoiceDetailedExportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceDetailedImportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceDetailedVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceRewardDetailedResVO;
-import com.hbhb.springboot.web.view.Page;
+import com.hbhb.cw.systemcenter.vo.UserInfo;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,22 +34,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InvoiceDetailedServiceImpl implements InvoiceDetailedService {
 
-    @Value("${cw.invoice.unit-id.hangzhou}")
-    private Integer hangzhou;
-    @Value("${cw.invoice.unit-id.benbu}")
-    private Integer benbu;
-
     @Resource
     private UnitApiExp unitApiExp;
     @Resource
     private InvoiceRewardDetailedMapper invoiceRewardDetailedMapper;
-
+   @Resource
+   private SysUserApiExp sysUserApiExp;
     private final List<String> msg = new ArrayList<>();
 
     @Override
-    public Page<InvoiceRewardDetailedResVO> getPageByCont(InvoiceDetailedVO cond, Integer pageNum, Integer pageSize) {
+    public Page<InvoiceRewardDetailedResVO> getPageByCont(InvoiceDetailedVO cond, Integer userId, Integer pageNum, Integer pageSize) {
+        UserInfo user = sysUserApiExp.getUserInfoById(userId);
         // 获取所有下属单位
-        List<Integer> unitIds = unitApiExp.getSubUnit(cond.getUnitId());
+        List<Integer> unitIds = unitApiExp.getSubUnit(user.getUnitId());
+        unitIds.add(-1);
         PageHelper.startPage(pageNum, pageSize);
         List<InvoiceRewardDetailedResVO> list = invoiceRewardDetailedMapper.selectByCond(cond,unitIds);
         int count = invoiceRewardDetailedMapper.countByCond(cond,unitIds);
@@ -91,9 +90,11 @@ public class InvoiceDetailedServiceImpl implements InvoiceDetailedService {
     }
 
     @Override
-    public List<InvoiceDetailedExportVO> getListByCont(InvoiceDetailedVO cond) {
+    public List<InvoiceDetailedExportVO> getListByCont(InvoiceDetailedVO cond, Integer userId) {
+       UserInfo user = sysUserApiExp.getUserInfoById(userId);
         // 获取所有下属单位
-        List<Integer> unitIds = unitApiExp.getSubUnit(cond.getUnitId());
+        List<Integer> unitIds = unitApiExp.getSubUnit(user.getUnitId());
+        unitIds.add(-1);
         List<InvoiceRewardDetailedResVO> list = invoiceRewardDetailedMapper.selectByCond(cond, unitIds);
         return BeanConverter.copyBeanList(list, InvoiceDetailedExportVO.class);
     }

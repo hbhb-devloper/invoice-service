@@ -4,15 +4,15 @@ import com.alibaba.excel.EasyExcel;
 import com.hbhb.core.utils.ExcelUtil;
 import com.hbhb.cw.invoice.common.config.InvoiceErrorCode;
 import com.hbhb.cw.invoice.common.exception.InvoiceException;
+import com.hbhb.cw.invoice.model.Page;
+import com.hbhb.cw.invoice.rpc.FileApiExp;
 import com.hbhb.cw.invoice.service.InvoiceFocusService;
 import com.hbhb.cw.invoice.service.listener.InvoiceFocusListener;
 import com.hbhb.cw.invoice.web.vo.InvoiceFocusAccountResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceFocusImportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceFocusVO;
-import com.hbhb.springboot.web.view.Page;
 import com.hbhb.web.annotation.UserId;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,45 +29,41 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author yzc
  * @since 2020-10-21
  */
-@Api(tags = "渠道发票-集中化应付台账管理")
+@Tag(name = "渠道发票-集中化应付台账管理")
 @RestController
-@RequestMapping("/invoice/focus")
+@RequestMapping("/focus")
 @Slf4j
 public class InvoiceFocusController {
 
-    @Value("${file.upload.template}")
-    private String filePath;
+    @Resource
+    private FileApiExp fileApi;
 
     @Resource
     private InvoiceFocusService invoiceFocusService;
 
-    @ApiOperation(value = "按条件获取列表", notes = "分页")
+    @Operation(summary = "按条件获取列表")
     @GetMapping("/list")
     public Page<InvoiceFocusAccountResVO> getPages(
-            @ApiParam(value = "条件") InvoiceFocusVO cond,
-            @ApiParam(value = "页码，默认为1") @RequestParam(required = false) Integer pageNum,
-            @ApiParam(value = "每页数量，默认为10") @RequestParam(required = false) Integer pageSize,
+            @Parameter(description ="条件") InvoiceFocusVO cond,
+           @Parameter(description = "页码，默认为1") @RequestParam(required = false) Integer pageNum,
+           @Parameter(description = "每页数量，默认为10") @RequestParam(required = false) Integer pageSize,
             @Parameter(hidden = true) @UserId Integer userId) {
         pageNum = pageNum == null ? 1 : pageNum;
         pageSize = pageSize == null ? 20 : pageSize;
-        if (cond.getUnitId() == null) {
-            cond.setUnitId(userId);
-        }
-        return invoiceFocusService.getPageByCont(cond, pageNum, pageSize);
+        return invoiceFocusService.getPageByCont(cond, userId, pageNum, pageSize);
     }
 
 
-    @ApiOperation("集中化应付台账表导入")
+    @Operation(summary ="集中化应付台账表导入")
     @PostMapping("/import")
     public List<String> importList(MultipartFile file,
                                    @Parameter(hidden = true) @UserId Integer userId) {
@@ -85,12 +81,12 @@ public class InvoiceFocusController {
         return invoiceFocusService.getMsg();
     }
 
-    @ApiOperation("导出集中化应付台账管理模板")
+    @Operation(summary ="导出集中化应付台账管理模板")
     @PostMapping("/export/template")
     public void rewardTemplate(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<Object> list = new ArrayList<>();
         String fileName = ExcelUtil.encodingFileName(request, "集中化应付台账模块");
         ExcelUtil.export2WebWithTemplate(response, fileName, "Sheet1",
-                filePath + File.separator + "集中化应付台账模块.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "集中化应付台账模块.xlsx", list);
     }
 }

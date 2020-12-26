@@ -5,6 +5,7 @@ import com.hbhb.core.bean.BeanConverter;
 import com.hbhb.cw.invoice.common.DictType;
 import com.hbhb.cw.invoice.mapper.InvoiceTaxpayerCredentialsMapper;
 import com.hbhb.cw.invoice.model.InvoiceTaxpayerCredentials;
+import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.rpc.DictApiExp;
 import com.hbhb.cw.invoice.rpc.UnitApiExp;
 import com.hbhb.cw.invoice.service.InvoiceTaxpayerService;
@@ -14,7 +15,6 @@ import com.hbhb.cw.invoice.web.vo.InvoiceTaxpayerShowVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceTaxpayerVO;
 import com.hbhb.cw.systemcenter.enums.DictCode;
 import com.hbhb.cw.systemcenter.vo.DictVO;
-import com.hbhb.springboot.web.view.Page;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,7 @@
 package com.hbhb.cw.invoice.service.impl;
 
 import com.hbhb.core.bean.BeanConverter;
+import com.hbhb.cw.invoice.common.InvoiceBuyer;
 import com.hbhb.cw.invoice.common.InvoiceGoodsName;
 import com.hbhb.cw.invoice.mapper.InvoiceLibraryMapper;
 import com.hbhb.cw.invoice.service.Invoice1vatService;
@@ -11,7 +12,6 @@ import com.hbhb.cw.invoice.web.vo.InvoiceInspectionReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceInspectionResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceInspectionVO;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -30,16 +30,6 @@ import javax.annotation.Resource;
  */
 @Service
 public class InvoiceInspectionServiceImpl implements InvoiceInspectionService {
-
-    @Value("${cw.invoice.unit-id.hangzhou}")
-    private Integer hangzhou;
-    @Value("${cw.invoice.unit-id.benbu}")
-    private Integer benbu;
-
-    @Value("${cw.invoice.invoice.buyer-tax-id}")
-    private String buyerTaxId;
-    @Value("${cw.invoice.invoice.buyer-name}")
-    private String buyerName;
 
     @Resource
     private InvoiceLibraryMapper invoiceLibraryMapper;
@@ -141,7 +131,7 @@ public class InvoiceInspectionServiceImpl implements InvoiceInspectionService {
                 inspectionVO.setCheck("发票税率不正确");
                 continue;
             }
-            if (!buyerTaxId.equals(inspectionVO.getBuyerTax()) || !buyerName.equals(inspectionVO.getBuyerName())) {
+            if (!InvoiceBuyer.BUYER_NUMBER.value().equals(inspectionVO.getBuyerTax()) || !InvoiceBuyer.BUYER_NAME.value().equals(inspectionVO.getBuyerName())) {
                 inspectionVO.setCheck("购买方税号/购买方名称不一致");
                 continue;
             }
