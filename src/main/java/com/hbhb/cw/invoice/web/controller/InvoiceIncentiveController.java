@@ -83,6 +83,7 @@ public class InvoiceIncentiveController {
     public void rewardTemplate(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<Object> list = new ArrayList<>();
         String fileName = ExcelUtil.encodingFileName(request, "综合激励模板");
+        System.out.println(fileApi.getTemplatePath());
         ExcelUtil.export2WebWithTemplate(response, fileName, "Sheet1",
                 fileApi.getTemplatePath() + File.separator + "综合激励模板.xlsx", list);
     }
