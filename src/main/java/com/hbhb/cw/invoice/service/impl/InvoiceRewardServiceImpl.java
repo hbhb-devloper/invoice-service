@@ -87,9 +87,11 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
 
 
     @Override
-    public void saveInvoiceDetails(List<InvoiceRewardImportVO> dataList, String importDate, Integer unitId, BigDecimal taxRate) {
+    public void saveInvoiceDetails(List<InvoiceRewardImportVO> dataList, String importDate, Integer userId, BigDecimal taxRate) {
         msg.clear();
         log.info("导入开始了");
+        UserInfo user = sysUserApiExp.getUserInfoById(userId);
+        Integer unitId = user.getUnitId();
         // 判断用户是否能进行导入操作
         if (UnitEnum.HANGZHOU.value().equals(unitId) || UnitEnum.BENBU.value().equals(unitId)) {
             msg.add("该用户无法导入");
@@ -198,8 +200,10 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveInvoiceSubsidy(List<InvoiceSubsidyImportVO> dataList, String importDate, Integer unitId) {
+    public void saveInvoiceSubsidy(List<InvoiceSubsidyImportVO> dataList, String importDate, Integer userId) {
         msg.clear();
+        UserInfo user = sysUserApiExp.getUserInfoById(userId);
+        Integer unitId = user.getUnitId();
         Map<String, Integer> unitMap = unitApiExp.getUnitMapByShortName();
         if (dataList.size() != 0 && !unitMap.get(dataList.get(0).getUnitName()).equals(unitId)) {
             msg.add("只能导入同单位的数据");
@@ -220,8 +224,10 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveInvoiceAccount(List<InvoiceAccountImportVO> dataList, Integer unitId) {
+    public void saveInvoiceAccount(List<InvoiceAccountImportVO> dataList, Integer userId) {
         msg.clear();
+        UserInfo user = sysUserApiExp.getUserInfoById(userId);
+        Integer unitId = user.getUnitId();
         Map<String, Integer> unitMap = unitApiExp.getUnitMapByShortName();
         if (dataList.size() != 0 && !unitMap.get(dataList.get(0).getUnitName()).equals(unitId)) {
             msg.add("只能导入同单位的数据");

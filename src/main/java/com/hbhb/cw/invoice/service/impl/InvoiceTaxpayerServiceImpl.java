@@ -7,6 +7,7 @@ import com.hbhb.cw.invoice.mapper.InvoiceTaxpayerCredentialsMapper;
 import com.hbhb.cw.invoice.model.InvoiceTaxpayerCredentials;
 import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.rpc.DictApiExp;
+import com.hbhb.cw.invoice.rpc.SysUserApiExp;
 import com.hbhb.cw.invoice.rpc.UnitApiExp;
 import com.hbhb.cw.invoice.service.InvoiceTaxpayerService;
 import com.hbhb.cw.invoice.web.vo.InvoiceTaxpayerImportVO;
@@ -15,6 +16,7 @@ import com.hbhb.cw.invoice.web.vo.InvoiceTaxpayerShowVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceTaxpayerVO;
 import com.hbhb.cw.systemcenter.enums.DictCode;
 import com.hbhb.cw.systemcenter.vo.DictVO;
+import com.hbhb.cw.systemcenter.vo.UserInfo;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +41,8 @@ public class InvoiceTaxpayerServiceImpl implements InvoiceTaxpayerService {
     private InvoiceTaxpayerCredentialsMapper invoiceTaxpayerCredentialsMapper;
     @Resource
     private DictApiExp dictApiExp;
+    @Resource
+    private SysUserApiExp sysUserApiExp;
 
     private final List<String> msg = new ArrayList<>();
 
@@ -63,8 +67,10 @@ public class InvoiceTaxpayerServiceImpl implements InvoiceTaxpayerService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveInvoiceTaxpayer(List<InvoiceTaxpayerImportVO> dataList, Integer unitId) {
+    public void saveInvoiceTaxpayer(List<InvoiceTaxpayerImportVO> dataList, Integer userId) {
         msg.clear();
+        UserInfo user = sysUserApiExp.getUserInfoById(userId);
+        Integer unitId = user.getUnitId();
         List<InvoiceTaxpayerCredentials> list = BeanConverter.copyBeanList(dataList, InvoiceTaxpayerCredentials.class);
         // 获取所有的单位缩写名列表
         Map<String, Integer> unitMap = unitApiExp.getUnitMapByShortName();

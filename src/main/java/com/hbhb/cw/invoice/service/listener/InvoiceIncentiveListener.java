@@ -33,11 +33,11 @@ public class InvoiceIncentiveListener extends AnalysisEventListener {
     private final List<InvoiceIncentiveImportVO> dataList = new ArrayList<>();
 
     private final InvoiceIncentiveService invoiceIncentiveService;
-    private final AtomicInteger unitId;
+    private final AtomicInteger userId;
 
-    public InvoiceIncentiveListener(InvoiceIncentiveService invoiceIncentiveService, AtomicInteger unitId) {
+    public InvoiceIncentiveListener(InvoiceIncentiveService invoiceIncentiveService, AtomicInteger userId) {
         this.invoiceIncentiveService = invoiceIncentiveService;
-        this.unitId = unitId;
+        this.userId = userId;
     }
 
     /**
@@ -77,7 +77,7 @@ public class InvoiceIncentiveListener extends AnalysisEventListener {
      */
     private void saveData() {
         if (!CollectionUtils.isEmpty(dataList)) {
-            invoiceIncentiveService.saveInvoiceIncentive(dataList, unitId.get());
+            invoiceIncentiveService.saveInvoiceIncentive(dataList, userId.get());
         }
     }
 }

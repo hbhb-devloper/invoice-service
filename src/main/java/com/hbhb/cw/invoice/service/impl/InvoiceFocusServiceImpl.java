@@ -55,8 +55,10 @@ public class InvoiceFocusServiceImpl implements InvoiceFocusService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveInvoiceFocus(List<InvoiceFocusImportVO> dataList, Integer unitId) {
+    public void saveInvoiceFocus(List<InvoiceFocusImportVO> dataList, Integer userId) {
         msg.clear();
+        UserInfo user = sysUserApiExp.getUserInfoById(userId);
+        Integer unitId = user.getUnitId();
         List<InvoiceFocusAccount> list = BeanConverter.copyBeanList(dataList, InvoiceFocusAccount.class);
         // 获取所有的单位缩写名列表
         Map<String, Integer> unitMap = unitApiExp.getUnitMapByShortName();

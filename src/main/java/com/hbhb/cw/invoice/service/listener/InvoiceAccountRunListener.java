@@ -33,11 +33,11 @@ public class InvoiceAccountRunListener extends AnalysisEventListener {
     private final List<InvoiceAccountRunImportVO> dataList = new ArrayList<>();
 
     private final InvoiceAccountRunService invoiceAccountRunService;
-    private final AtomicInteger unitId;
+    private final AtomicInteger userId;
 
-    public InvoiceAccountRunListener(InvoiceAccountRunService invoiceAccountRunService, AtomicInteger unitId) {
+    public InvoiceAccountRunListener(InvoiceAccountRunService invoiceAccountRunService, AtomicInteger userId) {
         this.invoiceAccountRunService = invoiceAccountRunService;
-        this.unitId = unitId;
+        this.userId = userId;
     }
 
     /**
@@ -77,7 +77,7 @@ public class InvoiceAccountRunListener extends AnalysisEventListener {
      */
     private void saveData() {
         if (!CollectionUtils.isEmpty(dataList)) {
-            invoiceAccountRunService.saveInvoiceAccountRun(dataList, unitId.get());
+            invoiceAccountRunService.saveInvoiceAccountRun(dataList, userId.get());
         }
     }
 }

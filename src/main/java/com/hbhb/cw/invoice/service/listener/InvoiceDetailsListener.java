@@ -35,13 +35,13 @@ public class InvoiceDetailsListener extends AnalysisEventListener {
 
     private final InvoiceRewardService invoiceDetailsService;
     private final StringBuffer importDate;
-    private final AtomicInteger unitId;
+    private final AtomicInteger userId;
     private final BigDecimal taxRate;
 
-    public InvoiceDetailsListener(InvoiceRewardService invoiceDetailsService, StringBuffer importDate, AtomicInteger unitId, BigDecimal taxRate) {
+    public InvoiceDetailsListener(InvoiceRewardService invoiceDetailsService, StringBuffer importDate, AtomicInteger userId, BigDecimal taxRate) {
         this.invoiceDetailsService = invoiceDetailsService;
         this.importDate = importDate;
-        this.unitId = unitId;
+        this.userId = userId;
         this.taxRate = taxRate;
     }
 
@@ -83,7 +83,7 @@ public class InvoiceDetailsListener extends AnalysisEventListener {
     private void saveData() {
         log.info("监听方法开始");
         if (!CollectionUtils.isEmpty(dataList)) {
-            invoiceDetailsService.saveInvoiceDetails(dataList, String.valueOf(importDate), unitId.get(), taxRate);
+            invoiceDetailsService.saveInvoiceDetails(dataList, String.valueOf(importDate), userId.get(), taxRate);
         }
     }
 }

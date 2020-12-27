@@ -33,11 +33,11 @@ public class InvoiceCurrentAccountListener extends AnalysisEventListener {
     private final List<InvoiceAccountImportVO> dataList = new ArrayList<>();
 
     private final InvoiceRewardService invoiceRewardService;
-    private final AtomicInteger unitId;
+    private final AtomicInteger userId;
 
-    public InvoiceCurrentAccountListener(InvoiceRewardService invoiceRewardService, AtomicInteger unitId) {
+    public InvoiceCurrentAccountListener(InvoiceRewardService invoiceRewardService, AtomicInteger userId) {
         this.invoiceRewardService = invoiceRewardService;
-        this.unitId = unitId;
+        this.userId = userId;
     }
 
     /**
@@ -77,7 +77,7 @@ public class InvoiceCurrentAccountListener extends AnalysisEventListener {
      */
     private void saveData() {
         if (!CollectionUtils.isEmpty(dataList)) {
-            invoiceRewardService.saveInvoiceAccount(dataList, unitId.get());
+            invoiceRewardService.saveInvoiceAccount(dataList, userId.get());
         }
     }
 }

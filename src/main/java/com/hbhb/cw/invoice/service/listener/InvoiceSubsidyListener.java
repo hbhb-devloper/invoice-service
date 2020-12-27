@@ -34,12 +34,12 @@ public class InvoiceSubsidyListener extends AnalysisEventListener {
 
     private final InvoiceRewardService invoiceRewardService;
     private final StringBuffer importDate;
-    private final AtomicInteger unitId;
+    private final AtomicInteger userId;
 
-    public InvoiceSubsidyListener(InvoiceRewardService invoiceRewardService, StringBuffer importDate, AtomicInteger unitId) {
+    public InvoiceSubsidyListener(InvoiceRewardService invoiceRewardService, StringBuffer importDate, AtomicInteger userId) {
         this.invoiceRewardService = invoiceRewardService;
         this.importDate = importDate;
-        this.unitId = unitId;
+        this.userId = userId;
     }
 
     /**
@@ -79,7 +79,7 @@ public class InvoiceSubsidyListener extends AnalysisEventListener {
      */
     private void saveData() {
         if (!CollectionUtils.isEmpty(dataList)) {
-            invoiceRewardService.saveInvoiceSubsidy(dataList, String.valueOf(importDate), unitId.get());
+            invoiceRewardService.saveInvoiceSubsidy(dataList, String.valueOf(importDate), userId.get());
         }
     }
 }
