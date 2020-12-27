@@ -105,8 +105,9 @@ public class Invoice1vatController {
                        @Parameter(description = "需导出的发票id", required = true) @RequestBody List<Long> ids) {
         List<Invoice1VO> list = invoice1vatService.selectListByIds(ids);
         String fileName = ExcelUtil.encodingFileName(request, "增值税专票");
+        String templatePath = fileApi.getTemplatePath();
         ExcelUtil.export2WebWithTemplate(response, fileName,"增值税专票",
-                fileApi.getTemplatePath() + File.separator + "增值税专票模板.xlsx", list);
+                templatePath + File.separator + "增值税专票模板.xlsx", list);
     }
 
     @Operation(summary ="查询数据详情")
@@ -124,7 +125,8 @@ public class Invoice1vatController {
         cond.setUserId(userId);
         List<Invoice1VO> list = invoice1vatService.listInvoice1vatByCond(cond);
         String fileName = ExcelUtil.encodingFileName(request, "增值税专票");
+        String templatePath = fileApi.getTemplatePath();
         ExcelUtil.export2WebWithTemplate(response, fileName,"增值税专票",
-                fileApi.getTemplatePath() + File.separator + "增值税专票模板.xlsx", list);
+                templatePath + File.separator + "增值税专票模板.xlsx", list);
     }
 }

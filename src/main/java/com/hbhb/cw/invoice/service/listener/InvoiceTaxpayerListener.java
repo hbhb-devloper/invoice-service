@@ -33,11 +33,11 @@ public class InvoiceTaxpayerListener extends AnalysisEventListener {
     private final List<InvoiceTaxpayerImportVO> dataList = new ArrayList<>();
 
     private final InvoiceTaxpayerService invoiceTaxpayerService;
-    private final AtomicInteger unitId;
+    private final AtomicInteger userId;
 
-    public InvoiceTaxpayerListener(InvoiceTaxpayerService invoiceTaxpayerService, AtomicInteger unitId) {
+    public InvoiceTaxpayerListener(InvoiceTaxpayerService invoiceTaxpayerService, AtomicInteger userId) {
         this.invoiceTaxpayerService = invoiceTaxpayerService;
-        this.unitId = unitId;
+        this.userId = userId;
     }
 
     /**
@@ -77,7 +77,7 @@ public class InvoiceTaxpayerListener extends AnalysisEventListener {
      */
     private void saveData() {
         if (!CollectionUtils.isEmpty(dataList)) {
-            invoiceTaxpayerService.saveInvoiceTaxpayer(dataList, unitId.get());
+            invoiceTaxpayerService.saveInvoiceTaxpayer(dataList, userId.get());
         }
     }
 }

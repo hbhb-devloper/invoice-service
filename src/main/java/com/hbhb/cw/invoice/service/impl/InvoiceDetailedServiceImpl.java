@@ -56,9 +56,11 @@ public class InvoiceDetailedServiceImpl implements InvoiceDetailedService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveInvoiceDetailed(List<InvoiceDetailedImportVO> dataList, Integer unitId) {
+    public void saveInvoiceDetailed(List<InvoiceDetailedImportVO> dataList, Integer userId) {
         msg.clear();
         // 获取所有的单位缩写名列表
+        UserInfo user = sysUserApiExp.getUserInfoById(userId);
+        Integer unitId = user.getUnitId();
         Map<String, Integer> unitMap = unitApiExp.getUnitMapByShortName();
         if (!unitId.equals(Math.toIntExact(unitMap.get(dataList.get(0).getUnitId())))) {
             msg.add("只能导入同单位的数据");

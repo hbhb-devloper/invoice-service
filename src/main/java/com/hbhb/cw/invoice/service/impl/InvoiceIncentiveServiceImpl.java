@@ -55,8 +55,10 @@ public class InvoiceIncentiveServiceImpl implements InvoiceIncentiveService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveInvoiceIncentive(List<InvoiceIncentiveImportVO> dataList, Integer unitId) {
+    public void saveInvoiceIncentive(List<InvoiceIncentiveImportVO> dataList, Integer userId) {
         msg.clear();
+        UserInfo user = sysUserApiExp.getUserInfoById(userId);
+        Integer unitId = user.getUnitId();
         List<InvoiceIncentive> invoiceIncentives = BeanConverter.copyBeanList(dataList, InvoiceIncentive.class);
         // 获取所有的单位缩写名列表
         Map<String, Integer> unitMap = unitApiExp.getUnitMapByShortName();

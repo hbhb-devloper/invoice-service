@@ -33,11 +33,11 @@ public class InvoiceDetailedListener extends AnalysisEventListener {
     private final List<InvoiceDetailedImportVO> dataList = new ArrayList<>();
 
     private final InvoiceDetailedService invoiceDetailedService;
-    private final AtomicInteger unitId;
+    private final AtomicInteger userId;
 
-    public InvoiceDetailedListener(InvoiceDetailedService invoiceDetailedService, AtomicInteger unitId) {
+    public InvoiceDetailedListener(InvoiceDetailedService invoiceDetailedService, AtomicInteger userId) {
         this.invoiceDetailedService = invoiceDetailedService;
-        this.unitId = unitId;
+        this.userId = userId;
     }
 
     /**
@@ -77,7 +77,7 @@ public class InvoiceDetailedListener extends AnalysisEventListener {
      */
     private void saveData() {
         if (!CollectionUtils.isEmpty(dataList)) {
-            invoiceDetailedService.saveInvoiceDetailed(dataList, unitId.get());
+            invoiceDetailedService.saveInvoiceDetailed(dataList, userId.get());
         }
     }
 }

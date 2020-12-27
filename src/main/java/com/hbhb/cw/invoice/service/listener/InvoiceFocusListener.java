@@ -33,11 +33,11 @@ public class InvoiceFocusListener extends AnalysisEventListener {
     private final List<InvoiceFocusImportVO> dataList = new ArrayList<>();
 
     private final InvoiceFocusService invoiceFocusService;
-    private final AtomicInteger unitId;
+    private final AtomicInteger userId;
 
-    public InvoiceFocusListener(InvoiceFocusService invoiceFocusService, AtomicInteger unitId) {
+    public InvoiceFocusListener(InvoiceFocusService invoiceFocusService, AtomicInteger userId) {
         this.invoiceFocusService = invoiceFocusService;
-        this.unitId = unitId;
+        this.userId = userId;
     }
 
     /**
@@ -77,7 +77,7 @@ public class InvoiceFocusListener extends AnalysisEventListener {
      */
     private void saveData() {
         if (!CollectionUtils.isEmpty(dataList)) {
-            invoiceFocusService.saveInvoiceFocus(dataList, unitId.get());
+            invoiceFocusService.saveInvoiceFocus(dataList, userId.get());
         }
     }
 }

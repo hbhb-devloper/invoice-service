@@ -68,8 +68,10 @@ public class InvoiceAccountRunServiceImpl implements InvoiceAccountRunService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveInvoiceAccountRun(List<InvoiceAccountRunImportVO> dataList, Integer unitId) {
+    public void saveInvoiceAccountRun(List<InvoiceAccountRunImportVO> dataList, Integer userId) {
         msg.clear();
+        UserInfo user = sysUserApiExp.getUserInfoById(userId);
+        Integer unitId = user.getUnitId();
         List<InvoiceAccountRun> list = BeanConverter.copyBeanList(dataList, InvoiceAccountRun.class);
         // 获取所有的单位缩写名列表
         Map<String, Integer> unitMap = unitApiExp.getUnitMapByShortName();

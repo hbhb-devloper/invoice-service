@@ -116,7 +116,7 @@ public class Invoice1vat {
     }
 
     public void setUnitId(Integer unitId) {
-        this.unitId = unitId;
+        this.userId = userId;
     }
 
     public Date getiTime() {
