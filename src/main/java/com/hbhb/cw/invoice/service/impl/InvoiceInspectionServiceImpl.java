@@ -73,7 +73,12 @@ public class InvoiceInspectionServiceImpl implements InvoiceInspectionService {
     private List<InvoiceInspectionVO> checkList(InvoiceInspectionReqVO cond) {
         List<InvoiceInspectResVat> vatList = invoice1vatService.getListByCond(cond);
         List<InvoiceInspectionVO> allList = BeanConverter.copyBeanList(vatList, InvoiceInspectionVO.class);
-        List<InvoiceInspectionVO> list = invoiceLibraryMapper.selectInspectionList(cond);
+        int libraryCount = invoiceLibraryMapper.countInspectionParentList(cond);
+        List<InvoiceInspectionVO> list = new ArrayList<>();
+        for (int i = 0; i < libraryCount; i = i+1500) {
+            List<InvoiceInspectionVO> libraryList = invoiceLibraryMapper.selectInspectionList(cond,i,1500);
+            list.addAll(libraryList);
+        }
         // invoiceCode+invoiceNumber -> InvoiceInspectionVO
         Map<String, InvoiceInspectionVO> map = new HashMap<>();
         for (InvoiceInspectionVO vo : list) {
