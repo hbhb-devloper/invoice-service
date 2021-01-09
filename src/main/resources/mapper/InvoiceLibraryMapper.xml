@@ -408,7 +408,7 @@
     ig.price              as price,
     ig.tax_rate           as taxRate
     from invoice_library il
-    left join invoice_goods ig on il.invoice_code = ig.invoice_code
+    left join invoice_goods ig on il.invoice_code = ig.invoice_code and il.invoice_number = ig.invoice_number
     where il.create_time like concat ('%', #{cond.importDate}, '%')
       <if test="cond.sellerTax != null">
         and il.seller_tax like concat ('%', #{cond.sellerTax}, '%')
@@ -416,39 +416,6 @@
       <if test="cond.sellerName != null">
         and il.seller_name like concat ('%', #{cond.sellerName}, '%')
       </if>
-    group by il.invoice_code,il.invoice_number
-    limit #{page},#{num}
-  </select>
-
-  <select id="selectList" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceInspectionVO">
-    select il.invoice_code       as invoiceCode,
-    il.invoice_number     as invoiceNumber,
-    il.invoice_date       as invoiceDate,
-    il.invoice_state      as invoiceState,
-    il.seller_tax         as sellerTax,
-    il.seller_name        as sellerName,
-    il.buyer_tax          as buyerTax,
-    il.buyer_name         as buyerName,
-    il.amount             as amount,
-    il.tax_amount         as taxAmount,
-    il.tax_include_amount as taxIncludeAmount,
-    il.check_code         as checkCode,
-    il.seller_contact     as sellerContact,
-    il.seller_account     as sellerAccount,
-    il.buyer_contact      as buyerContact,
-    il.buyer_account      as buyerAccount,
-    il.remark             as remark,
-    il.drawer             as drawer,
-    il.payee              as payee,
-    il.reviewer           as reviewer,
-    ig.goods_name         as goodsName,
-    ig.model              as model,
-    ig.unit               as unit,
-    ig.quantity           as quantity,
-    ig.price              as price,
-    ig.tax_rate           as taxRate
-    from invoice_library il
-    left join invoice_goods ig on il.invoice_code = ig.invoice_code
     group by il.invoice_code,il.invoice_number
   </select>
 
@@ -480,7 +447,7 @@
     ig.price              as price,
     ig.tax_rate           as taxRate
     from invoice_library il
-    left join invoice_goods ig on il.invoice_code = ig.invoice_code
+    left join invoice_goods ig on il.invoice_code = ig.invoice_code and il.invoice_num = ig.invoice_num
     where il.unit_id in
       <foreach collection="list" item="item" open="(" separator="," close=")">
         #{item}
@@ -511,5 +478,11 @@
       and il.invoice_date like concat ('%', #{cond.invoiceDate}, '%')
     </if>
     </where>
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from invoice_library
   </select>
 </mapper>
