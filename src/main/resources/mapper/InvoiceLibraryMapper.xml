@@ -449,9 +449,9 @@
     from invoice_library il
     left join invoice_goods ig on il.invoice_code = ig.invoice_code and il.invoice_num = ig.invoice_num
     where il.unit_id in
-      <foreach collection="list" item="item" open="(" separator="," close=")">
-        #{item}
-      </foreach>
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
     <if test="cond.sellerTax != null  and cond.sellerTax != ''">
       and il.seller_tax like concat ('%', #{cond.sellerTax}, '%')
     </if>
