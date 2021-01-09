@@ -7,6 +7,7 @@ import com.hbhb.cw.invoice.service.InvoiceInspectionService;
 import com.hbhb.cw.invoice.web.vo.InvoiceInspectionExportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceInspectionReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceInspectionResVO;
+import com.hbhb.cw.invoice.web.vo.InvoiceInspectionVO;
 import com.hbhb.web.annotation.UserId;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -52,7 +54,8 @@ public class InvoiceInspectionController {
            @Parameter(description = "每页数量，默认为10") @RequestParam(required = false) Integer pageSize,
             @Parameter(hidden = true) @UserId Integer userId) {
         if (cond.getImportDate() == null) {
-            cond.setImportDate(DateUtil.getCurrentMonth());
+            String month = DateUtil.dateToString(new Date(), "yyyy-MM");
+            cond.setImportDate(month);
         }
         pageNum = pageNum == null ? 0 : pageNum - 1;
         pageSize = pageSize == null ? 20 : pageSize;
@@ -60,6 +63,13 @@ public class InvoiceInspectionController {
             cond.setUnitId(userId);
         }
         return invoiceInspectionService.getList(cond, pageNum, pageSize);
+    }
+
+    @Operation(summary ="获取发票库表列表")
+    @GetMapping("/list2")
+    public List<InvoiceInspectionVO> getList2(
+            @Parameter(description ="条件") InvoiceInspectionReqVO cond) {
+        return invoiceInspectionService.getList2(cond);
     }
 
     @Operation(summary ="导出往来账模板")

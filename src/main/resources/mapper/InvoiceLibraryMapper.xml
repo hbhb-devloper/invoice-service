@@ -410,18 +410,17 @@
     from invoice_library il
     left join invoice_goods ig on il.invoice_code = ig.invoice_code
     <where>
-      <if test="cond.sellerTax != null  and cond.sellerTax != ''">
+      <if test="cond.sellerTax != null">
         and il.seller_tax like concat ('%', #{cond.sellerTax}, '%')
       </if>
-      <if test="cond.sellerName != null  and cond.sellerName != ''">
+      <if test="cond.sellerName != null">
         and il.seller_name like concat ('%', #{cond.sellerName}, '%')
       </if>
     </where>
     group by il.invoice_code,il.invoice_number
   </select>
 
-  <select id="countInspectionList" parameterType="map" resultType="int">
-    select COUNT(1) FROM (
+  <select id="selectList" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceInspectionVO">
     select il.invoice_code       as invoiceCode,
     il.invoice_number     as invoiceNumber,
     il.invoice_date       as invoiceDate,
@@ -450,18 +449,7 @@
     ig.tax_rate           as taxRate
     from invoice_library il
     left join invoice_goods ig on il.invoice_code = ig.invoice_code
-    <where>
-    <if test="cond.sellerTax != null  and cond.sellerTax != ''">
-      and il.seller_tax like concat ('%', #{cond.sellerTax}, '%')
-    </if>
-    <if test="cond.sellerName != null  and cond.sellerName != ''">
-      and il.seller_name like concat ('%', #{cond.sellerName}, '%')
-    </if>
-    <if test="cond.invoiceDate != null  and cond.invoiceDate != ''">
-      and il.invoice_date like concat ('%', #{cond.invoiceDate}, '%')
-    </if>
-    </where>
-    group by il.invoice_code,il.invoice_number) t;
+    group by il.invoice_code,il.invoice_number
   </select>
 
   <select id="selectInspectionParentList" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceInspectionVO">

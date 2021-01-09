@@ -47,6 +47,11 @@ public class InvoiceInspectionServiceImpl implements InvoiceInspectionService {
     }
 
     @Override
+    public List<InvoiceInspectionVO> getList2(InvoiceInspectionReqVO cond) {
+        return invoiceLibraryMapper.selectList();
+    }
+
+    @Override
     public List<InvoiceInspectionExportVO> getExportList(InvoiceInspectionReqVO cond) {
         List<InvoiceInspectionVO> checkList = checkList(cond);
         List<InvoiceInspectionExportVO> exportList = BeanConverter.copyBeanList(checkList, InvoiceInspectionExportVO.class);
@@ -68,7 +73,7 @@ public class InvoiceInspectionServiceImpl implements InvoiceInspectionService {
     private List<InvoiceInspectionVO> checkList(InvoiceInspectionReqVO cond) {
         List<InvoiceInspectResVat> vatList = invoice1vatService.getListByCond(cond);
         List<InvoiceInspectionVO> allList = BeanConverter.copyBeanList(vatList, InvoiceInspectionVO.class);
-        List<InvoiceInspectionVO> list = invoiceLibraryMapper.selectInspectionList(cond, cond.getUnitId());
+        List<InvoiceInspectionVO> list = invoiceLibraryMapper.selectInspectionList(cond);
         // invoiceCode+invoiceNumber -> InvoiceInspectionVO
         Map<String, InvoiceInspectionVO> map = new HashMap<>();
         for (InvoiceInspectionVO vo : list) {

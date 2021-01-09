@@ -15,9 +15,9 @@ public interface InvoiceLibraryMapper extends BaseMapper<InvoiceLibrary, Long> {
 
     String selectTime();
 
-    List<InvoiceInspectionVO> selectInspectionList(@Param("cond") InvoiceInspectionReqVO cond, @Param("unitId") Integer unitId);
+    List<InvoiceInspectionVO> selectInspectionList(@Param("cond") InvoiceInspectionReqVO cond);
 
-    int countInspectionList(@Param("cond") InvoiceInspectionReqVO cond, @Param("unitId") Integer unitId);
+    List<InvoiceInspectionVO> selectList();
 
     List<InvoiceInspectionVO> selectInspectionParentList(@Param("cond") InvoiceInspectionReqVO cond, @Param("list") List<Integer> unitIds);
 
