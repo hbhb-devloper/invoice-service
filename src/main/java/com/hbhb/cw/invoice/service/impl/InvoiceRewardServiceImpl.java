@@ -354,9 +354,10 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
             if (list.get(i).getAmountSum() == null) {
                 list.get(i).setAmountSum(new BigDecimal("0.0"));
             }
+            // 往来账酬金 - 正常酬金报账金额（不含税）
             BigDecimal rewSubtract = accountAmount.subtract(list.get(i).getAmountSum());
-            if (rewSubtract.compareTo(ZERO) >= 0) {
-                list.get(i).setAmountCheck("超额结算0");
+            if (rewSubtract.compareTo(ZERO) < 0) {
+                list.get(i).setAmountCheck("超额结算"+rewSubtract);
             }
             // 获得补贴金额（含税）
             BigDecimal taxSub = subMap.get(channel);
@@ -376,10 +377,10 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
                 accountSubsidy = new BigDecimal("0.0");
             }
             list.get(i).setAccountSubsidy(accountSubsidy);
-            // 相减判断是否超额
+            // 相减判断是否超额 往来账综合补贴 - 不含税实付金额
             BigDecimal assSubtract = accountSubsidy.subtract(divide);
-            if (assSubtract.compareTo(ZERO) >= 0) {
-                list.get(i).setSubsidyCheck("超额结算0");
+            if (assSubtract.compareTo(ZERO) < 0) {
+                list.get(i).setSubsidyCheck("超额结算"+assSubtract);
             }
             // 求和项:小计（不含税）
             BigDecimal sum = list.get(i).getAmountSum().add(divide);
@@ -391,10 +392,10 @@ public class InvoiceRewardServiceImpl implements InvoiceRewardService {
                 accountSum = new BigDecimal("0.0");
             }
             list.get(i).setAccountSum(accountSum);
-
+            // 往来帐小计 - 求和项:小计（不含税）
             BigDecimal sumSubtract = accountSum.subtract(sum);
-            if (sumSubtract.compareTo(ZERO) >= 0) {
-                list.get(i).setSumCheck("超额结算0");
+            if (sumSubtract.compareTo(ZERO) < 0) {
+                list.get(i).setSumCheck("超额结算" + sumSubtract);
             }
 
             // 账期赋值

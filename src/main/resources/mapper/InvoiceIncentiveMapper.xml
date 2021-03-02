@@ -144,35 +144,6 @@
       </if>
   </select>
 
-  <select id="selectByParentCond" parameterType="map"  resultType="com.hbhb.cw.invoice.web.vo.InvoiceIncentiveResVO">
-    select
-    u.unit_name as unitId,
-    ii.channel_num as channelNum,
-    ii.channel_name as channelName,
-    ii.tax_amount as taxAmount
-    from invoice_incentive ii
-    left join unit u on u.id = ii.unit_id
-    where ii.unit_id in
-    <foreach collection="list" item="item" open="(" separator="," close=")">
-      #{item}
-    </foreach>
-      <if test="cond.channelNum != null">
-        and ii.channel_num like concat ('%', #{cond.channelNum}, '%')
-      </if>
-  </select>
-
-  <select id="countByParentCond" parameterType="map" resultType="int">
-    select COUNT(1)
-    from invoice_incentive
-    where unit_id in
-    <foreach collection="list" item="item" open="(" separator="," close=")">
-      #{item}
-    </foreach>
-    <if test="cond.channelNum != null">
-      and channel_num like concat ('%', #{cond.channelNum}, '%')
-    </if>
-  </select>
-
   <insert id="insertBatch" parameterType="list">
     insert into invoice_incentive (
     unit_id,
