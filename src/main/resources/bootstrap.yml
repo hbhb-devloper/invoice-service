@@ -40,8 +40,11 @@ management:
 
 # 宿主机相关配置
 host:
+
+  #正式服内网地址
+  docker0: 192.168.0.39
   # docker0地址
-  docker0: 172.17.0.1
+  docker1: 172.17.0.1
   # 代理ip（解决docker容器内部无法访问宿主机ip的问题）
   proxy: 47.96.83.55
 
@@ -67,7 +70,7 @@ spring:
   profiles: default
   cloud:
     consul:
-      host: consul.yeexun.com.cn
+      host: consul.iishoni.com
       discovery:
 #        prefer-ip-address: true
         instance-id: ${spring.application.name}-${server.port}-${spring.cloud.client.ip-address}
@@ -82,7 +85,7 @@ spring:
   profiles: dev
   cloud:
     consul:
-      host: consul.yeexun.com.cn
+      host: consul.iishoni.com
       discovery:
         instance-id: ${spring.application.name}-${port.dev}-${spring.cloud.client.ip-address}
         service-name: ${spring.application.name}
@@ -96,13 +99,13 @@ spring:
   profiles: test
   cloud:
     consul:
-      host: consul.yeexun.com.cn
+      host: consul.iishoni.com
       discovery:
-        instance-id: ${spring.application.name}-${port.test}-${spring.cloud.client.ip-address}
+        instance-id: ${spring.application.name}-${port.test-proxy}-${spring.cloud.client.ip-address}
         service-name: ${spring.application.name}
-        health-check-url: http://${host.docker0}:${port.test}/actuator/health
+        health-check-url: http://${host.docker1}:${port.test-proxy}/actuator/health
         # 测试环境使用代理ip
-        hostname: ${host.proxy}
+        hostname: ${host.docker1}
         port: ${port.test-proxy}
 ################### 正式环境配置 ###################
 ---
