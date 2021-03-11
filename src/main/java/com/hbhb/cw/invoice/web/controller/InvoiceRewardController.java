@@ -40,16 +40,16 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author yzc
  * @since 2020-09-08
  */
-@Tag(name = "渠道发票-酬金发放")
+@Api( "渠道发票-酬金发放")
 @RestController
 @RequestMapping("/remuneration")
 @Slf4j
@@ -135,7 +135,7 @@ public class InvoiceRewardController {
     public void rewardTemplate(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<Object> list = new ArrayList<>();
         String fileName = ExcelUtil.encodingFileName(request, "酬金发放表模板");
-        ExcelUtil.export2WebWithTemplate(response, fileName, "酬金发放明细表---普票",
+        ExcelUtil.export2WebWithTemplate(response, fileName, "酬金发放明细表",
                 fileApi.getTemplatePath() + File.separator + "酬金发放表模板.xlsx", list);
     }
 
