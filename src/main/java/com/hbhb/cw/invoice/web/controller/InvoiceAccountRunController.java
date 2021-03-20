@@ -89,7 +89,7 @@ public class InvoiceAccountRunController {
         List<InvoiceAccountRunExportVO> list = invoiceAccountRunService.getListByCont(cond,userId);
         String fileName = ExcelUtil.encodingFileName(request, "往来账管理表");
         ExcelUtil.export2WebWithTemplate(response, fileName, "往来账",
-                "C:/Users/cn/Desktop/lll" + File.separator + "往来账管理表.xlsx", list);
+                fileApi.getTemplatePath() + File.separator + "往来账管理表.xlsx", list);
     }
 
     @Operation(summary ="导出往来账管理模板")

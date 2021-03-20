@@ -11,6 +11,7 @@ import com.hbhb.cw.invoice.web.vo.InvoiceInspectionExportVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceInspectionReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceInspectionResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceInspectionVO;
+import com.hbhb.cw.systemcenter.enums.UnitEnum;
 
 import org.springframework.stereotype.Service;
 
@@ -66,9 +67,12 @@ public class InvoiceInspectionServiceImpl implements InvoiceInspectionService {
      * 整合List<InvoiceInspectionVO>
      */
     private List<InvoiceInspectionVO> checkList(InvoiceInspectionReqVO cond) {
+        if (UnitEnum.HANGZHOU.value().equals(cond.getUnitId())){
+            cond.setUnitId(null);
+        }
         List<InvoiceInspectResVat> vatList = invoice1vatService.getListByCond(cond);
         List<InvoiceInspectionVO> allList = BeanConverter.copyBeanList(vatList, InvoiceInspectionVO.class);
-        List<InvoiceInspectionVO> list = invoiceLibraryMapper.selectInspectionList(cond, cond.getUnitId());
+        List<InvoiceInspectionVO> list = invoiceLibraryMapper.selectInspectionList(cond);
         // invoiceCode+invoiceNumber -> InvoiceInspectionVO
         Map<String, InvoiceInspectionVO> map = new HashMap<>();
         for (InvoiceInspectionVO vo : list) {

@@ -10,7 +10,6 @@ import com.hbhb.cw.invoice.model.InvoiceVat;
 import com.hbhb.cw.invoice.model.Page;
 import com.hbhb.cw.invoice.rpc.DictApiExp;
 import com.hbhb.cw.invoice.rpc.SysUserApiExp;
-import com.hbhb.cw.invoice.rpc.UnitApiExp;
 import com.hbhb.cw.invoice.service.InvoiceVatService;
 import com.hbhb.cw.invoice.web.vo.InvoiceByCondVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceVatAddVO;
@@ -49,9 +48,6 @@ public class InvoiceVatServiceImpl implements InvoiceVatService {
 
     @Resource
     private SysUserApiExp sysUserApiExp;
-
-    @Resource
-    private UnitApiExp unitApiExp;
 
     /**
      * 查询增值税普票
@@ -159,7 +155,6 @@ public class InvoiceVatServiceImpl implements InvoiceVatService {
         BeanUtils.copyProperties(invoiceVatAddVO, invoiceVat);
         Date date = DateUtil.string2DateYMD(invoiceVatAddVO.getInvoiceDate());
         invoiceVat.setInvoiceDate(date);
-        //赋值单位名称和导入人员
         invoiceVat.setUserId(user.getId());
         invoiceVat.setUnitId(user.getUnitId());
         invoiceVat.setiTime(new Date());

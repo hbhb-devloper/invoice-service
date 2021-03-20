@@ -20,7 +20,10 @@ import com.hbhb.cw.invoice.web.vo.InvoiceRewardReqVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceRewardResVO;
 import com.hbhb.cw.invoice.web.vo.InvoiceSubsidyImportVO;
 import com.hbhb.web.annotation.UserId;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,26 +33,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * @author yzc
  * @since 2020-09-08
  */
-@Tag(name = "渠道发票-酬金发放")
+@Tag(name="渠道发票-酬金发放")
 @RestController
 @RequestMapping("/remuneration")
 @Slf4j
@@ -135,7 +132,7 @@ public class InvoiceRewardController {
     public void rewardTemplate(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<Object> list = new ArrayList<>();
         String fileName = ExcelUtil.encodingFileName(request, "酬金发放表模板");
-        ExcelUtil.export2WebWithTemplate(response, fileName, "酬金发放明细表---普票",
+        ExcelUtil.export2WebWithTemplate(response, fileName, "酬金发放明细表",
                 fileApi.getTemplatePath() + File.separator + "酬金发放表模板.xlsx", list);
     }
 
