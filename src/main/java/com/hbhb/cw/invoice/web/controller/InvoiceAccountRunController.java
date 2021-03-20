@@ -62,6 +62,7 @@ public class InvoiceAccountRunController {
         pageNum = pageNum == null ? 1 : pageNum;
         pageSize = pageSize == null ? 20 : pageSize;
         return invoiceAccountRunService.getPageByCont(cond, userId, pageNum, pageSize);
+
     }
 
     @Operation(summary ="往来账管理导入")
