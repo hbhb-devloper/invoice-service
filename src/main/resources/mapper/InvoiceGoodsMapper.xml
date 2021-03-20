@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbhb.cw.invoice.mapper.InvoiceGoodsMapper">
+  <resultMap id="BaseResultMap" type="com.hbhb.cw.invoice.model.InvoiceGoods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="invoice_code" jdbcType="VARCHAR" property="invoiceCode" />
+    <result column="invoice_number" jdbcType="VARCHAR" property="invoiceNumber" />
+    <result column="tax_code" jdbcType="VARCHAR" property="taxCode" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="quantity" jdbcType="VARCHAR" property="quantity" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="tax_rate" jdbcType="DECIMAL" property="taxRate" />
+    <result column="tax_amount" jdbcType="DECIMAL" property="taxAmount" />
+    <result column="create_by" jdbcType="INTEGER" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, invoice_code, invoice_number, tax_code, goods_name, model, unit, quantity, price, 
+    amount, tax_rate, tax_amount, create_by, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invoice_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from invoice_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbhb.cw.invoice.model.InvoiceGoods">
+    insert into invoice_goods (id, invoice_code, invoice_number, 
+      tax_code, goods_name, model, 
+      unit, quantity, price, 
+      amount, tax_rate, tax_amount, 
+      create_by, create_time)
+    values (#{id,jdbcType=BIGINT}, #{invoiceCode,jdbcType=VARCHAR}, #{invoiceNumber,jdbcType=VARCHAR}, 
+      #{taxCode,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{quantity,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{taxRate,jdbcType=DECIMAL}, #{taxAmount,jdbcType=DECIMAL}, 
+      #{createBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbhb.cw.invoice.model.InvoiceGoods">
+    insert into invoice_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="invoiceCode != null">
+        invoice_code,
+      </if>
+      <if test="invoiceNumber != null">
+        invoice_number,
+      </if>
+      <if test="taxCode != null">
+        tax_code,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="model != null">
+        model,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="taxRate != null">
+        tax_rate,
+      </if>
+      <if test="taxAmount != null">
+        tax_amount,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceCode != null">
+        #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNumber != null">
+        #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="taxCode != null">
+        #{taxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="taxRate != null">
+        #{taxRate,jdbcType=DECIMAL},
+      </if>
+      <if test="taxAmount != null">
+        #{taxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.invoice.model.InvoiceGoods">
+    update invoice_goods
+    <set>
+      <if test="invoiceCode != null">
+        invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNumber != null">
+        invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="taxCode != null">
+        tax_code = #{taxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="taxRate != null">
+        tax_rate = #{taxRate,jdbcType=DECIMAL},
+      </if>
+      <if test="taxAmount != null">
+        tax_amount = #{taxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.invoice.model.InvoiceGoods">
+    update invoice_goods
+    set invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      tax_code = #{taxCode,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      tax_rate = #{taxRate,jdbcType=DECIMAL},
+      tax_amount = #{taxAmount,jdbcType=DECIMAL},
+      create_by = #{createBy,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertBatch" parameterType="list">
+    insert into invoice_goods (
+    invoice_code,
+    invoice_number,
+    tax_code,
+    goods_name,
+    model,
+    unit,
+    quantity,
+    price,
+    amount,
+    tax_rate,
+    tax_amount,
+    create_time) values
+    <foreach item="item" index="index" collection="list" separator=",">
+      (#{item.invoiceCode},
+      #{item.invoiceNumber},
+      #{item.taxCode},
+      #{item.goodsName},
+      #{item.model},
+      #{item.unit},
+      #{item.quantity},
+      #{item.price},
+      #{item.amount},
+      #{item.taxRate},
+      #{item.taxAmount},
+      #{item.createTime})
+    </foreach>
+    ON DUPLICATE KEY UPDATE tax_code = VALUES(tax_code), goods_name = VALUES(goods_name),
+    model= VALUES(model), unit = VALUES(unit),
+    quantity = VALUES(quantity), price = VALUES(price),
+    amount = VALUES(amount),tax_rate = VALUES(tax_rate),tax_amount = VALUES(tax_amount);
+  </insert>
+</mapper>

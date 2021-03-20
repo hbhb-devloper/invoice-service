@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbhb.cw.invoice.mapper.InvoiceSubsidyMapper">
+  <resultMap id="BaseResultMap" type="com.hbhb.cw.invoice.model.InvoiceSubsidy">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="unit_id" jdbcType="INTEGER" property="unitId" />
+    <result column="channel_number" jdbcType="VARCHAR" property="channelNumber" />
+    <result column="tax_subsidy" jdbcType="DECIMAL" property="taxSubsidy" />
+    <result column="import_date" jdbcType="VARCHAR" property="importDate" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, unit_id, channel_number, tax_subsidy, import_date, create_time, create_by, update_time, 
+    update_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invoice_subsidy
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from invoice_subsidy
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbhb.cw.invoice.model.InvoiceSubsidy">
+    insert into invoice_subsidy (id, unit_id, channel_number, 
+      tax_subsidy, import_date, create_time, 
+      create_by, update_time, update_by
+      )
+    values (#{id,jdbcType=BIGINT}, #{unitId,jdbcType=INTEGER}, #{channelNumber,jdbcType=VARCHAR}, 
+      #{taxSubsidy,jdbcType=DECIMAL}, #{importDate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbhb.cw.invoice.model.InvoiceSubsidy">
+    insert into invoice_subsidy
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="unitId != null">
+        unit_id,
+      </if>
+      <if test="channelNumber != null">
+        channel_number,
+      </if>
+      <if test="taxSubsidy != null">
+        tax_subsidy,
+      </if>
+      <if test="importDate != null">
+        import_date,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="unitId != null">
+        #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="channelNumber != null">
+        #{channelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="taxSubsidy != null">
+        #{taxSubsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="importDate != null">
+        #{importDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.invoice.model.InvoiceSubsidy">
+    update invoice_subsidy
+    <set>
+      <if test="unitId != null">
+        unit_id = #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="channelNumber != null">
+        channel_number = #{channelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="taxSubsidy != null">
+        tax_subsidy = #{taxSubsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="importDate != null">
+        import_date = #{importDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.invoice.model.InvoiceSubsidy">
+    update invoice_subsidy
+    set unit_id = #{unitId,jdbcType=INTEGER},
+      channel_number = #{channelNumber,jdbcType=VARCHAR},
+      tax_subsidy = #{taxSubsidy,jdbcType=DECIMAL},
+      import_date = #{importDate,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertBatch" parameterType="list">
+    insert ignore into invoice_subsidy (
+    unit_id,
+    channel_number,
+    tax_subsidy,
+    import_date) values
+    <foreach item="item" index="index" collection="list" separator=",">
+      (#{item.unitId},
+      #{item.channelNumber},
+      #{item.taxSubsidy},
+      #{item.importDate})
+    </foreach>
+  </insert>
+
+  <delete id="deleteByMonth" parameterType="string">
+    delete from invoice_subsidy
+    where import_date = #{month}
+    <if test="unitId != null">
+      and unit_id = #{unitId}
+    </if>
+  </delete>
+
+  <select id="selectListByMonth" parameterType="string" resultType="com.hbhb.cw.invoice.web.vo.InvoiceSubsidyVO">
+    select isu.unit_id        as unitId,
+    u.unit_name        as unitName,
+    isu.channel_number as channelNumber,
+    isu.tax_subsidy    as taxSubsidy
+    from invoice_subsidy isu
+    left join unit u on isu.unit_id = u.id
+    where isu.import_date = #{importDate}
+    group by isu.unit_id, isu.channel_number
+  </select>
+
+</mapper>

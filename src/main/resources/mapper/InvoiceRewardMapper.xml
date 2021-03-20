@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbhb.cw.invoice.mapper.InvoiceRewardMapper">
+  <resultMap id="BaseResultMap" type="com.hbhb.cw.invoice.model.InvoiceReward">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="serial_number" jdbcType="VARCHAR" property="serialNumber" />
+    <result column="channel_month" jdbcType="VARCHAR" property="channelMonth" />
+    <result column="channel_number" jdbcType="VARCHAR" property="channelNumber" />
+    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+    <result column="account_title" jdbcType="VARCHAR" property="accountTitle" />
+    <result column="pay_name" jdbcType="VARCHAR" property="payName" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="amount_due" jdbcType="DECIMAL" property="amountDue" />
+    <result column="payment" jdbcType="DECIMAL" property="payment" />
+    <result column="actual_payment" jdbcType="DECIMAL" property="actualPayment" />
+    <result column="tax_payment" jdbcType="DECIMAL" property="taxPayment" />
+    <result column="invoice_number" jdbcType="VARCHAR" property="invoiceNumber" />
+    <result column="tax_rate" jdbcType="DECIMAL" property="taxRate" />
+    <result column="unit_id" jdbcType="INTEGER" property="unitId" />
+    <result column="import_date" jdbcType="VARCHAR" property="importDate" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, serial_number, channel_month, channel_number, channel_name, account_title, pay_name, 
+    bank_name, bank_account, amount, amount_due, payment, actual_payment, tax_payment, 
+    invoice_number, tax_rate, unit_id, import_date, create_time, create_by, update_by, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invoice_reward
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from invoice_reward
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbhb.cw.invoice.model.InvoiceReward">
+    insert into invoice_reward (id, serial_number, channel_month, 
+      channel_number, channel_name, account_title, 
+      pay_name, bank_name, bank_account, 
+      amount, amount_due, payment, 
+      actual_payment, tax_payment, invoice_number, 
+      tax_rate, unit_id, import_date, 
+      create_time, create_by, update_by, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{serialNumber,jdbcType=VARCHAR}, #{channelMonth,jdbcType=VARCHAR}, 
+      #{channelNumber,jdbcType=VARCHAR}, #{channelName,jdbcType=VARCHAR}, #{accountTitle,jdbcType=VARCHAR}, 
+      #{payName,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{amountDue,jdbcType=DECIMAL}, #{payment,jdbcType=DECIMAL}, 
+      #{actualPayment,jdbcType=DECIMAL}, #{taxPayment,jdbcType=DECIMAL}, #{invoiceNumber,jdbcType=VARCHAR}, 
+      #{taxRate,jdbcType=DECIMAL}, #{unitId,jdbcType=INTEGER}, #{importDate,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbhb.cw.invoice.model.InvoiceReward">
+    insert into invoice_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="serialNumber != null">
+        serial_number,
+      </if>
+      <if test="channelMonth != null">
+        channel_month,
+      </if>
+      <if test="channelNumber != null">
+        channel_number,
+      </if>
+      <if test="channelName != null">
+        channel_name,
+      </if>
+      <if test="accountTitle != null">
+        account_title,
+      </if>
+      <if test="payName != null">
+        pay_name,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="bankAccount != null">
+        bank_account,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="amountDue != null">
+        amount_due,
+      </if>
+      <if test="payment != null">
+        payment,
+      </if>
+      <if test="actualPayment != null">
+        actual_payment,
+      </if>
+      <if test="taxPayment != null">
+        tax_payment,
+      </if>
+      <if test="invoiceNumber != null">
+        invoice_number,
+      </if>
+      <if test="taxRate != null">
+        tax_rate,
+      </if>
+      <if test="unitId != null">
+        unit_id,
+      </if>
+      <if test="importDate != null">
+        import_date,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serialNumber != null">
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="channelMonth != null">
+        #{channelMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNumber != null">
+        #{channelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountTitle != null">
+        #{accountTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="payName != null">
+        #{payName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="amountDue != null">
+        #{amountDue,jdbcType=DECIMAL},
+      </if>
+      <if test="payment != null">
+        #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPayment != null">
+        #{actualPayment,jdbcType=DECIMAL},
+      </if>
+      <if test="taxPayment != null">
+        #{taxPayment,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceNumber != null">
+        #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="taxRate != null">
+        #{taxRate,jdbcType=DECIMAL},
+      </if>
+      <if test="unitId != null">
+        #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="importDate != null">
+        #{importDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.invoice.model.InvoiceReward">
+    update invoice_reward
+    <set>
+      <if test="serialNumber != null">
+        serial_number = #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="channelMonth != null">
+        channel_month = #{channelMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNumber != null">
+        channel_number = #{channelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+        channel_name = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountTitle != null">
+        account_title = #{accountTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="payName != null">
+        pay_name = #{payName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="amountDue != null">
+        amount_due = #{amountDue,jdbcType=DECIMAL},
+      </if>
+      <if test="payment != null">
+        payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPayment != null">
+        actual_payment = #{actualPayment,jdbcType=DECIMAL},
+      </if>
+      <if test="taxPayment != null">
+        tax_payment = #{taxPayment,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceNumber != null">
+        invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="taxRate != null">
+        tax_rate = #{taxRate,jdbcType=DECIMAL},
+      </if>
+      <if test="unitId != null">
+        unit_id = #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="importDate != null">
+        import_date = #{importDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.invoice.model.InvoiceReward">
+    update invoice_reward
+    set serial_number = #{serialNumber,jdbcType=VARCHAR},
+      channel_month = #{channelMonth,jdbcType=VARCHAR},
+      channel_number = #{channelNumber,jdbcType=VARCHAR},
+      channel_name = #{channelName,jdbcType=VARCHAR},
+      account_title = #{accountTitle,jdbcType=VARCHAR},
+      pay_name = #{payName,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      amount_due = #{amountDue,jdbcType=DECIMAL},
+      payment = #{payment,jdbcType=DECIMAL},
+      actual_payment = #{actualPayment,jdbcType=DECIMAL},
+      tax_payment = #{taxPayment,jdbcType=DECIMAL},
+      invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      tax_rate = #{taxRate,jdbcType=DECIMAL},
+      unit_id = #{unitId,jdbcType=INTEGER},
+      import_date = #{importDate,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertBatch" parameterType="list">
+    insert ignore into invoice_reward (
+    serial_number,
+    channel_month,
+    channel_number,
+    channel_name,
+    account_title,
+    pay_name,
+    bank_name,
+    bank_account,
+    amount,
+    amount_due,
+    payment,
+    actual_payment,
+    tax_payment,
+    invoice_number,
+    tax_rate,
+    import_date,
+    unit_id) values
+    <foreach item="item" index="index" collection="list" separator=",">
+      (#{item.serialNumber},
+      #{item.channelMonth},
+      #{item.channelNumber},
+      #{item.channelName},
+      #{item.accountTitle},
+      #{item.payName},
+      #{item.bankName},
+      #{item.bankAccount},
+      #{item.amount},
+      #{item.amountDue},
+      #{item.payment},
+      #{item.actualPayment},
+      #{item.taxPayment},
+      #{item.invoiceNumber},
+      #{item.taxRate},
+      #{item.importDate},
+      #{item.unitId})
+    </foreach>
+  </insert>
+
+  <select id="countBySerialNumber" parameterType="string" resultType="int">
+    select COUNT(1)
+    from invoice_reward
+    where serial_number = #{serialNumber}
+  </select>
+
+  <select id="selectByCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceRewardResVO">
+    select
+    ir.serial_number as serialNumber,
+    ir.channel_month as channelMonth,
+    ir.channel_number as channelNumber,
+    ir.channel_name as channelName,
+    ir.account_title as accountTitle,
+    ir.pay_name as payName,
+    ir.bank_name as bankName,
+    ir.bank_account as bankAccount,
+    ir.amount as amount,
+    ir.amount_due as amountDue,
+    ir.payment as payment,
+    ir.actual_payment as actualPayment,
+    ir.tax_payment as taxPayment,
+    ir.invoice_number as invoiceNumber,
+    ir.tax_rate as taxRate,
+    u.unit_name as unitName,
+    ir.import_date as importDate
+    from invoice_reward ir
+    left join unit u on u.id = ir.unit_id
+    where ir.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.serialNumber != null  and cond.serialNumber != ''">
+        and serial_number = #{cond.serialNumber}
+      </if>
+      <if test="cond.taxRate != null">
+        and ir.tax_rate = #{cond.taxRate}
+      </if>
+      <if test="cond.channelMonth != null  and cond.channelMonth != ''">
+        and channel_month = #{cond.channelMonth}
+      </if>
+      <if test="cond.channelName != null  and cond.channelName != ''">
+        and channel_name like concat ('%', #{cond.channelName}, '%')
+      </if>
+      <if test="cond.channelNumber != null  and cond.channelNumber != ''">
+        and channel_number like concat ('%', #{cond.channelNumber}, '%')
+      </if>
+      <if test="cond.importDate != null  and cond.importDate != ''">
+        and import_date = #{cond.importDate}
+      </if>
+  </select>
+
+  <select id="countByCond" parameterType="map" resultType="int">
+    select count(1)
+    from invoice_reward ir
+    left join unit u on u.id = ir.unit_id
+    where ir.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.taxRate != null">
+        and tax_rate = #{cond.taxRate}
+      </if>
+      <if test="cond.channelMonth != null  and cond.channelMonth != ''">
+        and channel_month = #{cond.channelMonth}
+      </if>
+      <if test="cond.channelName != null  and cond.channelName != ''">
+        and channel_name like concat ('%', #{cond.channelName}, '%')
+      </if>
+      <if test="cond.channelNumber != null  and cond.channelNumber != ''">
+        and channel_number like concat ('%', #{cond.channelNumber}, '%')
+      </if>
+      <if test="cond.importDate != null  and cond.importDate != ''">
+        and import_date = #{cond.importDate}
+      </if>
+      <if test="cond.unitId != null  and cond.unitId != ''">
+        and ir.unit_id = #{cond.unitId}
+      </if>
+  </select>
+
+  <select id="selectByParentCond"  parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceRewardResVO">
+    select
+    ir.serial_number as serialNumber,
+    ir.channel_month as channelMonth,
+    ir.channel_number as channelNumber,
+    ir.channel_name as channelName,
+    ir.account_title as accountTitle,
+    ir.pay_name as payName,
+    ir.bank_name as bankName,
+    ir.bank_account as bankAccount,
+    ir.amount as amount,
+    ir.amount_due as amountDue,
+    ir.payment as payment,
+    ir.actual_payment as actualPayment,
+    ir.tax_payment as taxPayment,
+    ir.invoice_number as invoiceNumber,
+    ir.tax_rate as taxRate,
+    u.unit_name as unitName,
+    ir.import_date as importDate
+    from invoice_reward ir
+    left join unit u on u.id = ir.unit_id
+    where ir.unit_id in
+      <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+      </foreach>
+    <if test="cond.serialNumber != null  and cond.serialNumber != ''">
+      and serial_number = #{cond.serialNumber}
+    </if>
+    <if test="cond.taxRate != null">
+      and tax_rate = #{cond.taxRate}
+    </if>
+    <if test="cond.channelMonth != null  and cond.channelMonth != ''">
+      and channel_month = #{cond.channelMonth}
+    </if>
+    <if test="cond.channelName != null  and cond.channelName != ''">
+      and channel_name like concat ('%', #{cond.channelName}, '%')
+    </if>
+    <if test="cond.channelNumber != null  and cond.channelNumber != ''">
+      and channel_number like concat ('%', #{cond.channelNumber}, '%')
+    </if>
+    <if test="cond.importDate != null  and cond.importDate != ''">
+      and import_date = #{cond.importDate}
+    </if>
+  </select>
+
+  <select id="countByParentCond"  parameterType="map" resultType="int">
+    select count(1)
+    from invoice_reward ir
+    left join unit u on u.id = ir.unit_id
+    where ir.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    <if test="cond.serialNumber != null  and cond.serialNumber != ''">
+      and serial_number = #{cond.serialNumber}
+    </if>
+    <if test="cond.taxRate != null">
+      and tax_rate = #{cond.taxRate}
+    </if>
+    <if test="cond.channelMonth != null  and cond.channelMonth != ''">
+      and channel_month = #{cond.channelMonth}
+    </if>
+    <if test="cond.channelName != null  and cond.channelName != ''">
+      and channel_name like concat ('%', #{cond.channelName}, '%')
+    </if>
+    <if test="cond.channelNumber != null  and cond.channelNumber != ''">
+      and channel_number like concat ('%', #{cond.channelNumber}, '%')
+    </if>
+    <if test="cond.importDate != null  and cond.importDate != ''">
+      and import_date = #{cond.importDate}
+    </if>
+  </select>
+
+  <delete id="deleteBySerialNumber" parameterType="list">
+    delete from invoice_reward
+    where serial_number in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+
+  <select id="censusByCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceMonthExportVO">
+    select ir.unit_id as unitId,
+    ir.channel_month as channelMonth,
+    ir.tax_rate as taxRate,
+    u.unit_name as unitName,
+    ifnull(sum(ir.actual_payment), 0) as actualPaymentSum
+    from invoice_reward ir
+    left join unit u on ir.unit_id = u.id
+    where ir.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.serialNumber != null  and cond.serialNumber != ''">
+        and serial_number = #{cond.serialNumber}
+      </if>
+      <if test="cond.taxRate != null  and cond.taxRate != ''">
+        and tax_rate = #{cond.taxRate}
+      </if>
+      <if test="cond.channelMonth != null  and cond.channelMonth != ''">
+        and channel_month = #{cond.channelMonth}
+      </if>
+      <if test="cond.channelName != null  and cond.channelName != ''">
+        and channel_name like concat ('%', #{cond.channelName, '%')
+      </if>
+      <if test="cond.channelNumber != null  and cond.channelNumber != ''">
+        and channel_number like concat ('%', #{cond.channelNumber}, '%')
+      </if>
+      <if test="cond.importDate != null  and cond.importDate != ''">
+        and import_date = #{cond.importDate}
+      </if>
+    group by ir.unit_id, ir.channel_month, ir.tax_rate, u.unit_name
+  </select>
+
+  <select id="censusByParentCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceMonthExportVO">
+    select ir.unit_id as unitId,
+    ir.channel_month as channelMonth,
+    ir.tax_rate as taxRate,
+    u.unit_name as unitName,
+    ifnull(sum(ir.actual_payment), 0) as actualPaymentSum
+    from invoice_reward ir
+    left join unit u on ir.unit_id = u.id
+    where ir.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    <if test="cond.serialNumber != null  and cond.serialNumber != ''">
+      and serial_number = #{cond.serialNumber}
+    </if>
+    <if test="cond.taxRate != null  and cond.taxRate != ''">
+      and tax_rate = #{cond.taxRate}
+    </if>
+    <if test="cond.channelMonth != null  and cond.channelMonth != ''">
+      and channel_month = #{cond.channelMonth}
+    </if>
+    <if test="cond.channelName != null  and cond.channelName != ''">
+      and channel_name = #{cond.channelName}
+    </if>
+    <if test="cond.channelNumber != null  and cond.channelNumber != ''">
+      and channel_number = #{cond.channelNumber}
+    </if>
+    <if test="cond.importDate != null  and cond.importDate != ''">
+      and import_date = #{cond.importDate}
+    </if>
+    group by ir.unit_id, ir.channel_month, ir.tax_rate, u.unit_name
+  </select>
+
+  <select id="checkListByCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceCheckVO">
+    select ir.unit_id                 as unitId,
+    ir.tax_rate                       as taxRate,
+    u.unit_name                       as unitName,
+    ir.channel_number                 as channelNumber,
+    ifnull(sum(ir.amount), 0)         as amountSum
+    from invoice_reward ir
+    left join unit u on ir.unit_id = u.id
+    where ir.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.serialNumber != null  and cond.serialNumber != ''">
+        and ir.serial_number = #{cond.serialNumber}
+      </if>
+      <if test="cond.taxRate != null  and cond.taxRate != ''">
+        and ir.tax_rate = #{cond.taxRate}
+      </if>
+      <if test="cond.channelMonth != null  and cond.channelMonth != ''">
+        and ir.channel_month = #{cond.channelMonth}
+      </if>
+      <if test="cond.channelName != null  and cond.channelName != ''">
+        and ir.channel_name like concat ('%', #{cond.channelName, '%')
+      </if>
+      <if test="cond.channelNumber != null  and cond.channelNumber != ''">
+        and ir.channel_number like concat ('%', #{cond.channelNumber}, '%')
+      </if>
+      <if test="cond.importDate != null  and cond.importDate != ''">
+        and ir.import_date = #{cond.importDate}
+      </if>
+    group by ir.unit_id, ir.tax_rate, u.unit_name, ir.channel_number
+  </select>
+
+  <select id="checkListByParentCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceMonthExportVO">
+    select ir.unit_id                 as unitId,
+    u.unit_name                       as unitName,
+    ir.channel_number                 as channelNumber,
+    ifnull(sum(ir.amount), 0)         as amountSum
+    from invoice_reward ir
+    left join unit u on ir.unit_id = u.id
+    where ir.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    <if test="cond.serialNumber != null  and cond.serialNumber != ''">
+      and serial_number = #{cond.serialNumber}
+    </if>
+    <if test="cond.taxRate != null  and cond.taxRate != ''">
+      and tax_rate = #{cond.taxRate}
+    </if>
+    <if test="cond.channelMonth != null  and cond.channelMonth != ''">
+      and channel_month = #{cond.channelMonth}
+    </if>
+    <if test="cond.channelName != null  and cond.channelName != ''">
+      and channel_name like concat ('%', #{cond.channelName, '%')
+    </if>
+    <if test="cond.channelNumber != null  and cond.channelNumber != ''">
+      and channel_number like concat ('%', #{cond.channelNumber}, '%')
+    </if>
+    <if test="cond.importDate != null  and cond.importDate != ''">
+      and import_date = #{cond.importDate}
+    </if>
+    group by ir.unit_id, ir.tax_rate, u.unit_name, ir.channel_number
+  </select>
+</mapper>

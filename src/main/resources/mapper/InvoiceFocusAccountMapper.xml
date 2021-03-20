@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbhb.cw.invoice.mapper.InvoiceFocusAccountMapper">
+  <resultMap id="BaseResultMap" type="com.hbhb.cw.invoice.model.InvoiceFocusAccount">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="reward_month" jdbcType="VARCHAR" property="rewardMonth" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="unit_id" jdbcType="INTEGER" property="unitId" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="channel_num" jdbcType="VARCHAR" property="channelNum" />
+    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+    <result column="first_level" jdbcType="VARCHAR" property="firstLevel" />
+    <result column="second_level" jdbcType="VARCHAR" property="secondLevel" />
+    <result column="third_level" jdbcType="VARCHAR" property="thirdLevel" />
+    <result column="director" jdbcType="VARCHAR" property="director" />
+    <result column="withhold" jdbcType="BIGINT" property="withhold" />
+    <result column="pay_name" jdbcType="VARCHAR" property="payName" />
+    <result column="bank" jdbcType="VARCHAR" property="bank" />
+    <result column="bank_branch" jdbcType="VARCHAR" property="bankBranch" />
+    <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="reward" jdbcType="DECIMAL" property="reward" />
+    <result column="payable" jdbcType="DECIMAL" property="payable" />
+    <result column="pay_state" jdbcType="VARCHAR" property="payState" />
+    <result column="invoice_open" jdbcType="VARCHAR" property="invoiceOpen" />
+    <result column="reward_number" jdbcType="VARCHAR" property="rewardNumber" />
+    <result column="purpose" jdbcType="VARCHAR" property="purpose" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, reward_month, city, unit_id, area, channel_num, channel_name, first_level, second_level, 
+    third_level, director, withhold, pay_name, bank, bank_branch, bank_account, reward, 
+    payable, pay_state, invoice_open, reward_number, purpose, create_time, create_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invoice_focus_account
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from invoice_focus_account
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbhb.cw.invoice.model.InvoiceFocusAccount">
+    insert into invoice_focus_account (id, reward_month, city, 
+      unit_id, area, channel_num, 
+      channel_name, first_level, second_level, 
+      third_level, director, withhold, 
+      pay_name, bank, bank_branch, 
+      bank_account, reward, payable, 
+      pay_state, invoice_open, reward_number,
+      purpose, create_time, create_by
+      )
+    values (#{id,jdbcType=BIGINT}, #{rewardMonth,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{unitId,jdbcType=INTEGER}, #{area,jdbcType=VARCHAR}, #{channelNum,jdbcType=VARCHAR}, 
+      #{channelName,jdbcType=VARCHAR}, #{firstLevel,jdbcType=VARCHAR}, #{secondLevel,jdbcType=VARCHAR}, 
+      #{thirdLevel,jdbcType=VARCHAR}, #{director,jdbcType=VARCHAR}, #{withhold,jdbcType=BIGINT}, 
+      #{payName,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, #{bankBranch,jdbcType=VARCHAR}, 
+      #{bankAccount,jdbcType=VARCHAR}, #{reward,jdbcType=DECIMAL}, #{payable,jdbcType=DECIMAL}, 
+      #{payState,jdbcType=VARCHAR}, #{invoiceOpen,jdbcType=VARCHAR}, #{rewardNumber,jdbcType=VARCHAR}, 
+      #{purpose,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbhb.cw.invoice.model.InvoiceFocusAccount">
+    insert into invoice_focus_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="rewardMonth != null">
+        reward_month,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="unitId != null">
+        unit_id,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="channelNum != null">
+        channel_num,
+      </if>
+      <if test="channelName != null">
+        channel_name,
+      </if>
+      <if test="firstLevel != null">
+        first_level,
+      </if>
+      <if test="secondLevel != null">
+        second_level,
+      </if>
+      <if test="thirdLevel != null">
+        third_level,
+      </if>
+      <if test="director != null">
+        director,
+      </if>
+      <if test="withhold != null">
+        withhold,
+      </if>
+      <if test="payName != null">
+        pay_name,
+      </if>
+      <if test="bank != null">
+        bank,
+      </if>
+      <if test="bankBranch != null">
+        bank_branch,
+      </if>
+      <if test="bankAccount != null">
+        bank_account,
+      </if>
+      <if test="reward != null">
+        reward,
+      </if>
+      <if test="payable != null">
+        payable,
+      </if>
+      <if test="payState != null">
+        pay_state,
+      </if>
+      <if test="invoiceOpen != null">
+        invoice_open,
+      </if>
+      <if test="rewardNumber != null">
+        reward_number,
+      </if>
+      <if test="purpose != null">
+        purpose,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="rewardMonth != null">
+        #{rewardMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null">
+        #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null">
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstLevel != null">
+        #{firstLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="secondLevel != null">
+        #{secondLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdLevel != null">
+        #{thirdLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="director != null">
+        #{director,jdbcType=VARCHAR},
+      </if>
+      <if test="withhold != null">
+        #{withhold,jdbcType=BIGINT},
+      </if>
+      <if test="payName != null">
+        #{payName,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankBranch != null">
+        #{bankBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="payable != null">
+        #{payable,jdbcType=DECIMAL},
+      </if>
+      <if test="payState != null">
+        #{payState,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceOpen != null">
+        #{invoiceOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardNumber != null">
+        #{rewardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="purpose != null">
+        #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.invoice.model.InvoiceFocusAccount">
+    update invoice_focus_account
+    <set>
+      <if test="rewardMonth != null">
+        reward_month = #{rewardMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null">
+        unit_id = #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null">
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+        channel_name = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstLevel != null">
+        first_level = #{firstLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="secondLevel != null">
+        second_level = #{secondLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdLevel != null">
+        third_level = #{thirdLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="director != null">
+        director = #{director,jdbcType=VARCHAR},
+      </if>
+      <if test="withhold != null">
+        withhold = #{withhold,jdbcType=BIGINT},
+      </if>
+      <if test="payName != null">
+        pay_name = #{payName,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankBranch != null">
+        bank_branch = #{bankBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="reward != null">
+        reward = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="payable != null">
+        payable = #{payable,jdbcType=DECIMAL},
+      </if>
+      <if test="payState != null">
+        pay_state = #{payState,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceOpen != null">
+        invoice_open = #{invoiceOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardNumber != null">
+        reward_number = #{rewardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="purpose != null">
+        purpose = #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.invoice.model.InvoiceFocusAccount">
+    update invoice_focus_account
+    set reward_month = #{rewardMonth,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      unit_id = #{unitId,jdbcType=INTEGER},
+      area = #{area,jdbcType=VARCHAR},
+      channel_num = #{channelNum,jdbcType=VARCHAR},
+      channel_name = #{channelName,jdbcType=VARCHAR},
+      first_level = #{firstLevel,jdbcType=VARCHAR},
+      second_level = #{secondLevel,jdbcType=VARCHAR},
+      third_level = #{thirdLevel,jdbcType=VARCHAR},
+      director = #{director,jdbcType=VARCHAR},
+      withhold = #{withhold,jdbcType=BIGINT},
+      pay_name = #{payName,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=VARCHAR},
+      bank_branch = #{bankBranch,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      reward = #{reward,jdbcType=DECIMAL},
+      payable = #{payable,jdbcType=DECIMAL},
+      pay_state = #{payState,jdbcType=VARCHAR},
+      invoice_open = #{invoiceOpen,jdbcType=VARCHAR},
+      reward_number = #{rewardNumber,jdbcType=VARCHAR},
+      purpose = #{purpose,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceFocusAccountResVO">
+    select
+    ifa.reward_month as rewardMonth,
+    ifa.city         as city,
+    u.unit_name      as unitId,
+    ifa.area         as area,
+    ifa.channel_num  as channelNum,
+    ifa.channel_name as channelName,
+    ifa.first_level  as firstLevel,
+    ifa.second_level as secondLevel,
+    ifa.third_level  as thirdLevel,
+    ifa.director     as director,
+    ifa.withhold     as withhold,
+    ifa.pay_name     as payName,
+    ifa.bank         as bank,
+    ifa.bank_branch  as bankBranch,
+    ifa.bank_account as bankAccount,
+    ifa.reward       as reward,
+    ifa.payable      as payable,
+    ifa.pay_state    as payState,
+    ifa.invoice_open as invoiceOpen,
+    ifa.reward_number as rewardNumber,
+    ifa.purpose      as purpose
+    from invoice_focus_account ifa
+    left join unit u on u.id = ifa.unit_id
+    where ifa.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.rewardMonth != null">
+        and ifa.reward_month like concat ('%', #{cond.rewardMonth}, '%')
+      </if>
+      <if test="cond.channelNum != null">
+        and ifa.channel_num like concat ('%',#{cond.channelNum}, '%')
+      </if>
+      <if test="cond.channelName != null">
+        and ifa.channel_name like concat ('%',#{cond.channelName}, '%')
+      </if>
+  </select>
+
+  <select id="countByCond" parameterType="map" resultType="int">
+    select COUNT(1)
+    from invoice_focus_account
+    where unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.rewardMonth != null">
+        and reward_month like concat ('%', #{cond.rewardMonth}, '%')
+      </if>
+      <if test="cond.channelNum != null">
+        and channel_num like concat ('%',#{cond.channelNum}, '%')
+      </if>
+      <if test="cond.channelName != null">
+        and channel_name like concat ('%',#{cond.channelName}, '%')
+      </if>
+  </select>
+
+  <select id="selectByParentCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceFocusAccountResVO">
+    select
+    ifa.reward_month as rewardMonth,
+    ifa.city         as city,
+    u.unit_name      as unitId,
+    ifa.area         as area,
+    ifa.channel_num  as channelNum,
+    ifa.channel_name as channelName,
+    ifa.first_level  as firstLevel,
+    ifa.second_level as secondLevel,
+    ifa.third_level  as thirdLevel,
+    ifa.director     as director,
+    ifa.withhold     as withhold,
+    ifa.pay_name     as payName,
+    ifa.bank         as bank,
+    ifa.bank_branch  as bankBranch,
+    ifa.bank_account as bankAccount,
+    ifa.reward       as reward,
+    ifa.payable      as payable,
+    ifa.pay_state    as payState,
+    ifa.invoice_open as invoiceOpen,
+    ifa.reward_number as rewardNumber,
+    ifa.purpose      as purpose
+    from invoice_focus_account ifa
+    left join unit u on u.id = ifa.unit_id
+    where ifa.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    <if test="cond.rewardMonth != null">
+      and ifa.reward_month like concat ('%', #{cond.rewardMonth}, '%')
+    </if>
+    <if test="cond.channelNum != null">
+      and ifa.channel_num like concat ('%',#{cond.channelNum}, '%')
+    </if>
+    <if test="cond.channelName != null">
+      and ifa.channel_name like concat ('%',#{cond.channelName}, '%')
+    </if>
+  </select>
+
+  <select id="countByParentCond" parameterType="map" resultType="int">
+    select COUNT(1)
+    from invoice_focus_account
+    where unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    <if test="cond.rewardMonth != null">
+      and reward_month like concat ('%', #{cond.rewardMonth}, '%')
+    </if>
+    <if test="cond.channelNum != null">
+      and channel_num like concat ('%',#{cond.channelNum}, '%')
+    </if>
+    <if test="cond.channelName != null">
+      and channel_name like concat ('%',#{cond.channelName}, '%')
+    </if>
+  </select>
+
+  <insert id="insertBatch" parameterType="list">
+    insert into invoice_focus_account (
+    reward_month,
+    city,
+    unit_id,
+    area,
+    channel_num,
+    channel_name,
+    first_level,
+    second_level,
+    third_level,
+    director,
+    withhold,
+    pay_name,
+    bank,
+    bank_branch,
+    bank_account,
+    reward,
+    payable,
+    pay_state,
+    Invoice_open,
+    reward_number,
+    purpose) values
+    <foreach item="item" index="index" collection="list" separator=",">
+      (#{item.rewardMonth},
+      #{item.city},
+      #{item.unitId},
+      #{item.area},
+      #{item.channelNum},
+      #{item.channelName},
+      #{item.firstLevel},
+      #{item.secondLevel},
+      #{item.thirdLevel},
+      #{item.director},
+      #{item.withhold},
+      #{item.payName},
+      #{item.bank},
+      #{item.bankBranch},
+      #{item.bankAccount},
+      #{item.reward},
+      #{item.payable},
+      #{item.payState},
+      #{item.invoiceOpen},
+      #{item.rewardNumber},
+      #{item.purpose})
+    </foreach>
+  </insert>
+
+  <delete id="deleteByUnitId" parameterType="int">
+    delete from invoice_focus_account
+    <where>
+      <if test="unitId != null">
+        and unit_id = #{unitId}
+      </if>
+    </where>
+  </delete>
+</mapper>

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbhb.cw.invoice.mapper.InvoiceRewardDetailedMapper">
+  <resultMap id="BaseResultMap" type="com.hbhb.cw.invoice.model.InvoiceRewardDetailed">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="unit_id" jdbcType="INTEGER" property="unitId" />
+    <result column="market_center" jdbcType="VARCHAR" property="marketCenter" />
+    <result column="channel_type" jdbcType="VARCHAR" property="channelType" />
+    <result column="channel_son_type" jdbcType="VARCHAR" property="channelSonType" />
+    <result column="agent_num" jdbcType="VARCHAR" property="agentNum" />
+    <result column="agent" jdbcType="VARCHAR" property="agent" />
+    <result column="project_type" jdbcType="VARCHAR" property="projectType" />
+    <result column="business_type" jdbcType="VARCHAR" property="businessType" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="average_price" jdbcType="DECIMAL" property="averagePrice" />
+    <result column="tally" jdbcType="DECIMAL" property="tally" />
+    <result column="rat_reward" jdbcType="DECIMAL" property="ratReward" />
+    <result column="actually_paid" jdbcType="DECIMAL" property="actuallyPaid" />
+    <result column="calculation_basis" jdbcType="VARCHAR" property="calculationBasis" />
+    <result column="reward" jdbcType="DECIMAL" property="reward" />
+    <result column="account_period" jdbcType="VARCHAR" property="accountPeriod" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, city, unit_id, market_center, channel_type, channel_son_type, agent_num, agent, 
+    project_type, business_type, brand, average_price, tally, rat_reward, actually_paid, 
+    calculation_basis, reward, account_period, create_time, create_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invoice_reward_detailed
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from invoice_reward_detailed
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbhb.cw.invoice.model.InvoiceRewardDetailed">
+    insert into invoice_reward_detailed (id, city, unit_id, 
+      market_center, channel_type, channel_son_type, 
+      agent_num, agent, project_type, 
+      business_type, brand, average_price, 
+      tally, rat_reward, actually_paid, 
+      calculation_basis, reward, account_period, 
+      create_time, create_by)
+    values (#{id,jdbcType=BIGINT}, #{city,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER}, 
+      #{marketCenter,jdbcType=VARCHAR}, #{channelType,jdbcType=VARCHAR}, #{channelSonType,jdbcType=VARCHAR}, 
+      #{agentNum,jdbcType=VARCHAR}, #{agent,jdbcType=VARCHAR}, #{projectType,jdbcType=VARCHAR}, 
+      #{businessType,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{averagePrice,jdbcType=DECIMAL}, 
+      #{tally,jdbcType=DECIMAL}, #{ratReward,jdbcType=DECIMAL}, #{actuallyPaid,jdbcType=DECIMAL}, 
+      #{calculationBasis,jdbcType=VARCHAR}, #{reward,jdbcType=DECIMAL}, #{accountPeriod,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbhb.cw.invoice.model.InvoiceRewardDetailed">
+    insert into invoice_reward_detailed
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="unitId != null">
+        unit_id,
+      </if>
+      <if test="marketCenter != null">
+        market_center,
+      </if>
+      <if test="channelType != null">
+        channel_type,
+      </if>
+      <if test="channelSonType != null">
+        channel_son_type,
+      </if>
+      <if test="agentNum != null">
+        agent_num,
+      </if>
+      <if test="agent != null">
+        agent,
+      </if>
+      <if test="projectType != null">
+        project_type,
+      </if>
+      <if test="businessType != null">
+        business_type,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="averagePrice != null">
+        average_price,
+      </if>
+      <if test="tally != null">
+        tally,
+      </if>
+      <if test="ratReward != null">
+        rat_reward,
+      </if>
+      <if test="actuallyPaid != null">
+        actually_paid,
+      </if>
+      <if test="calculationBasis != null">
+        calculation_basis,
+      </if>
+      <if test="reward != null">
+        reward,
+      </if>
+      <if test="accountPeriod != null">
+        account_period,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null">
+        #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="marketCenter != null">
+        #{marketCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="channelType != null">
+        #{channelType,jdbcType=VARCHAR},
+      </if>
+      <if test="channelSonType != null">
+        #{channelSonType,jdbcType=VARCHAR},
+      </if>
+      <if test="agentNum != null">
+        #{agentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="agent != null">
+        #{agent,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null">
+        #{projectType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null">
+        #{businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="averagePrice != null">
+        #{averagePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tally != null">
+        #{tally,jdbcType=DECIMAL},
+      </if>
+      <if test="ratReward != null">
+        #{ratReward,jdbcType=DECIMAL},
+      </if>
+      <if test="actuallyPaid != null">
+        #{actuallyPaid,jdbcType=DECIMAL},
+      </if>
+      <if test="calculationBasis != null">
+        #{calculationBasis,jdbcType=VARCHAR},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="accountPeriod != null">
+        #{accountPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.invoice.model.InvoiceRewardDetailed">
+    update invoice_reward_detailed
+    <set>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null">
+        unit_id = #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="marketCenter != null">
+        market_center = #{marketCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="channelType != null">
+        channel_type = #{channelType,jdbcType=VARCHAR},
+      </if>
+      <if test="channelSonType != null">
+        channel_son_type = #{channelSonType,jdbcType=VARCHAR},
+      </if>
+      <if test="agentNum != null">
+        agent_num = #{agentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="agent != null">
+        agent = #{agent,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null">
+        project_type = #{projectType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null">
+        business_type = #{businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="averagePrice != null">
+        average_price = #{averagePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tally != null">
+        tally = #{tally,jdbcType=DECIMAL},
+      </if>
+      <if test="ratReward != null">
+        rat_reward = #{ratReward,jdbcType=DECIMAL},
+      </if>
+      <if test="actuallyPaid != null">
+        actually_paid = #{actuallyPaid,jdbcType=DECIMAL},
+      </if>
+      <if test="calculationBasis != null">
+        calculation_basis = #{calculationBasis,jdbcType=VARCHAR},
+      </if>
+      <if test="reward != null">
+        reward = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="accountPeriod != null">
+        account_period = #{accountPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.invoice.model.InvoiceRewardDetailed">
+    update invoice_reward_detailed
+    set city = #{city,jdbcType=VARCHAR},
+      unit_id = #{unitId,jdbcType=INTEGER},
+      market_center = #{marketCenter,jdbcType=VARCHAR},
+      channel_type = #{channelType,jdbcType=VARCHAR},
+      channel_son_type = #{channelSonType,jdbcType=VARCHAR},
+      agent_num = #{agentNum,jdbcType=VARCHAR},
+      agent = #{agent,jdbcType=VARCHAR},
+      project_type = #{projectType,jdbcType=VARCHAR},
+      business_type = #{businessType,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      average_price = #{averagePrice,jdbcType=DECIMAL},
+      tally = #{tally,jdbcType=DECIMAL},
+      rat_reward = #{ratReward,jdbcType=DECIMAL},
+      actually_paid = #{actuallyPaid,jdbcType=DECIMAL},
+      calculation_basis = #{calculationBasis,jdbcType=VARCHAR},
+      reward = #{reward,jdbcType=DECIMAL},
+      account_period = #{accountPeriod,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertBatch" parameterType="list">
+    insert into invoice_reward_detailed (
+    city,
+    unit_id,
+    market_center,
+    channel_type,
+    channel_son_type,
+    agent_num,
+    agent,
+    project_type,
+    business_type,
+    brand,
+    average_price,
+    tally,
+    rat_reward,
+    actually_paid,
+    calculation_basis,
+    reward,
+    account_period) values
+    <foreach item="item" index="index" collection="list" separator=",">
+      (#{item.city},
+      #{item.unitId},
+      #{item.marketCenter},
+      #{item.channelType},
+      #{item.channelSonType},
+      #{item.agentNum},
+      #{item.agent},
+      #{item.projectType},
+      #{item.businessType},
+      #{item.brand},
+      #{item.averagePrice},
+      #{item.tally},
+      #{item.ratReward},
+      #{item.actuallyPaid},
+      #{item.calculationBasis},
+      #{item.reward},
+      #{item.accountPeriod})
+    </foreach>
+  </insert>
+
+
+  <select id="selectByCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceRewardDetailedResVO">
+    select
+    ird.city             as city,
+    u.unit_name          as unitId,
+    ird.market_center    as marketCenter,
+    ird.channel_type     as channelType,
+    ird.channel_son_type as channelSonType,
+    ird.agent_num        as agentNum,
+    ird.agent            as agent,
+    ird.project_type     as projectType,
+    ird.business_type    as businessType,
+    ird.brand            as brand,
+    ird.average_price    as averagePrice,
+    ird.tally            as tally,
+    ird.account_period   as accountPeriod,
+    ird.rat_reward       as ratReward,
+    actually_paid        as actuallyPaid,
+    calculation_basis    as calculationBasis,
+    reward               as reward,
+    account_period       as accountPeriod
+    from invoice_reward_detailed ird
+    left join unit u on u.id = ird.unit_id
+    where ird.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.agentNum != null">
+        and ird.agent_num like concat ('%', #{cond.agentNum}, '%')
+      </if>
+      <if test="cond.accountPeriod != null">
+        and ird.account_period like concat (#{cond.accountPeriod}, '%')
+      </if>
+  </select>
+
+  <select id="countByCond" parameterType="map" resultType="int">
+    select COUNT(1)
+    from invoice_reward_detailed
+    where unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.agentNum != null">
+        and agent_num like concat ('%', #{cond.agentNum}, '%')
+      </if>
+      <if test="cond.accountPeriod != null">
+        and account_period like concat (#{cond.accountPeriod}, '%')
+      </if>
+  </select>
+
+  <delete id="deleteByUnitId" parameterType="int">
+    delete from invoice_reward_detailed
+    <where>
+      <if test="unitId != null">
+        and unit_id = #{unitId}
+      </if>
+    </where>
+  </delete>
+</mapper>

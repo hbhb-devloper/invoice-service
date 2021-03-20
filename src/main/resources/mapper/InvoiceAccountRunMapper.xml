@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbhb.cw.invoice.mapper.InvoiceAccountRunMapper">
+  <resultMap id="BaseResultMap" type="com.hbhb.cw.invoice.model.InvoiceAccountRun">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="unit_id" jdbcType="INTEGER" property="unitId" />
+    <result column="channel_num" jdbcType="VARCHAR" property="channelNum" />
+    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+    <result column="last_reward" jdbcType="DECIMAL" property="lastReward" />
+    <result column="last_subsidy" jdbcType="DECIMAL" property="lastSubsidy" />
+    <result column="reward_free_amount" jdbcType="DECIMAL" property="rewardFreeAmount" />
+    <result column="reward_tax_amount" jdbcType="DECIMAL" property="rewardTaxAmount" />
+    <result column="subsidy_free_amount" jdbcType="DECIMAL" property="subsidyFreeAmount" />
+    <result column="subsidy_tax_amount" jdbcType="DECIMAL" property="subsidyTaxAmount" />
+    <result column="reward_free_pay" jdbcType="DECIMAL" property="rewardFreePay" />
+    <result column="reward_tax_pay" jdbcType="DECIMAL" property="rewardTaxPay" />
+    <result column="subsidy_free_pay" jdbcType="DECIMAL" property="subsidyFreePay" />
+    <result column="subsidy_tax_pay" jdbcType="DECIMAL" property="subsidyTaxPay" />
+    <result column="this_reward" jdbcType="DECIMAL" property="thisReward" />
+    <result column="this_subsidy" jdbcType="DECIMAL" property="thisSubsidy" />
+    <result column="subtotal" jdbcType="DECIMAL" property="subtotal" />
+    <result column="channel_by" jdbcType="VARCHAR" property="channelBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, unit_id, channel_num, channel_name, last_reward, last_subsidy, reward_free_amount,
+    reward_tax_amount, subsidy_free_amount, subsidy_tax_amount, reward_free_pay, reward_tax_pay, 
+    subsidy_free_pay, subsidy_tax_pay, this_reward, this_subsidy, subtotal, channel_by,
+    create_time, create_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invoice_account_run
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from invoice_account_run
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbhb.cw.invoice.model.InvoiceAccountRun">
+    insert into invoice_account_run (id, unit_id, channel_num,
+      channel_name, last_reward, last_subsidy,
+      reward_free_amount, reward_tax_amount, subsidy_free_amount, 
+      subsidy_tax_amount, reward_free_pay, reward_tax_pay, 
+      subsidy_free_pay, subsidy_tax_pay, this_reward, 
+      this_subsidy, subtotal, channel_by,
+      create_time, create_by)
+    values (#{id,jdbcType=BIGINT}, #{unitId,jdbcType=INTEGER}, #{channelNum,jdbcType=VARCHAR},
+      #{channelName,jdbcType=VARCHAR}, #{lastReward,jdbcType=DECIMAL}, #{lastSubsidy,jdbcType=DECIMAL},
+      #{rewardFreeAmount,jdbcType=DECIMAL}, #{rewardTaxAmount,jdbcType=DECIMAL}, #{subsidyFreeAmount,jdbcType=DECIMAL}, 
+      #{subsidyTaxAmount,jdbcType=DECIMAL}, #{rewardFreePay,jdbcType=DECIMAL}, #{rewardTaxPay,jdbcType=DECIMAL}, 
+      #{subsidyFreePay,jdbcType=DECIMAL}, #{subsidyTaxPay,jdbcType=DECIMAL}, #{thisReward,jdbcType=DECIMAL}, 
+      #{thisSubsidy,jdbcType=DECIMAL}, #{subtotal,jdbcType=DECIMAL}, #{channelBy,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbhb.cw.invoice.model.InvoiceAccountRun">
+    insert into invoice_account_run
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="unitId != null">
+        unit_id,
+      </if>
+      <if test="channelNum != null">
+        channel_num,
+      </if>
+      <if test="channelName != null">
+        channel_name,
+      </if>
+      <if test="lastReward != null">
+        last_reward,
+      </if>
+      <if test="lastSubsidy != null">
+        last_subsidy,
+      </if>
+      <if test="rewardFreeAmount != null">
+        reward_free_amount,
+      </if>
+      <if test="rewardTaxAmount != null">
+        reward_tax_amount,
+      </if>
+      <if test="subsidyFreeAmount != null">
+        subsidy_free_amount,
+      </if>
+      <if test="subsidyTaxAmount != null">
+        subsidy_tax_amount,
+      </if>
+      <if test="rewardFreePay != null">
+        reward_free_pay,
+      </if>
+      <if test="rewardTaxPay != null">
+        reward_tax_pay,
+      </if>
+      <if test="subsidyFreePay != null">
+        subsidy_free_pay,
+      </if>
+      <if test="subsidyTaxPay != null">
+        subsidy_tax_pay,
+      </if>
+      <if test="thisReward != null">
+        this_reward,
+      </if>
+      <if test="thisSubsidy != null">
+        this_subsidy,
+      </if>
+      <if test="subtotal != null">
+        subtotal,
+      </if>
+      <if test="channelBy != null">
+        channel_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="unitId != null">
+        #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="channelNum != null">
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastReward != null">
+        #{lastReward,jdbcType=DECIMAL},
+      </if>
+      <if test="lastSubsidy != null">
+        #{lastSubsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardFreeAmount != null">
+        #{rewardFreeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardTaxAmount != null">
+        #{rewardTaxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidyFreeAmount != null">
+        #{subsidyFreeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidyTaxAmount != null">
+        #{subsidyTaxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardFreePay != null">
+        #{rewardFreePay,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardTaxPay != null">
+        #{rewardTaxPay,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidyFreePay != null">
+        #{subsidyFreePay,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidyTaxPay != null">
+        #{subsidyTaxPay,jdbcType=DECIMAL},
+      </if>
+      <if test="thisReward != null">
+        #{thisReward,jdbcType=DECIMAL},
+      </if>
+      <if test="thisSubsidy != null">
+        #{thisSubsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="subtotal != null">
+        #{subtotal,jdbcType=DECIMAL},
+      </if>
+      <if test="channelBy != null">
+        #{channelBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbhb.cw.invoice.model.InvoiceAccountRun">
+    update invoice_account_run
+    <set>
+      <if test="unitId != null">
+        unit_id = #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="channelNum != null">
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+        channel_name = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastReward != null">
+        last_reward = #{lastReward,jdbcType=DECIMAL},
+      </if>
+      <if test="lastSubsidy != null">
+        last_subsidy = #{lastSubsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardFreeAmount != null">
+        reward_free_amount = #{rewardFreeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardTaxAmount != null">
+        reward_tax_amount = #{rewardTaxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidyFreeAmount != null">
+        subsidy_free_amount = #{subsidyFreeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidyTaxAmount != null">
+        subsidy_tax_amount = #{subsidyTaxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardFreePay != null">
+        reward_free_pay = #{rewardFreePay,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardTaxPay != null">
+        reward_tax_pay = #{rewardTaxPay,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidyFreePay != null">
+        subsidy_free_pay = #{subsidyFreePay,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidyTaxPay != null">
+        subsidy_tax_pay = #{subsidyTaxPay,jdbcType=DECIMAL},
+      </if>
+      <if test="thisReward != null">
+        this_reward = #{thisReward,jdbcType=DECIMAL},
+      </if>
+      <if test="thisSubsidy != null">
+        this_subsidy = #{thisSubsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="subtotal != null">
+        subtotal = #{subtotal,jdbcType=DECIMAL},
+      </if>
+      <if test="channelBy != null">
+        channel_by = #{channelBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbhb.cw.invoice.model.InvoiceAccountRun">
+    update invoice_account_run
+    set unit_id = #{unitId,jdbcType=INTEGER},
+      channel_num = #{channelNum,jdbcType=VARCHAR},
+      channel_name = #{channelName,jdbcType=VARCHAR},
+      last_reward = #{lastReward,jdbcType=DECIMAL},
+      last_subsidy = #{lastSubsidy,jdbcType=DECIMAL},
+      reward_free_amount = #{rewardFreeAmount,jdbcType=DECIMAL},
+      reward_tax_amount = #{rewardTaxAmount,jdbcType=DECIMAL},
+      subsidy_free_amount = #{subsidyFreeAmount,jdbcType=DECIMAL},
+      subsidy_tax_amount = #{subsidyTaxAmount,jdbcType=DECIMAL},
+      reward_free_pay = #{rewardFreePay,jdbcType=DECIMAL},
+      reward_tax_pay = #{rewardTaxPay,jdbcType=DECIMAL},
+      subsidy_free_pay = #{subsidyFreePay,jdbcType=DECIMAL},
+      subsidy_tax_pay = #{subsidyTaxPay,jdbcType=DECIMAL},
+      this_reward = #{thisReward,jdbcType=DECIMAL},
+      this_subsidy = #{thisSubsidy,jdbcType=DECIMAL},
+      subtotal = #{subtotal,jdbcType=DECIMAL},
+      channel_by = #{channelBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceAccountRunResVO">
+    select
+    u.unit_name as unitId,
+    iar.channel_num as channelNum,
+    iar.channel_name as channelName,
+    iar.last_reward as lastReward,
+    iar.last_subsidy as lastSubsidy,
+    iar.reward_free_amount as rewardFreeAmount,
+    iar.reward_tax_amount as rewardTaxAmount,
+    iar.subsidy_free_amount as subsidyFreeAmount,
+    iar.subsidy_tax_amount as subsidyTaxAmount,
+    iar.reward_free_pay as rewardFreePay,
+    iar.reward_tax_pay as rewardTaxPay,
+    iar.this_reward as thisReward,
+    iar.this_subsidy as thisSubsidy,
+    iar.subtotal as subtotal,
+    iar.channel_by as channelBy
+    from invoice_account_run iar
+    left join unit u on u.id = iar.unit_id
+    where iar.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    <if test="cond.channelNum != null">
+      and iar.channel_num  like concat ('%', #{cond.channelNum}, '%')
+    </if>
+    <if test="cond.channelName != null">
+      and iar.channel_name like concat ('%', #{cond.channelName}, '%')
+    </if>
+    <if test="cond.beginTime != null and cond.beginTime != '' and cond.endTime != null and cond.endTime != ''">
+      and iar.create_time between #{cond.beginTime} and #{cond.endTime}
+    </if>
+  </select>
+
+  <select id="countByCond" parameterType="map" resultType="int">
+    select COUNT(1)
+    from invoice_account_run
+    <where>
+      <if test="cond.unitId != null">
+        and unit_id = #{cond.unitId}
+      </if>
+      <if test="cond.channelNum != null">
+        and channel_num  like concat ('%', #{cond.channelNum}, '%')
+      </if>
+      <if test="cond.channelName != null">
+        and channel_name like concat ('%', #{cond.channelName}, '%')
+      </if>
+      <if test="cond.beginTime != null and cond.beginTime != '' and cond.endTime != null and cond.endTime != ''">
+        and create_time between #{cond.beginTime} and #{cond.endTime}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectTime" parameterType="int" resultType="string">
+    select create_time
+    from invoice_account_run
+    where unit_id = 109
+    order by create_time desc
+    limit 1
+  </select>
+
+  <insert id="insertBatch" parameterType="list">
+    insert into invoice_account_run (
+    unit_id,
+    channel_num,
+    channel_name,
+    last_reward,
+    last_subsidy,
+    reward_free_amount,
+    reward_tax_amount,
+    subsidy_free_amount,
+    subsidy_tax_amount,
+    reward_free_pay,
+    reward_tax_pay,
+    this_reward,
+    this_subsidy,
+    subtotal,
+    channel_by) values
+    <foreach item="item" index="index" collection="list" separator=",">
+      (#{item.unitId},
+      #{item.channelNum},
+      #{item.channelName},
+      #{item.lastReward},
+      #{item.lastSubsidy},
+      #{item.rewardFreeAmount},
+      #{item.rewardTaxAmount},
+      #{item.subsidyFreeAmount},
+      #{item.subsidyTaxAmount},
+      #{item.rewardFreePay},
+      #{item.rewardTaxPay},
+      #{item.thisReward},
+      #{item.thisSubsidy},
+      #{item.subtotal},
+      #{item.channelBy})
+    </foreach>
+  </insert>
+
+  <delete id="deleteByUnitId" parameterType="int">
+    delete from invoice_account_run
+    <where>
+      <if test="unitId != null">
+        and unit_id = #{unitId}
+      </if>
+    </where>
+  </delete>
+
+  <select id="selectContrastByCond" parameterType="map" resultType="com.hbhb.cw.invoice.web.vo.InvoiceContrastVO">
+    select t2.channelNum  as channelNum,
+    u.unit_name    as unitId,
+    t1.thisReward  as thisReward,
+    t1.thisSubsidy as thisSubsidy,
+    t1.subtotal    as subtotal,
+    t2.reward      as reward,
+    t3.taxAmount   as taxAmount,
+    t2.payableSum  as payableSum,
+    t2.payName     as payName
+    from (select iar.channel_num,
+    iar.unit_id,
+    iar.this_reward  as thisReward,
+    iar.this_subsidy as thisSubsidy,
+    iar.subtotal     as subtotal
+    from invoice_account_run iar
+    where iar.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.channelNum != null">
+        and iar.channel_num  like concat ('%', #{cond.channelNum}, '%')
+      </if>
+    group by iar.channel_num
+    ) t1
+    left join (select ifa.channel_num               as channelNum,
+    ifa.unit_id                   as unitId,
+    ifnull(sum(ifa.reward), 0)    as reward,
+    ifnull(sum(ifa.payable), 0)   as payableSum,
+    ifa.pay_name                  as payName
+    from invoice_focus_account ifa
+    where ifa.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.channelNum != null">
+        and ifa.channel_num  like concat ('%', #{cond.channelNum}, '%')
+      </if>
+      <if test="cond.payName != null">
+        and ifa.pay_name like concat ('%', #{cond.payName}, '%')
+      </if>
+    group by ifa.channel_num
+    ) t2
+    on t1.channel_num = t2.channelNum
+    left join (select
+    ifnull(sum(ii.tax_amount) , 0)       as taxAmount,
+    ii.channel_num as channelNum
+    from invoice_incentive ii
+    where ii.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.channelNum != null">
+        and ii.channel_num  like concat ('%', #{cond.channelNum}, '%')
+      </if>
+    group by ii.channel_num
+    ) t3
+    on t2.channelNum = t3.channelNum
+    left join unit u on u.id = t1.unit_id
+    where t1.channel_num = t2.channelNum
+  </select>
+
+  <select id="selectContrastCountByCond" parameterType="map" resultType="int">
+    select  COUNT(channel_num)
+    from( (select iar.channel_num,
+    iar.unit_id,
+    iar.this_reward  as thisReward,
+    iar.this_subsidy as thisSubsidy,
+    iar.subtotal     as subtotal
+    from invoice_account_run iar
+    where iar.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.channelNum != null">
+        and iar.channel_num  like concat ('%', #{cond.channelNum}, '%')
+      </if>
+    ) t1
+    left join (select ifa.channel_num               as channelNum,
+    ifa.unit_id                   as unitId,
+    ifnull(sum(ifa.reward), 0)    as reward,
+    ifnull(sum(ifa.payable), 0)   as payableSum,
+    ifa.pay_name                  as payName
+    from invoice_focus_account ifa
+    where ifa.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.channelNum != null">
+        and ifa.channel_num  like concat ('%', #{cond.channelNum}, '%')
+      </if>
+      <if test="cond.payName != null">
+        and ifa.pay_name like concat ('%', #{cond.payName}, '%')
+      </if>
+    group by ifa.channel_num
+    ) t2
+    on t1.channel_num = t2.channelNum
+    left join (select
+    ifnull(sum(ii.tax_amount) , 0)       as taxAmount,
+    ii.channel_num as channelNum
+    from invoice_incentive ii
+    where ii.unit_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      <if test="cond.channelNum != null">
+        and ii.channel_num  like concat ('%', #{cond.channelNum}, '%')
+      </if>
+    group by ii.channel_num
+    ) t3
+    on t2.channelNum = t3.channelNum
+    left join unit u on u.id = t1.unit_id)
+    where t1.channel_num = t2.channelNum
+  </select>
+
+</mapper>
